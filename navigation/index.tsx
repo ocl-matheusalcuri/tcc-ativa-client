@@ -9,7 +9,14 @@ import CliBottomTabNavigator from './CliBottomTabNavigator';
 import ProfBottomTabNavigator from './ProfBottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
-const cliente = true;
+import LoginScreen from '../screens/Login';
+import SignupCli from '../screens/SignupCli';
+import SignupProf from '../screens/SignupProf';
+
+
+
+const cliente = false;
+const login = false;
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -30,7 +37,16 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {login ? (
+        <>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      </>
+      ) : 
+      (
       <Stack.Screen name="Root" component={cliente ? CliBottomTabNavigator : ProfBottomTabNavigator} />
+      )}
+      <Stack.Screen name="SignupCli" component={SignupCli} />
+      <Stack.Screen name="SignupProf" component={SignupProf} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );

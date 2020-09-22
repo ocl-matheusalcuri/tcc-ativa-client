@@ -20,7 +20,7 @@ export default function ProfBottomTabNavigator() {
   return (
     <ProfBottomTab.Navigator
       initialRouteName="Perfil"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: "orange", inactiveBackgroundColor: "gray", activeBackgroundColor: "gray", inactiveTintColor: "white" }}>
       <ProfBottomTab.Screen
         name="Perfil"
         component={ProfPerfilNavigator}
