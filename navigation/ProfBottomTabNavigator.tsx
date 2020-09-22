@@ -14,7 +14,7 @@ import { ProfBottomTabsList, ProfPerfilList, ProfDashboardList, ProfAlunosList }
 
 const ProfBottomTab = createBottomTabNavigator<ProfBottomTabsList>();
 
-export default function ProfBottomTabNavigator() {
+export default function ProfBottomTabNavigator(email: string) {
   const colorScheme = useColorScheme();
 
   return (
@@ -23,25 +23,28 @@ export default function ProfBottomTabNavigator() {
       tabBarOptions={{ activeTintColor: "orange", inactiveBackgroundColor: "gray", activeBackgroundColor: "gray", inactiveTintColor: "white" }}>
       <ProfBottomTab.Screen
         name="Perfil"
-        component={ProfPerfilNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-person" color={color} />,
         }}
-      />
+      >
+        {props => <ProfPerfilNavigator/>}
+      </ProfBottomTab.Screen>
       <ProfBottomTab.Screen
         name="Dashboard"
-        component={ProfDashboardNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-calendar" color={color} />,
         }}
-      />
+      >
+        {props => <ProfDashboardNavigator/>}
+      </ProfBottomTab.Screen>
       <ProfBottomTab.Screen
         name="Alunos"
-        component={ProfAlunosNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-business" color={color} />,
         }}
-      />
+      >
+        {props => <ProfAlunosNavigator/>}
+      </ProfBottomTab.Screen>
     </ProfBottomTab.Navigator>
   );
 }

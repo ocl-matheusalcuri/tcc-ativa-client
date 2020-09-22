@@ -15,8 +15,9 @@ import SignupProf from '../screens/SignupProf';
 
 
 
-const cliente = false;
+const cliente = true;
 const login = false;
+const email = "teste@teste.com";
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -43,7 +44,7 @@ function RootNavigator() {
       </>
       ) : 
       (
-      <Stack.Screen name="Root" component={cliente ? CliBottomTabNavigator : ProfBottomTabNavigator} />
+      <Stack.Screen name="Root" component={cliente ? () => CliBottomTabNavigator(email) : () => ProfBottomTabNavigator(email)} />
       )}
       <Stack.Screen name="SignupCli" component={SignupCli} />
       <Stack.Screen name="SignupProf" component={SignupProf} />

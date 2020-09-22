@@ -4,11 +4,11 @@ import { StyleSheet, TextInput } from 'react-native';
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 
-export default function CliPerfil() {
+export default function CliPerfil({email}: any) {
     return (
         <View style={styles.container}>
             <View>
-              <Text>perfil</Text>
+              <Text>perfil: {email}</Text>
             </View>
         </View>
     )

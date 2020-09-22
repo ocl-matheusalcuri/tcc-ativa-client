@@ -15,41 +15,44 @@ import { CliBottomTabsList, CliPerfilList, CliPesquisaList, CliDashboardList, Cl
 
 const CliBottomTab = createBottomTabNavigator<CliBottomTabsList>();
 
-export default function CliBottomTabNavigator() {
+export default function CliBottomTabNavigator(email: string) {
   const colorScheme = useColorScheme();
-
   return (
     <CliBottomTab.Navigator
       initialRouteName="Perfil"
       tabBarOptions={{ activeTintColor: "orange", inactiveBackgroundColor: "gray", activeBackgroundColor: "gray", inactiveTintColor: "white" }}>
       <CliBottomTab.Screen
         name="Perfil"
-        component={CliPerfilNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-person" color={color} />,
         }}
-      />
+      >
+        {props => <CliPerfilNavigator email={email}/>}
+      </CliBottomTab.Screen>
       <CliBottomTab.Screen
         name="Pesquisa"
-        component={CliPesquisaNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-search" color={color} />,
         }}
-      />
+      >
+        {props => <CliPesquisaNavigator/>}
+        </CliBottomTab.Screen>
       <CliBottomTab.Screen
         name="Dashboard"
-        component={CliDashboardNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-checkmark-circle" color={color} />,
         }}
-      />
+      >
+        {props => <CliDashboardNavigator/>}
+      </CliBottomTab.Screen>
       <CliBottomTab.Screen
         name="Personal"
-        component={CliRelationNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-bookmarks" color={color} />,
         }}
-      />
+      >
+        {props => <CliRelationNavigator/>}
+      </CliBottomTab.Screen>
     </CliBottomTab.Navigator>
   );
 }
@@ -64,14 +67,15 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const CliPerfilStack = createStackNavigator<CliPerfilList>();
 
-function CliPerfilNavigator() {
+function CliPerfilNavigator({email}: any) {
   return (
     <CliPerfilStack.Navigator>
       <CliPerfilStack.Screen
         name="CliPerfilScreen"
-        component={CliPerfil}
         options={{ headerTitle: 'Seu Perfil' }}
-      />
+      >
+          {props => <CliPerfil email={email}/>}
+       </CliPerfilStack.Screen> 
     </CliPerfilStack.Navigator>
   );
 }
