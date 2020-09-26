@@ -15,8 +15,8 @@ import SignupProf from '../screens/SignupProf';
 
 
 
-const cliente = true;
-const login = false;
+const cliente = false;
+const login = true;
 const email = "teste@teste.com";
 
 // If you are not familiar with React Navigation, we recommend going through the

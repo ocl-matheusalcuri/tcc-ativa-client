@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function SignupCli({navigation}) {
     return (
         <View style={styles.container}>
-            <View>
+            <View style={styles.container}>
               <Text>signup cliente</Text>
               <TouchableOpacity onPress={() => navigation.navigate("Login")}><Text>Voltar ao login</Text></TouchableOpacity>
             </View>
@@ -19,10 +19,10 @@ export default function SignupCli({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-      padding: 20,
       flex: 1,
       alignItems: 'center',
-      backgroundColor: 'gray'
+      backgroundColor: 'orange',
+      justifyContent: "center",
     },
     title: {
       fontSize: 20,
@@ -32,5 +32,12 @@ const styles = StyleSheet.create({
       marginVertical: 30,
       height: 1,
       width: '80%',
+    },
+    opcao: {
+      fontSize: 30,
+      fontWeight: 'bold',
+      alignSelf: 'center',
+      marginBottom: 30,
+      marginTop: 30,
     },
   });
