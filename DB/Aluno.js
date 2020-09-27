@@ -26,9 +26,11 @@ const aluno = new mongoose.Schema({
     objetivo: {
         type:String
     },
-    personalId:[
-        {type: Schema.Types.ObjectId, ref: 'Personal'}
-      ]
+    personalId:{
+        type: Schema.Types.ObjectId, 
+        ref: 'Personal'
+    }
+      
 });
 
 module.exports = Aluno = mongoose.model('aluno',aluno);
