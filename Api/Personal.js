@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const Personal = require('../DB/Personal');
 const route = express.Router();
 mongoose.set('useFindAndModify', false);
@@ -29,24 +30,30 @@ route.get('/getById', async (req, res) => {
 });
 
 route.post('/cadastrarPersonal', async (req, res) => {
-    const { nome, celular, email, nascimento, instagram, facebook, cref, foco, especializacao, faixaEtaria } = req.body;
+    const { password, nome, celular, email, nascimento, instagram, facebook, cref, foco, especializacao, faixaEtaria } = req.body;
     await Personal.find({ email: email }).then((response) => {
         if (response.length == 0) {
             let personal = {};
-            if (nome != "" && celular != "" && email != "" && nascimento != "" && instagram != "" && facebook != "" && cref != "" && foco != "" && especializacao != "" && faixaEtaria != "") {
-                personal.nome = nome;
-                personal.celular = celular;
-                personal.email = email;
-                personal.nascimento = nascimento;
-                personal.instagram = instagram;
-                personal.facebook = facebook;
-                personal.cref = cref;
-                personal.foco = foco;
-                personal.especializacao = especializacao;
-                personal.faixaEtaria = faixaEtaria;
-                let personalModel = new Personal(personal);
-                personalModel.save();
-                res.json(personalModel);
+            if (password != "" && nome != "" && celular != "" && email != "" && nascimento != "" && instagram != "" && facebook != "" && cref != "" && foco != "" && especializacao != "" && faixaEtaria != "") {
+                bcrypt.hash(password, 10).then(hash => {
+
+                    let encryptedPssword = hash;
+
+                    personal.password = encryptedPssword;
+                    personal.nome = nome;
+                    personal.celular = celular;
+                    personal.email = email;
+                    personal.nascimento = nascimento;
+                    personal.instagram = instagram;
+                    personal.facebook = facebook;
+                    personal.cref = cref;
+                    personal.foco = foco;
+                    personal.especializacao = especializacao;
+                    personal.faixaEtaria = faixaEtaria;
+                    let personalModel = new Personal(personal);
+                    personalModel.save();
+                    res.json(personalModel);
+                })
             }
             else {
                 res.status(404).send("Preencha todos os dados");
@@ -59,7 +66,7 @@ route.post('/cadastrarPersonal', async (req, res) => {
 });
 
 route.put('/editarPerfil', async (req, res) => {
-    const {personalId, nome, celular, email, nascimento, instagram, facebook, cref, foco, especializacao, faixaEtaria } = req.body;
+    const { personalId, nome, celular, email, nascimento, instagram, facebook, cref, foco, especializacao, faixaEtaria } = req.body;
     let personal = await Personal.findById(personalId).then((response) => {
         if (response != null) {
             if (nome != "" && celular != "" && email != "" && nascimento != "" && instagram != "" && facebook != "" && cref != "" && foco != "" && especializacao != "" && faixaEtaria != "") {
