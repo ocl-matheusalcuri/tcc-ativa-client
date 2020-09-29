@@ -19,7 +19,6 @@ route.get('/getAll', async (req, res) => {
 route.get('/getById', async (req, res) => {
     const { personalId } = req.body;
     let aluno = await Personal.findById(personalId).then((response) => {
-        console.log(response);
         if (response != null) {
             res.json(response);
         }

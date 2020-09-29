@@ -45,7 +45,6 @@ route.post('/cadastrarTreino', async (req, res) => {
                         treino.descricaoTreino = descricaoTreino;
                         let treinoModel = new Treino(treino);
                         treinoModel.save();
-                        console.log(treinoModel);
                         res.json(treinoModel);
                     } else {
                         res.status(404).send("Aluno Inexistente");

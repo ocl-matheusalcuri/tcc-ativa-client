@@ -16,7 +16,7 @@ export default function CliPerfil({email}: any) {
     return (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={styles.bg}>
-              <Text>perfil: {user?.name}</Text>
+              <Text>perfil: {user?.email}</Text>
               <TouchableOpacity onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity>
             </View>
         </View>

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AuthContext } from '../contexts/auth';
 
 //@ts-ignore
@@ -11,7 +10,7 @@ export default function Login({navigation}) {
   const { signed, signIn, user, signOut } = React.useContext(AuthContext);
 
   async function handleSignIn() {
-    await signIn();
+    await signIn("eliasjunior6@teste.com", "12345");
   };
 
   async function handleSignOut() {
