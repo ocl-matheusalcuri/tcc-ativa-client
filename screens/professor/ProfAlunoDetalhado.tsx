@@ -1,24 +1,16 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 
+import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 
-import { AuthContext } from '../../contexts/auth';
-
-
-export default function ProfPerfil() {
-
-  const { signOut } = React.useContext(AuthContext);
-
-  async function handleSignOut() {
-    await signOut();
-  }
-
+//@ts-ignore
+export default function ProfAlunoDetalhado({route}) {
+    const { aluno } = route.params.params;
     return (
         <View style={styles.container}>
             <View>
-              <Text>perfil prof</Text>
-              <TouchableOpacity onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity>
+                <Text>aluno específico: {aluno}</Text>
             </View>
         </View>
     )

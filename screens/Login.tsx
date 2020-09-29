@@ -1,18 +1,29 @@
 import * as React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { AuthContext } from '../contexts/auth';
 
 //@ts-ignore
 export default function Login({navigation}) {
+  const { signed, signIn, user, signOut } = React.useContext(AuthContext);
+
+  async function handleSignIn() {
+    await signIn("eliasjunior6@teste.com", "12345");
+  };
+
+  async function handleSignOut() {
+    await signOut();
+  }
     return (
         <View style={styles.container}>
             <View>
               <Text>login screen</Text>
+              <TouchableOpacity onPress={handleSignIn}><Text>Entrar</Text></TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate("SignupCli")}><Text>Criar conta como Aluno</Text></TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate("SignupProf")}><Text>Criar conta como Professor</Text></TouchableOpacity>
+              <TouchableOpacity onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity>
             </View>
         </View>
     )
