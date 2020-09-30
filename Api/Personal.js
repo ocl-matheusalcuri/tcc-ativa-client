@@ -17,10 +17,11 @@ route.get('/getAll', async (req, res) => {
 });
 
 route.get('/getById', async (req, res) => {
-    const { personalId } = req.body;
-    let aluno = await Personal.findById(personalId).then((response) => {
+    const { userId } = req.query;
+    await Personal.findById(userId).then((response) => {
         if (response != null) {
-            res.json(response);
+            const object = {...response, type: "personal"}
+            return res.json(object);
         }
         else {
             res.status(404).send("Personal inexistente");

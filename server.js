@@ -1,18 +1,53 @@
 const express = require('express');
 const connectDB = require('./DB/Connection');
+
+const Aluno = require('./DB/Aluno');
+const Personal = require('./DB/Personal');
+
 const authMiddleware = require('./authValidation');
+
 const cors = require('cors');
+const fs = require('fs')
 const app = express();
+
+app.use(express.static('./assets/images'));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true}));
+
+
 
 app.use(cors());
 
 connectDB();
-app.use(express.json({extended:false}));
+
+app.get('/', (req, res) => {
+    res.send("Trabalho de Conclusão de Curso!");
+})
 
 
 app.use('/api', require('./api/AuthValidation'));
 
 app.use(authMiddleware);
+
+app.post('/upload', async (req, res) => {
+    const { userId, imgsource, type } = req.body.body;
+
+    const user = type === "aluno" ? await Aluno.findById(userId) : await Personal.findById(userId);
+    fs.writeFile(`./assets/images/${userId}.png`, imgsource, 'base64', (err) => {
+        if (err) throw err
+    })
+    user.temFoto = true;
+    await user.save();
+
+    return res.json({
+        user: {name: user.nome, email: user.email, temFoto: user.temFoto},
+        url: `http://192.168.0.45:3001/${user?.id}.png?${Date.now()}`
+    })
+})
+
+
+
+
 app.use('/api/alunoModel', require('./api/Aluno'))
 app.use('/api/personalModel', require('./api/Personal'))
 app.use('/api/treinoModel', require('./api/Treino'))

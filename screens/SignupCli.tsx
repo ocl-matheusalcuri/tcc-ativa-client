@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 //@ts-ignore
 export default function SignupCli({navigation}) {

@@ -32,7 +32,8 @@ const aluno = new mongoose.Schema({
     personalId:{
         type: Schema.Types.ObjectId, 
         ref: 'Personal'
-    }
+    },
+    temFoto: { type: Boolean, default: false }
       
 });
 

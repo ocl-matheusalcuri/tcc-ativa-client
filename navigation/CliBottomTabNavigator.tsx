@@ -74,7 +74,8 @@ function CliPerfilNavigator({email}: any) {
         name="CliPerfilScreen"
         options={{ headerTitle: 'Seu Perfil' }}
       >
-          {props => <CliPerfil email={email}/>}
+          {props => //@ts-ignore
+          <CliPerfil />}
        </CliPerfilStack.Screen> 
     </CliPerfilStack.Navigator>
   );

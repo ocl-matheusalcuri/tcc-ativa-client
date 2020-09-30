@@ -9,16 +9,15 @@ const route = express.Router();
 
 route.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    const aluno = await Aluno.findOne({email}, {email: 1, nome: 1, password: 1});
-    const personal = await Personal.findOne({email}, {email: 1, nome: 1, password: 1});
+    const aluno = await Aluno.findOne({email}, {email: 1, nome: 1, password: 1, temFoto: 1});
+    const personal = await Personal.findOne({email}, {email: 1, nome: 1, password: 1, temFoto: 1});
 
     if(aluno) {
         const match = await bcrypt.compare(password, aluno.password);
-
         if(match) {
             aluno.password = undefined;
             return res.json({
-                user: {name: aluno.nome, email: aluno.email, id: aluno._id},
+                user: {nome: aluno.nome, email: aluno.email, _id: aluno._id, temFoto: aluno.temFoto || false},
                 type: "aluno",
                 token: jwt.sign(aluno.toJSON(), 'segredo')
             })
@@ -31,7 +30,7 @@ route.post('/login', async (req, res) => {
         if(match) {
             personal.password = undefined;
             return res.json({
-                user: {name: personal.nome, email: personal.email, id: personal._id},
+                user: {nome: personal.nome, email: personal.email, _id: personal._id, temFoto: personal.temFoto},
                 type: "personal",
                 token: jwt.sign(personal.toJSON(), 'segredo')
             })

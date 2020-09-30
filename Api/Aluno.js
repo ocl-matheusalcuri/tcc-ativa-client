@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Aluno = require('../DB/Aluno');
 const Personal = require('../DB/Personal');
+const { response } = require('express');
 const route = express.Router();
 
 mongoose.set('useFindAndModify', false);
@@ -19,10 +20,11 @@ route.get('/getAll', async (req, res) => {
 });
 
 route.get('/getById', async (req, res) => {
-    const { alunoId } = req.body;
-    let aluno = await Aluno.findById(alunoId).then((response) => {
+    const { userId } = req.query;
+    await Aluno.findById(userId).then((response) => {
         if (response != null) {
-            res.json(response);
+            const object = {...response, type: "aluno"}
+            return res.json(object);
         }
         else {
             res.status(404).send("Aluno inexistente");
