@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, Image } from 'react-native';
+import { StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
+
 
 //@ts-ignore
 export default function Login({ navigation }) {
@@ -13,7 +13,7 @@ export default function Login({ navigation }) {
       <View style={styles.container}>
         <Image
           source={require('../assets/logo.png')}
-          style={styles.logo}
+          style={styles.logo} 
         />
         <TextInput style={styles.input} placeholder="E-mail" />
         <TextInput style={styles.input} secureTextEntry={true} placeholder="Senha" />

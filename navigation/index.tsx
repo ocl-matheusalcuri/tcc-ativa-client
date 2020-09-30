@@ -16,7 +16,7 @@ import SignupProf from '../screens/SignupProf';
 
 
 const cliente = false;
-const login = true;
+const login = false;
 const email = "teste@teste.com";
 
 // If you are not familiar with React Navigation, we recommend going through the
@@ -48,7 +48,6 @@ function RootNavigator() {
       )}
       <Stack.Screen name="SignupCli" component={SignupCli} />
       <Stack.Screen name="SignupProf" component={SignupProf} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
 }
