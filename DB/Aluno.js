@@ -29,6 +29,11 @@ const aluno = new mongoose.Schema({
     objetivo: {
         type:String
     },
+    token: {
+        type:String,
+        default: mongoose.Types.ObjectId,
+        index: { unique: true }
+    },
     personalId:{
         type: Schema.Types.ObjectId, 
         ref: 'Personal'

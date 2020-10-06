@@ -46,6 +46,7 @@ app.post('/upload', async (req, res) => {
     })
 });
 
+app.use('/api/agendaModel', require('./api/Agenda'))
 app.use('/api/alunoModel', require('./api/Aluno'))
 app.use('/api/personalModel', require('./api/Personal'))
 app.use('/api/treinoModel', require('./api/Treino'))

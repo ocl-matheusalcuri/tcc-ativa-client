@@ -47,7 +47,7 @@ route.post('/personal', async (req, res) => {
 });
 
 route.post('/aluno', async (req, res) => {
-    const { password, nome, celular, email, nascimento, hrAtiva, saude, prepFisico, objetivo } = req.body;
+    const { password, nome, celular, email, nascimento, hrAtiva, saude, prepFisico, objetivo } = req.body.user;
     await Aluno.find({ email: email }).then((response) => {
         if (response.length == 0) {
             let aluno = {};
