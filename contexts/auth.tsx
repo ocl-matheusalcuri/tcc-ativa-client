@@ -9,6 +9,7 @@ interface AuthContextData {
     user: any;
     type: string | undefined;
     signIn(email: string, password: string): Promise<void>;
+    signUp(user: any, type: "aluno" | "personal"): Promise<void>;
     signOut(): Promise<void>;
     refreshUser(alunoId: string): Promise<void>;
 }
@@ -48,6 +49,14 @@ export const AuthProvider: React.FC = ({children}) => {
      useEffect(() => {
         loadStorageData();
        },[user?._id]);
+
+
+    async function signUp(user: any, type: "aluno" | "personal") {
+      const url = type === "aluno" ? "http://localhost:3001/api/aluno" : "http://localhost:3001/api/personal"
+      api.post(url, {user}).then(response  => {
+        console.log({response});
+      })
+    }
 
     async function signIn(email: string, password:string) {
 
@@ -100,7 +109,7 @@ export const AuthProvider: React.FC = ({children}) => {
       }
 
     return (
-        <AuthContext.Provider value={{signed: !!user, user, signIn, signOut, type, refreshUser}}>
+        <AuthContext.Provider value={{signed: !!user, user, signIn, signOut, signUp, type, refreshUser}}>
             {children}
         </AuthContext.Provider>
     );

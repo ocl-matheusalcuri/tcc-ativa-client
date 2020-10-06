@@ -24,8 +24,9 @@ app.get('/', (req, res) => {
     res.send("Trabalho de Conclusão de Curso!");
 })
 
-
+app.use('/api', require('./api/Cadastro'));
 app.use('/api', require('./api/AuthValidation'));
+
 
 app.use(authMiddleware);
 
@@ -43,10 +44,7 @@ app.post('/upload', async (req, res) => {
         user: {name: user.nome, email: user.email, temFoto: user.temFoto},
         url: `http://192.168.0.45:3001/${user?.id}.png?${Date.now()}`
     })
-})
-
-
-
+});
 
 app.use('/api/alunoModel', require('./api/Aluno'))
 app.use('/api/personalModel', require('./api/Personal'))

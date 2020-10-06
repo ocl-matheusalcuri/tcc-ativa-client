@@ -1,9 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const Aluno = require('../DB/Aluno');
 const Personal = require('../DB/Personal');
-const { response } = require('express');
 const route = express.Router();
 
 mongoose.set('useFindAndModify', false);
@@ -40,41 +38,6 @@ route.get('/getAlunosByPersonalId', async (req, res) => {
         }
         else {
             res.status(404).send("Não existem alunos para esse personal");
-        }
-    });
-});
-
-route.post('/cadastrarAluno', async (req, res) => {
-    const { password, nome, celular, email, nascimento, hrAtiva, saude, prepFisico, objetivo } = req.body;
-    await Aluno.find({ email: email }).then((response) => {
-        if (response.length == 0) {
-            let aluno = {};
-            if (password != "" && nome != "" && celular != "" && email != "" && nascimento != "" && hrAtiva != "" && saude != "" && prepFisico != "" && objetivo != "") {
-
-                bcrypt.hash(password, 10).then(hash => {
-
-                    let encryptedPssword = hash;
-
-                    aluno.password = encryptedPssword;
-                    aluno.nome = nome;
-                    aluno.celular = celular;
-                    aluno.email = email;
-                    aluno.nascimento = nascimento;
-                    aluno.hrAtiva = hrAtiva;
-                    aluno.saude = saude;
-                    aluno.prepFisico = prepFisico;
-                    aluno.objetivo = objetivo;
-                    aluno.personalId = null;
-                    let alunoModel = new Aluno(aluno);
-                    alunoModel.save();
-                    res.json(alunoModel);
-                })
-            } else {
-                res.status(400).send("Preencha todos os dados");
-            }
-        }
-        else {
-            res.status(404).send("Esse aluno já possui um cadastro");
         }
     });
 });

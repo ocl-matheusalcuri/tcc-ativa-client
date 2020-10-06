@@ -8,7 +8,7 @@ import { AuthContext } from '../../contexts/auth';
 
 export default function ProfPerfil() {
 
-  const { signOut } = React.useContext(AuthContext);
+  const { signOut, user } = React.useContext(AuthContext);
 
   async function handleSignOut() {
     await signOut();
