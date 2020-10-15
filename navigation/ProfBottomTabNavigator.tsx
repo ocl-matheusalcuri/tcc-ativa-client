@@ -9,6 +9,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import ProfPerfil from '../screens/professor/ProfPerfil';
 import ProfDashboard from '../screens/professor/ProfDashboard';
 import ProfAlunos from '../screens/professor/ProfAlunos';
+import ProfAlunoDetalhado from '../screens/professor/ProfAlunoDetalhado';
 
 import { ProfBottomTabsList, ProfPerfilList, ProfDashboardList, ProfAlunosList } from '../types';
 
@@ -95,6 +96,12 @@ function ProfAlunosNavigator() {
         component={ProfAlunos}
         options={{ headerTitle: 'Alunos Prof' }}
       />
+
+    <ProfAlunosStack.Screen
+        name="ProfAlunoDetalhadoScreen"
+        component={ProfAlunoDetalhado}
+        options={{ headerTitle: 'Aluno Detalhado' }}
+      /> 
     </ProfAlunosStack.Navigator>
   );
 }

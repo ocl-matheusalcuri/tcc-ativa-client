@@ -6,11 +6,12 @@ import { Text, View } from '../../components/Themed';
 
 //@ts-ignore
 export default function ProfAlunoDetalhado({route}) {
-    const { aluno } = route.params.params;
+    const { aluno } = route.params;
+
     return (
         <View style={styles.container}>
             <View>
-                <Text>aluno específico: {aluno}</Text>
+              <Text>aluno específico: {aluno}</Text>
             </View>
         </View>
     )

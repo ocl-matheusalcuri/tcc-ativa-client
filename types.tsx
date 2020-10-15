@@ -60,4 +60,5 @@ export type ProfDashboardList = {
 
 export type ProfAlunosList = {
   ProfAlunosScreen: undefined;
+  ProfAlunoDetalhadoScreen: undefined;
 }

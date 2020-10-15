@@ -12,7 +12,6 @@ const agenda = new mongoose.Schema({
     data: {
         type: String
     },
-    timestamps: { createdAt: 'created_at' } 
 });
 
 module.exports = Agenda = mongoose.model('agenda', agenda);

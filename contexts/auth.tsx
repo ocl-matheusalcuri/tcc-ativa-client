@@ -59,7 +59,6 @@ export const AuthProvider: React.FC = ({children}) => {
     }
 
     async function signIn(email: string, password:string) {
-
         const response: Response = await api.post("http://192.168.0.45:3001/api/login", {email, password} );
         setUser({...response.data.user});
         setType(response.data.type);
