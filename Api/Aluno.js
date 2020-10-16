@@ -17,6 +17,18 @@ route.get('/getAll', async (req, res) => {
     });
 });
 
+route.get('/getFiltrado', async (req, res) => {
+    const { nome, personalId } = req.query;
+    await Aluno.find({personalId: personalId, nome: { "$regex": nome, "$options": "i"}}).then((response) => {
+        if (response.length != 0) {
+            res.json(response);
+        }
+        else {
+            res.json([]);
+        }
+    });
+});
+
 route.get('/getById', async (req, res) => {
     const { userId } = req.query;
     await Aluno.findById(userId).then((response) => {
@@ -31,8 +43,8 @@ route.get('/getById', async (req, res) => {
 });
 
 route.get('/getAlunosByPersonalId', async (req, res) => {
-    const { personalId } = req.body;
-    let aluno = await Aluno.find({ personalId: personalId }).then((response) => {
+    const { personalId } = req.query;
+    await Aluno.find({ personalId: personalId }).then((response) => {
         if (response.length != 0) {
             res.json(response);
         }
@@ -43,12 +55,11 @@ route.get('/getAlunosByPersonalId', async (req, res) => {
 });
 
 route.put('/editarPerfil', async (req, res) => {
-    const { alunoId, nome, celular, email, nascimento, hrAtiva, saude, prepFisico, objetivo } = req.body;
+    const { alunoId, nome, email, nascimento, hrAtiva, saude, prepFisico, objetivo } = req.body.body;
     let aluno = await Aluno.findById(alunoId).then((response) => {
         if (response != null) {
             if (nome != "" && email != "" && nascimento != "" && hrAtiva != "" && saude != "" && prepFisico != "" && objetivo != "") {
                 response.nome = nome;
-                response.celular = celular;
                 response.email = email;
                 response.nascimento = nascimento;
                 response.hrAtiva = hrAtiva;
@@ -68,8 +79,8 @@ route.put('/editarPerfil', async (req, res) => {
 });
 
 route.put('/incluirPersonal', async (req, res) => {
-    const { alunoId, personalId } = req.body;
-    let aluno = await Aluno.findById(alunoId).then((response) => {
+    const { alunoId, personalId } = req.body.body;
+    let aluno = await Aluno.findOne({token: alunoId}).then((response) => {
         if (response != null) {
             if (personalId != null) {
                 Personal.findById(personalId).then((responsePersonal) => {

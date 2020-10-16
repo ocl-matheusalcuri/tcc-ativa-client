@@ -20,7 +20,7 @@ export default function CliBottomTabNavigator(email: string) {
   return (
     <CliBottomTab.Navigator
       initialRouteName="Perfil"
-      tabBarOptions={{ activeTintColor: "orange", inactiveBackgroundColor: "gray", activeBackgroundColor: "gray", inactiveTintColor: "white" }}>
+      tabBarOptions={{ activeTintColor: "#51C73C", inactiveBackgroundColor: "#784E00", activeBackgroundColor: "#784E00", inactiveTintColor: "white" }}>
       <CliBottomTab.Screen
         name="Perfil"
         options={{
@@ -37,14 +37,7 @@ export default function CliBottomTabNavigator(email: string) {
       >
         {props => <CliPesquisaNavigator/>}
         </CliBottomTab.Screen>
-      <CliBottomTab.Screen
-        name="Dashboard"
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="md-checkmark-circle" color={color} />,
-        }}
-      >
-        {props => <CliDashboardNavigator/>}
-      </CliBottomTab.Screen>
+
       <CliBottomTab.Screen
         name="Personal"
         options={{
@@ -72,7 +65,7 @@ function CliPerfilNavigator({email}: any) {
     <CliPerfilStack.Navigator>
       <CliPerfilStack.Screen
         name="CliPerfilScreen"
-        options={{ headerTitle: 'Seu Perfil' }}
+        options={{ headerTitle: 'Seu Perfil', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center"}}
       >
           {props => //@ts-ignore
           <CliPerfil />}
@@ -89,25 +82,25 @@ function CliPesquisaNavigator() {
       <CliPesquisaStack.Screen
         name="CliPesquisaScreen"
         component={CliPesquisa}
-        options={{ headerTitle: 'Pesquisa de personal' }}
+        options={{ headerTitle: 'Pesquisa de personal', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
       />
     </CliPesquisaStack.Navigator>
   );
 }
 
-const CliDashboardStack = createStackNavigator<CliDashboardList>();
+// const CliDashboardStack = createStackNavigator<CliDashboardList>();
 
-function CliDashboardNavigator() {
-  return (
-    <CliDashboardStack.Navigator>
-      <CliDashboardStack.Screen
-        name="CliDashboardScreen"
-        component={CliDashboard}
-        options={{ headerTitle: 'Sua Dashboard' }}
-      />
-    </CliDashboardStack.Navigator>
-  );
-}
+// function CliDashboardNavigator() {
+//   return (
+//     <CliDashboardStack.Navigator>
+//       <CliDashboardStack.Screen
+//         name="CliDashboardScreen"
+//         component={CliDashboard}
+//         options={{ headerTitle: 'Sua Dashboard' }}
+//       />
+//     </CliDashboardStack.Navigator>
+//   );
+// }
 
 const CliRelationStack = createStackNavigator<CliRelationList>();
 
@@ -117,7 +110,7 @@ function CliRelationNavigator() {
       <CliRelationStack.Screen
         name="CliRelationScreen"
         component={CliRelation}
-        options={{ headerTitle: 'Seu Personal' }}
+        options={{ headerTitle: 'Seu Personal', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
       />
     </CliRelationStack.Navigator>
   );

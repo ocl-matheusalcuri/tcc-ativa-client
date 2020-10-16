@@ -4,6 +4,8 @@ import { View, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 
+import { SERVER_URL } from '../url';
+
 interface AuthContextData {
     signed: boolean;
     user: any;
@@ -52,14 +54,13 @@ export const AuthProvider: React.FC = ({children}) => {
 
 
     async function signUp(user: any, type: "aluno" | "personal") {
-      const url = type === "aluno" ? "http://localhost:3001/api/aluno" : "http://localhost:3001/api/personal"
+      const url = type === "aluno" ? `${SERVER_URL}/api/aluno` : `${SERVER_URL}/api/personal`
       api.post(url, {user}).then(response  => {
-        console.log({response});
       })
     }
 
     async function signIn(email: string, password:string) {
-        const response: Response = await api.post("http://192.168.0.45:3001/api/login", {email, password} );
+        const response: Response = await api.post(`${SERVER_URL}/api/login`, {email, password} );
         setUser({...response.data.user});
         setType(response.data.type);
     
@@ -76,7 +77,7 @@ export const AuthProvider: React.FC = ({children}) => {
       }
 
       async function refreshUser(userId: string) {
-        api.get(`http://192.168.0.45:3001/api/${type === "aluno" ? 'alunoModel' : 'personalModel'}/getById`, {
+        api.get(`${SERVER_URL}/api/${type === "aluno" ? 'alunoModel' : 'personalModel'}/getById`, {
           params: {
             userId: userId
           }

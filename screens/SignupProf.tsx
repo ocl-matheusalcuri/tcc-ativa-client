@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
+import { styles } from '../screens/styles';
+
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { AuthContext } from '../contexts/auth';
@@ -48,21 +50,34 @@ export default function SignupProf({navigation}) {
 
 
 
-  const [prof, setProf] = useState<any>({ 
-    password: "12345", 
-    nome: "Professor 1", 
-    celular: "(00) 00000-0000", 
-    email: "professor1@hotmail.com", 
-    nascimento: "00/00/0000", 
-    instagram: "professor1", 
-    facebook: "profacessor1", 
-    cref: "1233456788", 
-    foco: "Fortalecimento", 
-    especializacao: "Natação", 
-    faixaEtaria: "Idosos"
-  });
+  // const [prof, setProf] = useState<any>({ 
+  //   password: "12345", 
+  //   nome: "Professor 1", 
+  //   celular: "(00) 00000-0000", 
+  //   email: "professor1@hotmail.com", 
+  //   nascimento: "00/00/0000", 
+  //   instagram: "professor1", 
+  //   facebook: "profacessor1", 
+  //   cref: "1233456788", 
+  //   foco: "Fortalecimento", 
+  //   especializacao: "Natação", 
+  //   faixaEtaria: "Idosos"
+  // });
 
   async function handleSignUp() {
+    const prof = {
+      password: senha, 
+      nome: nome, 
+      celular: celular, 
+      email: email, 
+      nascimento: nascimento, 
+      instagram: instagram, 
+      facebook: facebook, 
+      cref: cref, 
+      foco: foco, 
+      especializacao: especialidade, 
+      faixaEtaria: faixaEtaria
+    }
     await signUp(prof, "personal");
     navigation.navigate("Login");
   }
@@ -72,19 +87,19 @@ export default function SignupProf({navigation}) {
             <View style={{...styles.bg}}>
               <Text>signup cliente</Text>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput style={{...styles.input}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
-                <TextInput style={{...styles.input}} placeholder="Nascimento" onChangeText={nascimento => setNascimento(nascimento)}/>
+                <TextInput style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
+                <TextInput style={{...styles.inputSignUp}} placeholder="Nascimento" onChangeText={nascimento => setNascimento(nascimento)}/>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput style={{...styles.input}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-                <TextInput style={{...styles.input}} placeholder="Celular" onChangeText={celular => setCelular(celular)}/>
+                <TextInput style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
+                <TextInput style={{...styles.inputSignUp}} placeholder="Celular" onChangeText={celular => setCelular(celular)}/>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput style={{...styles.input}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
-                <TextInput style={{...styles.input}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
+                <TextInput style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
+                <TextInput style={{...styles.inputSignUp}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
               </View>
-              <TextInput style={{...styles.input, width: 300}} placeholder="CREF" onChangeText={cref => setCREF(cref)}/>
-              <TextInput style={{...styles.input, width: 300}} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
+              <TextInput style={{...styles.inputSignUp, width: 300}} placeholder="CREF" onChangeText={cref => setCREF(cref)}/>
+              <TextInput style={{...styles.inputSignUp, width: 300}} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
               
               <Text>Especialidade</Text>
               <View style={{...styles.bg, ...styles.picker}}>
@@ -119,54 +134,54 @@ export default function SignupProf({navigation}) {
     )
 }
 
-const styles = StyleSheet.create({
-  bg: {
-    backgroundColor: '#CC8400'
-  },
-  container: {
-    padding: 20,
-    flex: 1,
-    alignItems: 'center',
-  },
-  conjuntoInput: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  picker: {
-    width: 290, 
-    height: 30, 
-    borderWidth: 1,
-    borderColor: "gray",
-    marginRight: 10,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    color: "#000",
-    marginVertical: 10
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    backgroundColor: "#fff",
-    padding: 0,
-    paddingHorizontal: 10,
-    marginVertical: 20,
-    width: 130,
-    marginRight: 20
-  },
-  btnCadastro: {
-    backgroundColor: "blue",
-    padding: 10,
-    alignItems: "center",
-    marginVertical: 10
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-  });
+// const styles = StyleSheet.create({
+//   bg: {
+//     backgroundColor: '#CC8400'
+//   },
+//   container: {
+//     padding: 20,
+//     flex: 1,
+//     alignItems: 'center',
+//   },
+//   conjuntoInput: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//   },
+//   picker: {
+//     width: 290, 
+//     height: 30, 
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     marginRight: 10,
+//     backgroundColor: "#fff",
+//     justifyContent: "center",
+//     color: "#000",
+//     marginVertical: 10
+//   },
+//   input: {
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     backgroundColor: "#fff",
+//     padding: 0,
+//     paddingHorizontal: 10,
+//     marginVertical: 20,
+//     width: 130,
+//     marginRight: 20
+//   },
+//   btnCadastro: {
+//     backgroundColor: "blue",
+//     padding: 10,
+//     alignItems: "center",
+//     marginVertical: 10
+//   },
+//   title: {
+//     fontSize: 20,
+//     fontWeight: 'bold',
+//   },
+//   separator: {
+//     marginVertical: 30,
+//     height: 1,
+//     width: '80%',
+//   },
+//   });

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 
+import { styles } from '../styles';
+
 import { Text, View } from '../../components/Themed';
 
 import { AuthContext } from '../../contexts/auth';
@@ -13,21 +15,24 @@ import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import { SERVER_URL } from '../../url';
 
+import Icon from 'react-native-vector-icons/MaterialIcons'
+Icon.loadFont();
 
 export default function ProfPerfil() {
 
-  const { signOut, user, type } = React.useContext(AuthContext);
+  const { signOut, user, type, refreshUser } = React.useContext(AuthContext);
 
-  const [foto, setFoto] = useState<any>(user?.temFoto ? `http://192.168.0.45:3001/${user?.id}.png?${Date.now()}` : `http://192.168.0.45:3001/default.png?${Date.now()}`);
+  const [foto, setFoto] = useState<any>(user?.temFoto ? `${SERVER_URL}/${user?._id}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`);
   const [imgBase64, setImgBase64] = useState<any>();
 
-  const [novoNome, setNovoNome] = useState("");
-  const [novoEmail, setNovoEmail] = useState("");
-  const [novoNascimento, setNovoNascimento] = useState("");
-  const [novoCelular, setNovoCelular] = useState("");
-  const [novoFacebook, setNovoFacebook] = useState("");
-  const [novoInstagram, setNovoInstagram] = useState("");
+  const [novoNome, setNovoNome] = useState(user?.nome);
+  const [novoEmail, setNovoEmail] = useState(user?.email);
+  const [novoNascimento, setNovoNascimento] = useState(user?.nascimento);
+  const [novoCelular, setNovoCelular] = useState(user?.celular);
+  const [novoFacebook, setNovoFacebook] = useState(user?.facebook);
+  const [novoInstagram, setNovoInstagram] = useState(user?.instagram);
 
   const [especialidade, setEspecialidade] = useState(user?.especializacao);
   const [faixaEtaria, setFaixaEtaria] = useState(user?.faixaEtaria);
@@ -72,16 +77,35 @@ async function handleProfileImage() {
 }
 
 function salvarFoto() {
-    api.post('http://192.168.0.45:3001/upload', {
+    api.post(`${SERVER_URL}/upload`, {
       body: {
         //@ts-ignore
         imgsource: imgBase64,
-        userId: user?.id,
+        userId: user?._id,
         type
       },
     }).then(response => {
       setFoto(response.data.url);
     }) 
+}
+
+function atualizaPerfil() {
+  api.put(`${SERVER_URL}/api/personalModel/editarPerfil`, {
+    body: {
+      personalId: user?._id,
+      nome: novoNome,
+       celular: novoCelular, 
+       email: novoEmail, 
+       nascimento: novoNascimento, 
+       instagram: novoInstagram, 
+       facebook: novoFacebook, 
+       foco: foco, 
+       especializacao: especialidade, 
+       faixaEtaria: faixaEtaria
+    }
+  }).then(async response => {
+    await refreshUser(user?._id)
+  })
 }
 
     return (
@@ -90,8 +114,11 @@ function salvarFoto() {
       <View style={styles.bg}>
         <View style={{...styles.bg, ...styles.conjuntoInput}}>
           <View  style={{...styles.bg, ...styles.foto}}>
-          <Image source={{uri: foto, cache:"reload"}} style={{width: 100, height: 100}}/>
-          <TouchableOpacity onPress={handleProfileImage}><Text>Selecionar foto</Text></TouchableOpacity>
+            <Image source={{uri: foto, cache:"reload"}} style={{width: 100, height: 100, borderRadius: 400/ 2}}/>
+            <View style={{...styles.bg, ...styles.conjuntoInput}}>
+              <TouchableOpacity style={{padding: 15}} onPress={handleProfileImage}><Icon name="camera-alt" size={20} color="white" /></TouchableOpacity>
+              <TouchableOpacity style={{padding: 15}} onPress={salvarFoto}><Icon name="save" size={20} color="white" /></TouchableOpacity>
+            </View>
           </View>
 
           <View  style={{...styles.bg}}>
@@ -106,7 +133,7 @@ function salvarFoto() {
         <TextInput style={{...styles.inputIsolado}} placeholder={user?.instagram} onChangeText={instagram => setNovoInstagram(instagram)}/>
 
 
-        <Text style={{marginTop: 20}}>Objetivo</Text>
+        <Text style={{marginTop: 20}}>Especialidade</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
             value={especialidade}
@@ -115,7 +142,7 @@ function salvarFoto() {
           />
         </View>
 
-        <Text>Preparo físico</Text>
+        <Text>Faixa etária</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
             value={faixaEtaria}
@@ -124,7 +151,7 @@ function salvarFoto() {
           />
         </View>
 
-        <Text>Saúde</Text>
+        <Text>Foco</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
             value={foco}
@@ -133,75 +160,77 @@ function salvarFoto() {
           />
         </View>
 
-        <TouchableOpacity style={{...styles.btnCadastro}} onPress={salvarFoto}><Text>Salvar</Text></TouchableOpacity>
-        <TouchableOpacity onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity>
+        <TouchableOpacity style={{...styles.btnCadastro}} onPress={atualizaPerfil}><Text>Atualizar perfil</Text></TouchableOpacity>
+        <TouchableOpacity style={{...styles.btnSair}} onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity>
       </View>
   </View>
   </ScrollView>
     )
 }
 
-const styles = StyleSheet.create({
-  bg: {
-    backgroundColor: '#CC8400'
-  },
-  container: {
-    padding: 20,
-    flex: 1,
-    alignItems: 'center',
-  },
-  foto: {
-    alignItems: "center",
-  },
-  conjuntoInput: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  picker: {
-    width: 290, 
-    height: 30, 
-    borderWidth: 1,
-    borderColor: "gray",
-    marginRight: 10,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    color: "#000",
-    marginVertical: 10
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    backgroundColor: "#fff",
-    padding: 0,
-    width: 160,
-    paddingHorizontal: 10,
-    marginVertical: 20,
-    marginRight: 20
-  },
-  inputIsolado: {
-    borderWidth: 1,
-    borderColor: "gray",
-    backgroundColor: "#fff",
-    padding: 0,
-    width: 290,
-    paddingHorizontal: 10,
-    marginVertical: 20,
-    marginRight: 20
-  },
-  btnCadastro: {
-    backgroundColor: "blue",
-    padding: 10,
-    alignItems: "center",
-    marginVertical: 10
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-  });
+// const styles = StyleSheet.create({
+//   bg: {
+//     backgroundColor: '#CC8400'
+//   },
+//   container: {
+//     padding: 20,
+//     flex: 1,
+//     alignItems: 'center',
+//   },
+//   foto: {
+//     alignItems: "center",
+//   },
+//   conjuntoInput: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//   },
+//   picker: {
+//     width: 290, 
+//     height: 30, 
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     marginRight: 10,
+//     backgroundColor: "#fff",
+//     justifyContent: "center",
+//     color: "#000",
+//     marginVertical: 10
+//   },
+//   input: {
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     backgroundColor: "#fff",
+//     padding: 0,
+//     width: 160,
+//     paddingHorizontal: 10,
+//     marginVertical: 20,
+//     marginRight: 20
+//   },
+//   inputIsolado: {
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     backgroundColor: "#fff",
+//     padding: 0,
+//     width: 290,
+//     paddingHorizontal: 10,
+//     marginVertical: 20,
+//     marginRight: 20
+//   },
+//   btnCadastro: {
+//     backgroundColor: "blue",
+//     padding: 10,
+//     alignItems: "center",
+//     marginVertical: 10,
+//     width: 290,
+//     borderRadius: 4
+//   },
+//   title: {
+//     fontSize: 20,
+//     fontWeight: 'bold',
+//   },
+//   separator: {
+//     marginVertical: 30,
+//     height: 1,
+//     width: '80%',
+//   },
+//   });

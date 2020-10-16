@@ -1,19 +1,56 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, Linking } from 'react-native';
+import { SocialIcon  } from 'react-native-elements'
+
+import { styles } from '../styles';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 
 import RNPickerSelect from 'react-native-picker-select';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import api from '../../services/api';
+import { SERVER_URL } from '../../url'
 
 
-export default function CliPesquisa() {
+async function getPersonal() {
+  const response = await api.get(`${SERVER_URL}/api/personalModel/getAll`)
+
+  return response
+}
+
+//@ts-ignore
+export default function CliPesquisa({navigation}) {
 
   const [nome, setNome] = useState("");
   const [especialidade, setEspecialidade] = useState("Ginástica");
   const [faixaEtaria, setFaixaEtaria] = useState("Idosos");
   const [foco, setFoco] = useState("Fortalecimento");
+  const [dados, setDados] = useState<any>();
+
+  async function getPersonal() {
+    const response = await api.get(`${SERVER_URL}/api/personalModel/getAll`)
+    setDados(response.data);
+  }
+
+  async function getPersonalFilter() {
+    const response = await api.get(`${SERVER_URL}/api/personalModel/getFiltrado`, {
+      params: {
+        especialidade,
+        foco,
+        faixaEtaria,
+        nome
+      }
+    });
+
+    setDados(response.data);
+  }
+
+  useEffect(() => {
+    getPersonal();
+  }, [navigation])
+
 
   const especialidadeOpt = [
     {label: "Ginástica", value: "Ginástica"},
@@ -70,24 +107,28 @@ export default function CliPesquisa() {
                 />
               </View>
 
-              <TextInput style={{...styles.input}} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => console.log("chamou")}><Text>Pesquisar</Text></TouchableOpacity>
+              <TextInput style={{...styles.inputIsolado}} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonalFilter}><Text>Pesquisar</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonal}><Text>Ver todos</Text></TouchableOpacity>
             </View>
 
             <ScrollView>
               <View style={{...styles.bg, overflow: "scroll"}}>
-                {array.map(index => (
-                  <View key={index.value} style={{...styles.bg, ...styles.profs}}>
-                  <View style={{...styles.bg}}>
-                    <Text>foto</Text>
+                { dados && dados.map((value: any, index: any) => (
+                  <View key={index} style={{...styles.bg, ...styles.profs}}>
+                  <View style={{...styles.bg, maxWidth: 40}}>
+                    <Image source={{uri: value?.temFoto ? `${SERVER_URL}/${value?._id}.png?${Date.now()}` :  `${SERVER_URL}/default.png?${Date.now()}`}} style={{width: 40, height: 40, borderRadius: 400/ 2}}/>
                   </View>
                   <View style={{...styles.bg, ...styles.itensProf}}>
-                    <Text>nome do personal</Text>
-                    <Text>email do personal</Text>
-                    <Text>telefone do personal</Text>
+                    <Text>{value.nome}</Text>
+                    <Text>{value.email}</Text>
+                    <Text>{value.celular}</Text>
                   </View>
                   <View style={{...styles.bg}}>
-                    <Text>insta</Text>
+                  <SocialIcon
+                    type='instagram'
+                    onPress={() => Linking.openURL(`https://www.instagram.com/${value.instagram}/`)}
+                  />
                   </View>
                 </View>
                 ))}
@@ -98,66 +139,66 @@ export default function CliPesquisa() {
     )
 }
 
-const styles = StyleSheet.create({
-  bg: {
-    backgroundColor: '#CC8400'
-  },
-  container: {
-    padding: 20,
-    flex: 1,
-    alignItems: 'center',
-  },
-  foto: {
-    alignItems: "center",
-  },
-  profs: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 10
-  },
-  itensProf: {
-    marginHorizontal: 40,
-  },
-  conjuntoInput: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  picker: {
-    width: 290, 
-    height: 30, 
-    borderWidth: 1,
-    borderColor: "gray",
-    marginRight: 10,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    color: "#000",
-    marginVertical: 10
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    backgroundColor: "#fff",
-    padding: 0,
-    width: 290,
-    paddingHorizontal: 10,
-    marginVertical: 20,
-    marginRight: 20
-  },
-  btnCadastro: {
-    backgroundColor: "blue",
-    padding: 10,
-    alignItems: "center",
-    marginVertical: 10
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-  });
+// const styles = StyleSheet.create({
+//   bg: {
+//     backgroundColor: '#CC8400'
+//   },
+//   container: {
+//     padding: 20,
+//     flex: 1,
+//     alignItems: 'center',
+//   },
+//   foto: {
+//     alignItems: "center",
+//   },
+//   profs: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     marginVertical: 10
+//   },
+//   itensProf: {
+//     marginHorizontal: 40,
+//   },
+//   conjuntoInput: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//   },
+//   picker: {
+//     width: 290, 
+//     height: 30, 
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     marginRight: 10,
+//     backgroundColor: "#fff",
+//     justifyContent: "center",
+//     color: "#000",
+//     marginVertical: 10
+//   },
+//   input: {
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     backgroundColor: "#fff",
+//     padding: 0,
+//     width: 290,
+//     paddingHorizontal: 10,
+//     marginVertical: 20,
+//     marginRight: 20
+//   },
+//   btnCadastro: {
+//     backgroundColor: "blue",
+//     padding: 10,
+//     alignItems: "center",
+//     marginVertical: 10
+//   },
+//   title: {
+//     fontSize: 20,
+//     fontWeight: 'bold',
+//   },
+//   separator: {
+//     marginVertical: 30,
+//     height: 1,
+//     width: '80%',
+//   },
+//   });
