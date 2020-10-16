@@ -48,7 +48,7 @@ export default function CliRelation({navigation}) {
   }, [navigation]);
 
 
-    return personal && personal.lentgh > 0? (
+    return personal && personal._id ? (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg, ...styles.conjuntoInput, marginBottom: 50}}>
                 <View  style={{...styles.bg, ...styles.foto}}>

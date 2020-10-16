@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 
 import { styles } from '../screens/styles';
 
@@ -27,6 +27,7 @@ export default function Login({navigation}) {
     return (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
+              <Image source={require('../assets/images/logo.png')} style={{width: 300, height: 300, borderRadius: 400/ 2}}/>
               {!!error && <Text style={{...styles.error}}>{error}</Text>}
               <TextInput style={{...styles.inputIsolado}} placeholder="Email" onChangeText={email => setEmail(email)}/>
               <TextInput style={{...styles.inputIsolado}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>

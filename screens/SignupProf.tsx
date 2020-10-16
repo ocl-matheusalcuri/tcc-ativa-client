@@ -86,7 +86,6 @@ export default function SignupProf({navigation}) {
       <ScrollView>
             <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
-              <Text>signup cliente</Text>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Nascimento" onChangeText={nascimento => setNascimento(nascimento)}/>
