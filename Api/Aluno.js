@@ -33,11 +33,10 @@ route.get('/getById', async (req, res) => {
     const { userId } = req.query;
     await Aluno.findById(userId).then((response) => {
         if (response != null) {
-            const object = {...response, type: "aluno"}
-            return res.json(object);
+            return res.json(response);
         }
         else {
-            res.status(404).send("Aluno inexistente");
+            return res.json([]);
         }
     });
 });
@@ -77,6 +76,22 @@ route.put('/editarPerfil', async (req, res) => {
         }
     });
 });
+
+route.put('/atualizarStatus', async (req, res) => {
+    const { alunoId, peso, massaMuscular, imc } = req.body.body;
+
+    await Aluno.findByIdAndUpdate(alunoId, {$set: {
+        peso, 
+        massaMuscular, 
+        imc
+    }}).then(response => {
+        if(response != null) {
+            res.json(response)
+        } else {
+            res.json([]);
+        }
+    })
+})
 
 route.put('/incluirPersonal', async (req, res) => {
     const { alunoId, personalId } = req.body.body;

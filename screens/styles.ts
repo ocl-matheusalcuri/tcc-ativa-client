@@ -36,10 +36,13 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginVertical: 10
+        paddingVertical: 10
       },
       itensProf: {
         marginHorizontal: 40,
+      },
+      agendaCardBg: {
+        backgroundColor: "#593100"
       },
     conjuntoInput: {
       flexDirection: "row",
@@ -67,7 +70,8 @@ export const styles = StyleSheet.create({
       width: 160,
       paddingHorizontal: 10,
       marginVertical: 20,
-      marginRight: 20
+      marginRight: 20,
+      borderRadius: 5
     },
     inputIsolado: {
       borderWidth: 1,
@@ -78,7 +82,8 @@ export const styles = StyleSheet.create({
       width: 290,
       paddingHorizontal: 10,
       marginVertical: 20,
-      marginRight: 20
+      marginRight: 20,
+      borderRadius: 5
     },
     inputSemLargura: {
         borderWidth: 1,
@@ -87,7 +92,19 @@ export const styles = StyleSheet.create({
         padding: 0,
         paddingHorizontal: 10,
         marginVertical: 20,
-        marginRight: 20
+        marginRight: 20,
+        borderRadius: 5
+      },
+      inputSemAltura: {
+        borderWidth: 1,
+        borderColor: "gray",
+        backgroundColor: "#fff",
+        padding: 0,
+        height: 30,
+        paddingHorizontal: 10,
+        marginVertical: 5,
+        marginRight: 20,
+        borderRadius: 5
       },
       inputSignUp: {
         borderWidth: 1,
@@ -98,7 +115,8 @@ export const styles = StyleSheet.create({
               marginVertical: 20,
               height: 30,
               width: 130,
-              marginRight: 20
+              marginRight: 20,
+              borderRadius: 5
       },
       aparelhoText: {
         maxWidth: 180,

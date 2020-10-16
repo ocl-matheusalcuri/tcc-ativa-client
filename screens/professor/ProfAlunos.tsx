@@ -77,7 +77,7 @@ export default function ProfAlunos({navigation}) {
           
           {dados.map((value: any, index: any) => (
             <TouchableOpacity key={index} onPress={() => navigation.navigate("ProfAlunoDetalhadoScreen", {
-              aluno: value,
+              alunoId: value._id,
               temFoto: value.temFoto
             })}>
             <View key={index} style={{...styles.bg, ...styles.profs}}>

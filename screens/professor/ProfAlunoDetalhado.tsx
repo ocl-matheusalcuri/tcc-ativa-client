@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { ScrollView, StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
@@ -18,15 +18,29 @@ export default function ProfAlunoDetalhado({route, navigation}) {
 
   const { signOut, user, type } = useContext(AuthContext);
 
-  const { aluno, temFoto } = route.params;
-
-  const [foto, setFoto] = useState<any>(temFoto ? `${SERVER_URL}/${aluno._id}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`);
+  const { alunoId, temFoto } = route.params;
+ 
+  const [foto, setFoto] = useState<any>(temFoto ? `${SERVER_URL}/${alunoId}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`);
 
 const [nomeTreino, setNomeTreino] = useState("");
 const [aparelho, setAparelho] = useState("");
 const [serie, setSerie] = useState<number>();
 const [repeticao, setRepeticao] = useState<number>();
 const [treinos, setTreinos] = useState<any>();
+const [peso, setPeso] = useState<number>();
+const [massaMuscular, setMassaMuscular] = useState<number>();
+const [imc, setImc] = useState<string>();
+const [aluno, setAluno] = useState<any>();
+
+async function getAlunoInfo() {
+  await api.get(`${SERVER_URL}/api/alunoModel/getById`, {
+    params: {
+      userId: alunoId
+    }
+  }).then(response => {
+    setAluno(response.data);
+  })
+}
 
 // const test = [
 //   {
@@ -41,19 +55,16 @@ async function getTreinos() {
     params: {
       alunoId: aluno._id
     }
-  })
+  });
 
   setTreinos(response.data);
 }
-
 useEffect(() => {
-  getTreinos()
+  getAlunoInfo();
+  getTreinos();
 }, [navigation])
 
-const array = [{treinoId: '1', titulo: 'Treino A', descricaoTreino: [{nome: "Esteira", repeticao: 15, serie: 3}, {nome: "Esteira", repeticao: 15, serie: 3}, {nome: "Esteira", repeticao: 15, serie: 3}]},{treinoId: '2', titulo: 'Treino B', descricaoTreino: [{nome: "Esteira", repeticao: 15, serie: 3}, {nome: "Esteira", repeticao: 15, serie: 3}, {nome: "Esteira", repeticao: 15, serie: 3}]}, {treinoId: '3', titulo: 'Treino C', descricaoTreino: [{nome: "Esteira", repeticao: 15, serie: 3}, {nome: "Esteira", repeticao: 15, serie: 3}, {nome: "Esteira", repeticao: 15, serie: 3}]}]
-
 async function atualizaTreino(treinoId: any, aparelho: string, serie: number | undefined, repeticao: number | undefined) {
-
   await api.put(`${SERVER_URL}/api/treinoModel/editarTreino`, {
     body: {
       treinoId: treinoId, 
@@ -64,10 +75,24 @@ async function atualizaTreino(treinoId: any, aparelho: string, serie: number | u
   }).then(response => getTreinos())
 }
 
+async function atualizarAluno() {
+  await api.put(`${SERVER_URL}/api/alunoModel/atualizarStatus`, {
+    body: {
+      alunoId: alunoId,
+      peso,
+      massaMuscular,
+      imc
+    }
+  });
+  await getAlunoInfo();
+
+  Alert.alert("Informações atualizadas com sucesso!")
+}
+
 async function criarTreino() {
   const response = await api.post(`${SERVER_URL}/api/treinoModel/cadastrarTreino`, {
     body: {
-      alunoId: aluno._id, 
+      alunoId: alunoId, 
       personalId: user?._id, 
       nome: nomeTreino, 
       descricaoTreino: [{
@@ -81,7 +106,7 @@ async function criarTreino() {
 }
 
 
-    return (
+    return aluno ? (
       <>      
       <ScrollView>
           <View style={{...styles.container, ...styles.bg, minHeight: 732}}>
@@ -96,6 +121,16 @@ async function criarTreino() {
                     <Text style={{marginVertical: 20, ...styles.btnText}}>Preparo físico: {aluno.prepFisico}</Text>
                     <Text style={{...styles.btnText}}>Saúde: {aluno.saude}</Text>
                   </View>
+                </View>
+                
+                <View style={{...styles.bg, marginBottom: 30}}>
+                  <Text style={{...styles.btnText}}>Peso (em kg)</Text>
+                  <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.peso.toString()} onChangeText={peso => setPeso(parseInt(peso) || 0)}/>
+                  <Text style={{...styles.btnText}}>Massa muscular</Text>
+                  <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.massaMuscular.toString()} onChangeText={massa => setMassaMuscular(parseInt(massa) || 0)}/>
+                  <Text style={{...styles.btnText}}>IMC (e anotações)</Text>
+                  <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.imc} onChangeText={imc => setImc(imc)}/>
+                  <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50}} onPress={atualizarAluno}><Text style={{...styles.btnText}}>Atualizar informações</Text></TouchableOpacity>
                 </View>
 
                
@@ -155,7 +190,7 @@ async function criarTreino() {
           </View>
       </ScrollView>
       </>
-    )
+    ) : (<View/>)
 }
 
 // const styles = StyleSheet.create({

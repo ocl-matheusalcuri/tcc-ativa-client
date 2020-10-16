@@ -38,8 +38,16 @@ const aluno = new mongoose.Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Personal'
     },
-    temFoto: { type: Boolean, default: false }
-      
+    temFoto: { type: Boolean, default: false },
+    peso: {
+        type:Number, default: 0
+    },
+    massaMuscular: {
+        type:Number, default: 0
+    },  
+    imc: {
+        type:String, default: ""
+    },
 });
 
 module.exports = Aluno = mongoose.model('aluno',aluno);

@@ -55,35 +55,52 @@ export default function CliRelation({navigation}) {
                   <Image source={{uri: personal?.temFoto ? `${SERVER_URL}/${personal?._id}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`, cache:"reload"}} style={{width: 80, height: 80, borderRadius: 400/ 2}}/>
                 </View>
 
-                <View  style={{...styles.bg, marginLeft: 20}}>
-                  <Text>{personal.nome}</Text>
-                  <Text style={{marginVertical: 10}}>{personal.email}</Text>
-                  <Text>{personal.celular}</Text>
+                <View style={{...styles.bg, marginLeft: 20}}>
+                  <Text style={{...styles.btnText}}>{personal.nome}</Text>
+                  <Text style={{marginVertical: 10, ...styles.btnText}}>{personal.email}</Text>
+                  <Text style={{...styles.btnText}}>{personal.celular}</Text>
                 </View>
               </View>
 
+              <View style={{backgroundColor: "#5A6E03", marginBottom: 20, padding: 10, width: "70%"}}>
+              <View style={{backgroundColor: "#5A6E03", flexDirection: "row", justifyContent: "space-between"}}>
+                <Text style={{...styles.btnText}}>Peso:</Text>
+                <Text style={{...styles.btnText}}>{user?.peso}</Text>
+              </View>
+              <View style={{backgroundColor: "#5A6E03", flexDirection: "row", justifyContent: "space-between", marginVertical: 15}}>
+                <Text style={{...styles.btnText}}>Massa muscular:</Text>
+                <Text style={{...styles.btnText}}>{user?.massaMuscular}</Text>
+              </View>
+              <View style={{backgroundColor: "#5A6E03", flexDirection: "row", justifyContent: "space-between"}}>
+                <Text style={{...styles.btnText}}>IMC:</Text>
+                <Text style={{...styles.btnText}}>{user?.imc}</Text>
+              </View>
+              </View>
+
               <ScrollView>
-              <View style={{...styles.bg}}>
+              <View style={{...styles.agendaCardBg}}>
                 {treino?.length > 0 && treino.map((parent: any, index: any) => (
                   <View key={index} style={{...styles.bg}}>
-                  <Text style={{marginBottom: 15}}>{parent.nome}</Text>
-                  <View style={{...styles.bg, ...styles.profs}}>
-                    <Text>Aparelho</Text>
-                    <Text style={{marginHorizontal: 50}}>Série</Text>
-                    <Text>Repetições</Text>
+                  <View style={{...styles.agendaCardBg, padding: 10, borderTopRightRadius: 5, borderTopLeftRadius: 5}}>
+                    <Text style={{paddingBottom: 15, ...styles.btnText, fontWeight: "bold"}}>{parent.nome}</Text>
+                  </View>
+                  <View style={{backgroundColor: "#593100", ...styles.profs, padding: 10}}>
+                    <Text style={{...styles.btnText}}>Aparelho</Text>
+                    <Text style={{paddingHorizontal: 50, ...styles.btnText}}>Série</Text>
+                    <Text style={{...styles.btnText}}>Repetições</Text>
                   </View>
                   
-                    <View style={{...styles.bg, marginBottom: 50}}>
+                    <View style={{backgroundColor: "#593100", marginBottom: 50, padding: 10, borderBottomLeftRadius: 5, borderBottomRightRadius: 5}}>
                       {parent.descricaoTreino.map((value: any, index: any) => (
-                        <View key={index} style={{...styles.bg, ...styles.profs}}>
-                        <View style={{...styles.bg}}>
-                          <Text>{value.nome}</Text>
+                        <View key={index} style={{backgroundColor: "#593100", ...styles.profs}}>
+                        <View style={{backgroundColor: "#593100"}}>
+                          <Text style={{...styles.btnText}}>{value.nome}</Text>
                         </View>
-                        <View style={{...styles.bg}}>
-                          <Text>{value.serie}</Text>
+                        <View style={{backgroundColor: "#593100"}}>
+                          <Text style={{...styles.btnText}}>{value.serie}</Text>
                         </View>
-                        <View style={{...styles.bg}}>
-                          <Text>{value.repeticao}</Text>
+                        <View style={{backgroundColor: "#593100"}}>
+                          <Text style={{...styles.btnText}}>{value.repeticao}</Text>
                         </View>
                       </View>
                       ))}

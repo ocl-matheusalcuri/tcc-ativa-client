@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 import { styles } from '../screens/styles';
 
@@ -25,6 +25,7 @@ export default function Login({navigation}) {
     await signOut();
   }
     return (
+      <ScrollView>
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
               <Image source={require('../assets/images/logo.png')} style={{width: 300, height: 300, borderRadius: 400/ 2}}/>
@@ -39,6 +40,7 @@ export default function Login({navigation}) {
               {/* <TouchableOpacity onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity> */}
             </View>
         </View>
+      </ScrollView>
     )
 }
 
