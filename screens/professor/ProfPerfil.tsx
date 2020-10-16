@@ -5,7 +5,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
-import iconSet from '@expo/vector-icons/build/Fontisto';
 
 export default function ProfPerfil() {
     return (
@@ -47,7 +46,7 @@ export default function ProfPerfil() {
                 { label: 'Ganhar massa', value: 'Ganhar massa' },
                 { label: 'Físico', value: 'Físico' },]}/>
       </View>
-      <TouchableOpacity style={styles.botao}  /*onpress save*/><Text style={styles.textbt}>Salvar alterações</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.botao}  /*onpress save*/><Text style={styles.textbt}>Salvar Alterações</Text></TouchableOpacity>
     </View>
     )
 }
@@ -221,8 +220,8 @@ const styles = StyleSheet.create({
     marginBottom:-100
   },  
   botao2: {
-    width: 300,
-    height: 40,
+    width: 30,
+    height: 30,
     backgroundColor: '#FF8C00',
     marginTop: 110,
     borderRadius: 5,
