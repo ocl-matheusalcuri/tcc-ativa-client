@@ -5,12 +5,31 @@ import RNPickerSelect from 'react-native-picker-select';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { useState } from "react";
+        import { AuthContext } from '../contexts/auth';
 
 //@ts-ignore
 
 
 
 export default function SignupCli({ navigation }) {
+      const { signUp, user, type } = React.useContext(AuthContext);
+
+  const [aluno, setAluno] = useState<any>({ 
+    password: "12345", 
+    nome: "Aluno 1", 
+    celular: "(11) 11111-1111", 
+    email: "aluno1@hotmail.com", 
+    nascimento: "11/11/1111", 
+    hrAtiva: "Muita", 
+    saude: "Regular", 
+    prepFisico: "Sedentário", 
+    objetivo: "Emagrecer" 
+  });
+
+  async function handleSignUp() {
+    await signUp(aluno, "aluno");
+    navigation.navigate("Login");
+  }
   return (
     <View style={styles.container}>
       <Image source={require('../assets/logo.png')} style={styles.logo} />
@@ -60,6 +79,7 @@ export default function SignupCli({ navigation }) {
       <TouchableOpacity style={styles.botao2} onPress={() => navigation.navigate("Login")}><Text style={styles.textbt}>Voltar para Login</Text></TouchableOpacity>
     </View>
   )
+
 }
 
 const styles = StyleSheet.create({

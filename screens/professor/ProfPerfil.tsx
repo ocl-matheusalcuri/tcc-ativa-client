@@ -2,11 +2,21 @@ import * as React from 'react';
 import { StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
+
 import { Text, View } from '../../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
 
+import { AuthContext } from '../../contexts/auth';
+
+
 export default function ProfPerfil() {
+
+  const { signOut, user } = React.useContext(AuthContext);
+
+  async function handleSignOut() {
+    await signOut();
+  }
+
     return (
       <View style={styles.container}>
       <Text style={styles.texto}>Seu perfil $Nome</Text>

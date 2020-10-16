@@ -5,9 +5,32 @@ import RNPickerSelect from 'react-native-picker-select';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { useState } from "react";
+        import { AuthContext } from '../contexts/auth';
+
 
 //@ts-ignore
 export default function SignupProf({navigation}) {
+  const { signUp, user, type } = React.useContext(AuthContext);
+
+  const [prof, setProf] = useState<any>({ 
+    password: "12345", 
+    nome: "Professor 1", 
+    celular: "(00) 00000-0000", 
+    email: "professor1@hotmail.com", 
+    nascimento: "00/00/0000", 
+    instagram: "professor1", 
+    facebook: "profacessor1", 
+    cref: "1233456788", 
+    foco: "Fortalecimento", 
+    especializacao: "Natação", 
+    faixaEtaria: "Idosos"
+  });
+
+  async function handleSignUp() {
+    await signUp(prof, "personal");
+    navigation.navigate("Login");
+  }
+
     return (
       <View style={styles.container}>
       <Image source={require('../assets/logo.png')} style={styles.logo} />
@@ -50,6 +73,7 @@ export default function SignupProf({navigation}) {
       <TouchableOpacity style={styles.botao}  onPress={() => navigation.navigate("Login")}><Text style={styles.textbt}>Criar Conta</Text></TouchableOpacity>
       <TouchableOpacity style={styles.botao2} onPress={() => navigation.navigate("Login")}><Text style={styles.textbt}>Voltar para Login</Text></TouchableOpacity>
     </View>
+
     )
 }
 

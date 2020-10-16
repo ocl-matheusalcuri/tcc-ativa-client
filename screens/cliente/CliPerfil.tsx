@@ -1,18 +1,62 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, Image, TouchableOpacity, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
+
+import AsyncStorage from '@react-native-community/async-storage';
 import { Text, View } from '../../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
 import iconSet from '@expo/vector-icons/build/Fontisto';
 
 
-export default function CliPerfil({email}: any) {
+import { AuthContext } from '../../contexts/auth';
+
+import * as ImagePicker from 'expo-image-picker';
+import { useEffect, useState } from 'react';
+
+import api from '../../services/api';
+
+//@ts-ignore
+export default function CliPerfil({navigation}) {
+  const { signOut, user, type } = React.useContext(AuthContext);
+
+  const [foto, setFoto] = useState<any>(user?.temFoto ? `http://192.168.0.45:3001/${user?.id}.png?${Date.now()}` : `http://192.168.0.45:3001/default.png?${Date.now()}`);
+  const [imgBase64, setImgBase64] = useState<any>();
+
+  async function handleSignOut() {
+    await signOut();
+  }
+
+async function handleProfileImage() {
+  let image = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    quality: 1,
+    base64: true,
+  });
+
+  //@ts-ignore
+    Platform.OS !== 'web' ? setImgBase64(image.base64) : setImgBase64(image.uri.split(',')[1]);
+}
+
+function salvarFoto() {
+    api.post('http://192.168.0.45:3001/upload', {
+      body: {
+        //@ts-ignore
+        imgsource: imgBase64,
+        userId: user?.id,
+        type
+      },
+    }).then(response => {
+      setFoto(response.data.url);
+    }) 
+}
+
+
+
     return (
       <View style={styles.container}>
       <Text style={styles.texto}>Seu perfil $Nome</Text>
-      <Image style={styles.fotoperf} source={require('C:/Users/pietr/Desktop/TCC/tcc3/assets/images/perfil.png')}></Image>
+      <Image style={styles.fotoperf} source={{uri: foto, cache:"reload"}} style={{width: 50, height: 50}}></Image>
       <TouchableOpacity style={styles.alterarfoto} /*onpress save*/><Text style={styles.textbt}>Alterar Foto</Text></TouchableOpacity>
       <TextInput style={styles.input1} placeholder="Nome" />
       <TextInput style={styles.input2} placeholder="Nascimento" />
@@ -56,6 +100,7 @@ export default function CliPerfil({email}: any) {
       </View>
       <TouchableOpacity style={styles.botao}  /*onpress save*/><Text style={styles.textbt}>Salvar alterações</Text></TouchableOpacity>
     </View>
+
     )
 }
 

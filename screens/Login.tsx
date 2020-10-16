@@ -4,10 +4,20 @@ import { StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
+        
+import { AuthContext } from '../contexts/auth';
 
 
 //@ts-ignore
 export default function Login({ navigation }) {
+    
+     async function handleSignIn() {
+    await signIn("eliasjunior6@teste.com", "12345");
+  };
+
+  async function handleSignOut() {
+    await signOut();
+  }
   return (
     <View style={styles.container}>
       <View style={styles.container}>
