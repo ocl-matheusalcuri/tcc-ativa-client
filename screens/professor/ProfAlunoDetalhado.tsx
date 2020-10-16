@@ -53,7 +53,7 @@ async function getAlunoInfo() {
 async function getTreinos() {
   const response = await api.get(`${SERVER_URL}/api/treinoModel/getTreinosByAlunoId`, {
     params: {
-      alunoId: aluno._id
+      alunoId: alunoId
     }
   });
 
@@ -72,7 +72,7 @@ async function atualizaTreino(treinoId: any, aparelho: string, serie: number | u
       serie: serie,
       repeticao: repeticao
     }
-  }).then(response => getTreinos())
+  }).then(response => getTreinos());
 }
 
 async function atualizarAluno() {
@@ -102,7 +102,7 @@ async function criarTreino() {
       }]
     }
   })
-  getTreinos()
+  getTreinos();
 }
 
 

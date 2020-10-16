@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
       paddingVertical: 20,
       flex: 1,
       alignItems: 'center',
-      minHeight: 731
+      minHeight: 780
     },
     error: {
       backgroundColor: "#ff9191",

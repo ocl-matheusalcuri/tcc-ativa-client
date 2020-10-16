@@ -10,7 +10,7 @@ route.get('/getAll', async (req, res) => {
             res.json(response);
         }
         else {
-            res.status(404).send("Não existem personais cadastrados no banco");
+            res.json([]);
         }
     });
 });
@@ -18,12 +18,12 @@ route.get('/getAll', async (req, res) => {
 route.get('/getFiltrado', async (req, res) => {
     const { especialidade, foco, faixaEtaria, nome } = req.query;
     if(nome) {
-        await Personal.find({especializacao: especialidade, foco: foco, faixaEtaria: faixaEtaria, nome: { "$regex": nome, "$options": "i"}}).then((response) => {
+        await Personal.find({nome: { "$regex": nome, "$options": "i"}}).then((response) => {
             if (response.length != 0) {
                 res.json(response);
             }
             else {
-                res.status(404).send("Não existem personais cadastrados no banco");
+                res.json([]);
             }
         });
     } else {
@@ -32,7 +32,7 @@ route.get('/getFiltrado', async (req, res) => {
                 res.json(response11);
             }
             else {
-                res.status(404).send("Não existem personais cadastrados no banco");
+                res.json([]);
             }
         });
     }
