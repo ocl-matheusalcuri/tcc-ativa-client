@@ -22,7 +22,10 @@ route.post('/login', async (req, res) => {
                 token: jwt.sign(aluno.toJSON(), 'segredo')
             })
         } else {
-            return res.send('Deu ruim!');
+            return res.json({
+                error: true,
+                mensagem: "Senha incorreta!"
+            });
         }
     } else if(personal) {
         const match = await bcrypt.compare(password, personal.password);
@@ -35,7 +38,10 @@ route.post('/login', async (req, res) => {
                 token: jwt.sign(personal.toJSON(), 'segredo')
             })
         } else {
-            return res.send('Deu ruim!');
+            return res.json({
+                error: true,
+                mensagem: "Senha incorreta!"
+            });
         }
     }
 })

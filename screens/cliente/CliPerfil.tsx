@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, Image, Platform } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, Image, Platform, ScrollView } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import { Text, View } from '../../components/Themed';
@@ -115,6 +115,7 @@ function atualizaPerfil() {
 
 
     return (
+      <ScrollView>
         <View style={{...styles.container, ...styles.bg}}>
             <View style={styles.bg}>
               <View style={{...styles.bg, ...styles.conjuntoInput}}>
@@ -133,7 +134,7 @@ function atualizaPerfil() {
                 </View>
               </View>
 
-              <Text style={{marginTop: 40}}>Objetivo</Text>
+              <Text style={{...styles.btnText, marginTop: 40}}>Objetivo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={novoObjetivo}
@@ -142,7 +143,7 @@ function atualizaPerfil() {
                 />
               </View>
 
-              <Text>Preparo físico</Text>
+              <Text style={{...styles.btnText}}>Preparo físico</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={novoPrepFisico}
@@ -151,7 +152,7 @@ function atualizaPerfil() {
                 />
               </View>
 
-              <Text>Saúde</Text>
+              <Text style={{...styles.btnText}}>Saúde</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={novoSaude}
@@ -160,7 +161,7 @@ function atualizaPerfil() {
                 />
               </View>
 
-              <Text>Horas ativas por semana</Text>
+              <Text style={{...styles.btnText}}>Horas ativas por semana</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={novoHrAtiva}
@@ -168,11 +169,12 @@ function atualizaPerfil() {
                   items={hrAtivaOpt}
                 />
               </View>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={atualizaPerfil}><Text>Salvar informações do perfil</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={salvarFoto}><Text>Salvar foto</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnSair}} onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={atualizaPerfil}><Text style={{...styles.btnText}}>Salvar informações do perfil</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={salvarFoto}><Text style={{...styles.btnText}}>Salvar foto</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnSair}} onPress={handleSignOut}><Text style={{...styles.btnText}}>Sair</Text></TouchableOpacity>
             </View>
         </View>
+        </ScrollView>
     )
 }
 

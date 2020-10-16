@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 
 import { styles } from '../screens/styles';
 
@@ -83,6 +83,7 @@ export default function SignupProf({navigation}) {
   }
 
     return (
+      <ScrollView>
             <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
               <Text>signup cliente</Text>
@@ -92,16 +93,16 @@ export default function SignupProf({navigation}) {
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-                <TextInput style={{...styles.inputSignUp}} placeholder="Celular" onChangeText={celular => setCelular(celular)}/>
+                <TextInput style={{...styles.inputSignUp}} keyboardType="number-pad" placeholder="Celular" onChangeText={celular => setCelular(celular)}/>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
               </View>
               <TextInput style={{...styles.inputSignUp, width: 300}} placeholder="CREF" onChangeText={cref => setCREF(cref)}/>
-              <TextInput style={{...styles.inputSignUp, width: 300}} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
+              <TextInput style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
               
-              <Text>Especialidade</Text>
+              <Text style={{...styles.btnText}}>Especialidade</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={especialidade}
@@ -110,7 +111,7 @@ export default function SignupProf({navigation}) {
                 />
               </View>
 
-              <Text>Faixa etário alvo</Text>
+              <Text style={{...styles.btnText}}>Faixa etário alvo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={faixaEtaria}
@@ -119,7 +120,7 @@ export default function SignupProf({navigation}) {
                 />
               </View>
 
-              <Text>Foco</Text>
+              <Text style={{...styles.btnText}}>Foco</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={foco}
@@ -127,10 +128,11 @@ export default function SignupProf({navigation}) {
                   items={focoOpt}
                 />
               </View>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("Login")}><Text>Voltar ao login</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={handleSignUp}><Text>Criar conta</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("Login")}><Text style={{...styles.btnText}}>Voltar ao login</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={handleSignUp}><Text style={{...styles.btnText}}>Criar conta</Text></TouchableOpacity>
             </View>
             </View>
+          </ScrollView>
     )
 }
 

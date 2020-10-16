@@ -61,14 +61,14 @@ export default function ProfAlunos({navigation}) {
       <View style={{...styles.bg}}>
 
         <TextInput style={{...styles.inputIsolado}} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
-        <TouchableOpacity style={{...styles.btnCadastro}} onPress={getAlunosPorTexto}><Text>Pesquisar</Text></TouchableOpacity>
-        <TouchableOpacity style={{...styles.btnCadastro}} onPress={getAlunos}><Text>Ver todos</Text></TouchableOpacity>
+        <TouchableOpacity style={{...styles.btnCadastro}} onPress={getAlunosPorTexto}><Text style={{...styles.btnText}}>Pesquisar</Text></TouchableOpacity>
+        <TouchableOpacity style={{...styles.btnCadastro}} onPress={getAlunos}><Text style={{...styles.btnText}}>Ver todos</Text></TouchableOpacity>
 
       </View>
 
       <View style={{...styles.bg}}>
           <TextInput style={{...styles.inputIsolado}} placeholder="Adicionar novo cliente" onChangeText={id => setClienteId(id)}/>
-          <TouchableOpacity style={{...styles.btnCadastro}} onPress={addCliente}><Text>Adicionar</Text></TouchableOpacity>
+          <TouchableOpacity style={{...styles.btnCadastro}} onPress={addCliente}><Text style={{...styles.btnText}}>Adicionar</Text></TouchableOpacity>
         </View>
 
      { dados?.length > 0 && 
@@ -77,16 +77,16 @@ export default function ProfAlunos({navigation}) {
           
           {dados.map((value: any, index: any) => (
             <TouchableOpacity key={index} onPress={() => navigation.navigate("ProfAlunoDetalhadoScreen", {
-              aluno: value._id,
+              aluno: value,
               temFoto: value.temFoto
             })}>
             <View key={index} style={{...styles.bg, ...styles.profs}}>
             <View style={{...styles.bg}}>
-            <Image source={{uri: value?.temFoto ? `${SERVER_URL}/${value?._id}.png?${Date.now()}` :  `${SERVER_URL}/default.png?${Date.now()}`}} style={{width: 40, height: 40}}/>
+            <Image source={{uri: value?.temFoto ? `${SERVER_URL}/${value?._id}.png?${Date.now()}` :  `${SERVER_URL}/default.png?${Date.now()}`}} style={{width: 40, height: 40, borderRadius: 400/ 2}}/>
             </View>
             <View style={{...styles.bg, ...styles.itensProf}}>
-              <Text>{value.nome}</Text>
-              <Text>{value.celular}</Text>
+              <Text style={{...styles.btnText}}>{value.nome}</Text>
+              <Text style={{...styles.btnText}}>{value.celular}</Text>
             </View>
           </View>
           </TouchableOpacity>

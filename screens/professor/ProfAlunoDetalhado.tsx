@@ -18,10 +18,9 @@ export default function ProfAlunoDetalhado({route, navigation}) {
 
   const { signOut, user, type } = useContext(AuthContext);
 
-    const { aluno, temFoto } = route.params;
+  const { aluno, temFoto } = route.params;
 
-
-  const [foto, setFoto] = useState<any>(temFoto ? `${SERVER_URL}/${aluno}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`);
+  const [foto, setFoto] = useState<any>(temFoto ? `${SERVER_URL}/${aluno._id}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`);
 
 const [nomeTreino, setNomeTreino] = useState("");
 const [aparelho, setAparelho] = useState("");
@@ -40,7 +39,7 @@ const [treinos, setTreinos] = useState<any>();
 async function getTreinos() {
   const response = await api.get(`${SERVER_URL}/api/treinoModel/getTreinosByAlunoId`, {
     params: {
-      alunoId: aluno
+      alunoId: aluno._id
     }
   })
 
@@ -68,7 +67,7 @@ async function atualizaTreino(treinoId: any, aparelho: string, serie: number | u
 async function criarTreino() {
   const response = await api.post(`${SERVER_URL}/api/treinoModel/cadastrarTreino`, {
     body: {
-      alunoId: aluno, 
+      alunoId: aluno._id, 
       personalId: user?._id, 
       nome: nomeTreino, 
       descricaoTreino: [{
@@ -89,13 +88,13 @@ async function criarTreino() {
               <View style={styles.bg}>
                 <View style={{...styles.bg, ...styles.conjuntoInput, marginBottom: 40}}>
                   <View  style={{...styles.bg, ...styles.foto}}>
-                    <Image source={{uri: foto, cache:"reload"}} style={{width: 100, height: 100}}/>
+                    <Image source={{uri: foto, cache:"reload"}} style={{width: 100, height: 100, borderRadius: 400/ 2}}/>
                   </View>
 
                   <View  style={{...styles.bg, marginLeft: 20}}>
-                    <Text>Objetivo: Emagrecer</Text>
-                    <Text style={{marginVertical: 20}}>Preparo físico: Sedentário</Text>
-                    <Text>Saúde: Razovável</Text>
+                    <Text style={{...styles.btnText}}>Objetivo: {aluno.objetivo}</Text>
+                    <Text style={{marginVertical: 20, ...styles.btnText}}>Preparo físico: {aluno.prepFisico}</Text>
+                    <Text style={{...styles.btnText}}>Saúde: {aluno.saude}</Text>
                   </View>
                 </View>
 
@@ -104,26 +103,26 @@ async function criarTreino() {
                 {treinos?.map((parent: any, index: any) => (
                   <View key={index} style={{...styles.bg}}>
                     <View style={{...styles.bg, ...styles.profs}}>
-                      <Text style={{marginBottom: 15}}>{parent.nome}</Text>
+                      <Text style={{marginBottom: 15, ...styles.btnText}}>{parent.nome}</Text>
                     </View>
 
                     <View style={{...styles.bg, ...styles.profs}}>
-                      <Text>Aparelho</Text>
-                      <Text style={{marginLeft: 50}}>Série</Text>
-                      <Text>Repetições</Text>
+                      <Text style={{...styles.btnText}}>Aparelho</Text>
+                      <Text style={{marginLeft: 50, ...styles.btnText}}>Série</Text>
+                      <Text style={{...styles.btnText}}>Repetições</Text>
                     </View>
                   
                     <View style={{...styles.bg}}>
                       {parent.descricaoTreino.map((value: any ,index: any) => (
                         <View key={index} style={{...styles.bg, ...styles.profs}}>
                         <View style={{...styles.bg}}>
-                          <Text numberOfLines={1} style={{...styles.aparelhoText}}>{value.nome}</Text>
+                          <Text numberOfLines={1} style={{...styles.aparelhoText, ...styles.btnText}}>{value.nome}</Text>
                         </View>
                         <View style={{...styles.bg}}>
-                          <Text numberOfLines={1} style={{paddingRight: 100}}>{value.serie}</Text>
+                          <Text numberOfLines={1} style={{paddingRight: 100, ...styles.btnText}}>{value.serie}</Text>
                         </View>
                         <View style={{...styles.bg}}>
-                          <Text numberOfLines={1}>{value.repeticao}</Text>
+                          <Text numberOfLines={1} style={{...styles.btnText}}>{value.repeticao}</Text>
                         </View>
                       </View>
                       ))}
@@ -134,7 +133,7 @@ async function criarTreino() {
                       <TextInput style={{...styles.inputSemLargura}} placeholder="Série" onChangeText={serie => setSerie(parseInt(serie))}/>
                       <TextInput style={{...styles.inputSemLargura}} placeholder="Repetições" onChangeText={repeticao => setRepeticao(parseInt(repeticao))}/>
                     </View>  
-                    <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50}} onPress={() => atualizaTreino(parent._id, aparelho, serie, repeticao)}><Text>Add aparelho</Text></TouchableOpacity>
+                    <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50}} onPress={() => atualizaTreino(parent._id, aparelho, serie, repeticao)}><Text style={{...styles.btnText}}>Add aparelho</Text></TouchableOpacity>
 
                   </View>
                 
@@ -142,13 +141,13 @@ async function criarTreino() {
                 
                 </View>
                 
-                <Text>Adicionar novo treino</Text>
+                <Text style={{...styles.btnText}}>Adicionar novo treino</Text>
                 <TextInput style={{...styles.inputIsolado}} placeholder="Título do novo treino" onChangeText={nome => setNomeTreino(nome)}/>
                 <TextInput style={{...styles.inputIsolado}} placeholder="Coloque no mínimo um aparelho" onChangeText={aparelho => setAparelho(aparelho)}/>
                 <TextInput style={{...styles.inputIsolado}} placeholder="Repetições" onChangeText={repeticao => setRepeticao(parseInt(repeticao) || 0)}/>
                 <TextInput style={{...styles.inputIsolado}} placeholder="Séries" onChangeText={serie => setSerie(parseInt(serie) || 0)}/>
                 
-                <TouchableOpacity style={{...styles.btnCadastro}} onPress={criarTreino}><Text>Adicionar</Text></TouchableOpacity>
+                <TouchableOpacity style={{...styles.btnCadastro}} onPress={criarTreino}><Text style={{...styles.btnText}}>Adicionar</Text></TouchableOpacity>
                 
 
               </View>

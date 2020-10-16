@@ -11,6 +11,7 @@ import { styles } from '../styles';
 
 
 import { SERVER_URL } from '../../url'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 //@ts-ignore
 export default function CliRelation({navigation}) {
@@ -47,7 +48,7 @@ export default function CliRelation({navigation}) {
   }, [navigation]);
 
 
-    return personal ? (
+    return personal && personal.lentgh > 0? (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg, ...styles.conjuntoInput, marginBottom: 50}}>
                 <View  style={{...styles.bg, ...styles.foto}}>
@@ -94,7 +95,13 @@ export default function CliRelation({navigation}) {
               </View>
               </ScrollView>
         </View>
-    ) : (<View/>)
+    ) : (
+    <View style={{...styles.container, ...styles.bg, justifyContent: "center"}}>
+      <Text style={{...styles.btnText}}>Você não está associado(a) à nenhum personal.</Text>
+      <Text style={{...styles.btnText}}>Encontre algum que lhe agrade cliando no botão abaixo</Text>
+      <TouchableOpacity style={{...styles.btnCadastro, marginTop: 50}} onPress={() => navigation.navigate("Pesquisa")}><Text style={{...styles.btnText}}>Pesquisar personal</Text></TouchableOpacity>
+    </View>
+      )
 }
 
 // const styles = StyleSheet.create({

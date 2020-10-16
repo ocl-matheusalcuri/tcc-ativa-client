@@ -94,11 +94,11 @@ export default function SignupCli({navigation}) {
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-                <TextInput style={{...styles.inputSignUp}} placeholder="Celular" onChangeText={celular => setCelular(celular)}/>
+                <TextInput style={{...styles.inputSignUp}} keyboardType="number-pad" placeholder="Celular" onChangeText={celular => setCelular(celular)}/>
               </View>
-              <TextInput style={{...styles.inputSignUp, width: 300}} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
+              <TextInput style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
               
-              <Text>Objetivo</Text>
+              <Text style={{...styles.btnText}}>Objetivo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={objetivo}
@@ -107,7 +107,7 @@ export default function SignupCli({navigation}) {
                 />
               </View>
 
-              <Text>Preparo físico</Text>
+              <Text style={{...styles.btnText}}>Preparo físico</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={prepFisico}
@@ -116,7 +116,7 @@ export default function SignupCli({navigation}) {
                 />
               </View>
 
-              <Text>Saúde</Text>
+              <Text style={{...styles.btnText}}>Saúde</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={saude}
@@ -125,7 +125,7 @@ export default function SignupCli({navigation}) {
                 />
               </View>
 
-              <Text>Horas ativas por semana</Text>
+              <Text style={{...styles.btnText}}>Horas ativas por semana</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={hrAtiva}
@@ -133,8 +133,8 @@ export default function SignupCli({navigation}) {
                   items={hrAtivaOpt}
                 />
               </View>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("Login")}><Text>Voltar ao login</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={handleSignUp}><Text>Criar conta</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("Login")}><Text style={{...styles.btnText}}>Voltar ao login</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={handleSignUp}><Text style={{...styles.btnText}}>Criar conta</Text></TouchableOpacity>
             </View>
         </View>
     )

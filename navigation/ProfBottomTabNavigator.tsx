@@ -100,7 +100,7 @@ function ProfAlunosNavigator() {
     <ProfAlunosStack.Screen
         name="ProfAlunoDetalhadoScreen"
         component={ProfAlunoDetalhado}
-        options={{ headerTitle: 'Aluno Detalhado', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
+        options={{ headerTitle: 'Detalhado', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
       /> 
     </ProfAlunosStack.Navigator>
   );

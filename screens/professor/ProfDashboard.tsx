@@ -13,6 +13,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import api from '../../services/api';
 import { SERVER_URL } from '../../url';
+import Icon from 'react-native-vector-icons/MaterialIcons'
+Icon.loadFont();
 
 
 function compare(a: any, b: any, field: "data" | "hora") {
@@ -53,6 +55,14 @@ export default function ProfDashboard({navigation}) {
     getPersonalFilter();
   }
 
+  async function deletarCompromisso(agendaId: string) {
+    await api.delete(`${SERVER_URL}/api/agendaModel/deletarAgenda`, {
+      params: {
+        agendaId: agendaId
+      }
+    });
+    getPersonalFilter();
+  }
 
   useEffect(() => {
     getPersonalFilter();
@@ -88,11 +98,11 @@ export default function ProfDashboard({navigation}) {
         <View style={{...styles.container, ...styles.bg}}>
           <View style={{...styles.bg, marginBottom: 40}}>
             <TextInput style={{...styles.inputIsolado}} placeholder="Título do evento" onChangeText={titulo => setTitulo(titulo)}/>
-            <Text>Dia selecionado: {data}</Text>
-            <TouchableOpacity style={{...styles.btnCadastro}} onPress={showDatepicker}><Text>Selecione o dia</Text></TouchableOpacity>
-            <Text>Horário selecionado: {hora}</Text>
-            <TouchableOpacity style={{...styles.btnCadastro}} onPress={showTimepicker}><Text>Seleciona a hora</Text></TouchableOpacity>
-            <TouchableOpacity style={{...styles.btnCadastro}} onPress={salvarCompromisso}><Text>Salvar</Text></TouchableOpacity>
+            <Text style={{...styles.btnText}}>Dia selecionado: {data}</Text>
+            <TouchableOpacity style={{...styles.btnCadastro}} onPress={showDatepicker}><Text style={{...styles.btnText}}>Selecione o dia</Text></TouchableOpacity>
+            <Text style={{...styles.btnText}}>Horário selecionado: {hora}</Text>
+            <TouchableOpacity style={{...styles.btnCadastro}} onPress={showTimepicker}><Text style={{...styles.btnText}}>Seleciona a hora</Text></TouchableOpacity>
+            <TouchableOpacity style={{...styles.btnCadastro}} onPress={salvarCompromisso}><Text style={{...styles.btnText}}>Salvar</Text></TouchableOpacity>
 
             <View style={{...styles.bg}}>
             {show && <DateTimePicker
@@ -108,9 +118,10 @@ export default function ProfDashboard({navigation}) {
             {agenda && <View style={{...styles.bg}}>
               
                 {agenda.map((value: any, index: any) => (
-                  <View key={index} style={{...styles.bg, marginBottom: 20}}>
-                    <Text>{value.nome}</Text>
-                    <Text>{value.data} às {value.hora}</Text>
+                  <View key={index} style={{...styles.bg, ...styles.agendaBox}}>
+                    <TouchableOpacity style={{position: "absolute", left: 10, top: "30%"}} onPress={() => deletarCompromisso(value?._id)}><Icon name="close" size={20} color="#E32C22" /></TouchableOpacity>
+                    <Text style={{...styles.btnText}}>{value.nome}</Text>
+                    <Text style={{...styles.btnText}}>{value.data} às {value.hora}</Text>
                   </View>
                 ))}
               

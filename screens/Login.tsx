@@ -13,9 +13,12 @@ export default function Login({navigation}) {
   const { signed, signIn, user, signOut } = React.useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
 //"aluno1@hotmail.com", "12345"
   async function handleSignIn() {
-    await signIn(email, senha);
+    setError("")
+   const login = await signIn(email, senha);
+   if(login) setError(login);
   };
 
   async function handleSignOut() {
@@ -24,14 +27,14 @@ export default function Login({navigation}) {
     return (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
-              <Text>login screen</Text>
+              {!!error && <Text style={{...styles.error}}>{error}</Text>}
               <TextInput style={{...styles.inputIsolado}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-              <TextInput style={{...styles.inputIsolado}} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
+              <TextInput style={{...styles.inputIsolado}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
               <TextInput/>
-              <TouchableOpacity style={{...styles.btnEntrar}} onPress={handleSignIn}><Text>Entrar</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnEntrar}} onPress={handleSignIn}><Text style={{...styles.btnText}}>Entrar</Text></TouchableOpacity>
               <Text style={{...styles.texto}}>OU</Text>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("SignupCli")}><Text>Criar conta como Aluno</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("SignupProf")}><Text>Criar conta como Professor</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("SignupCli")}><Text style={{...styles.btnText}}>Criar conta como Aluno</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("SignupProf")}><Text style={{...styles.btnText}}>Criar conta como Professor</Text></TouchableOpacity>
               {/* <TouchableOpacity onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity> */}
             </View>
         </View>

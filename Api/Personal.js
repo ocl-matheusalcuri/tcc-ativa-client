@@ -46,7 +46,7 @@ route.get('/getById', async (req, res) => {
             return res.json(response);
         }
         else {
-            res.status(404).send("Personal inexistente");
+            return res.json([]);
         }
     });
 });

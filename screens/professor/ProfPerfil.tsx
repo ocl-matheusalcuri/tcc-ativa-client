@@ -133,7 +133,7 @@ function atualizaPerfil() {
         <TextInput style={{...styles.inputIsolado}} placeholder={user?.instagram} onChangeText={instagram => setNovoInstagram(instagram)}/>
 
 
-        <Text style={{marginTop: 20}}>Especialidade</Text>
+        <Text style={{marginTop: 20, ...styles.btnText}}>Especialidade</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
             value={especialidade}
@@ -142,7 +142,7 @@ function atualizaPerfil() {
           />
         </View>
 
-        <Text>Faixa etária</Text>
+        <Text style={{...styles.btnText}}>Faixa etária</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
             value={faixaEtaria}
@@ -151,7 +151,7 @@ function atualizaPerfil() {
           />
         </View>
 
-        <Text>Foco</Text>
+        <Text style={{...styles.btnText}}>Foco</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
             value={foco}
@@ -160,8 +160,8 @@ function atualizaPerfil() {
           />
         </View>
 
-        <TouchableOpacity style={{...styles.btnCadastro}} onPress={atualizaPerfil}><Text>Atualizar perfil</Text></TouchableOpacity>
-        <TouchableOpacity style={{...styles.btnSair}} onPress={handleSignOut}><Text>Sair</Text></TouchableOpacity>
+        <TouchableOpacity style={{...styles.btnCadastro}} onPress={atualizaPerfil}><Text style={{...styles.btnText}}>Atualizar perfil</Text></TouchableOpacity>
+        <TouchableOpacity style={{...styles.btnSair}} onPress={handleSignOut}><Text style={{...styles.btnText}}>Sair</Text></TouchableOpacity>
       </View>
   </View>
   </ScrollView>

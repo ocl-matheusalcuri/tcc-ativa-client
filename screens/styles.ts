@@ -10,6 +10,24 @@ export const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
     },
+    error: {
+      backgroundColor: "#ff9191",
+      color: "#870000",
+      borderWidth: 1,
+      borderColor: "#ff0000",
+      borderRadius: 4,
+      textAlign: "center",
+      marginBottom: 10,
+      paddingVertical: 5
+    },
+    agendaBox: {
+      marginBottom: 20, 
+      paddingBottom: 5,
+      width: 300, 
+      alignItems: "center",
+      borderBottomWidth: 1,
+      borderBottomColor: "gray"
+    },
     foto: {
       alignItems: "center",
     },
@@ -33,6 +51,7 @@ export const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: "gray",
       marginRight: 10,
+      paddingHorizontal: 5,
       backgroundColor: "#fff",
       justifyContent: "center",
       color: "#000",
@@ -43,6 +62,7 @@ export const styles = StyleSheet.create({
       borderColor: "gray",
       backgroundColor: "#fff",
       padding: 0,
+      height: 30,
       width: 160,
       paddingHorizontal: 10,
       marginVertical: 20,
@@ -53,6 +73,7 @@ export const styles = StyleSheet.create({
       borderColor: "gray",
       backgroundColor: "#fff",
       padding: 0,
+      height: 30,
       width: 290,
       paddingHorizontal: 10,
       marginVertical: 20,
@@ -74,6 +95,7 @@ export const styles = StyleSheet.create({
               padding: 0,
               paddingHorizontal: 10,
               marginVertical: 20,
+              height: 30,
               width: 130,
               marginRight: 20
       },
@@ -84,7 +106,8 @@ export const styles = StyleSheet.create({
           texto: {
               fontSize: 20,
               textAlign: "center",
-              paddingRight: 20
+              paddingRight: 20,
+              color: "#FFF"
             },
           btnEntrar: {
       backgroundColor: "green",
@@ -92,6 +115,9 @@ export const styles = StyleSheet.create({
       alignItems: "center",
       marginVertical: 10,
       width: 290
+    },
+    btnText: {
+      color: "#FFF",
     },
     btnCadastro: {
       backgroundColor: "#1B82B3",

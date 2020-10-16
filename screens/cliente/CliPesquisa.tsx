@@ -80,7 +80,7 @@ export default function CliPesquisa({navigation}) {
     return (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
-            <Text>Especialidade</Text>
+            <Text style={{...styles.btnText}}>Especialidade</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={especialidade}
@@ -89,7 +89,7 @@ export default function CliPesquisa({navigation}) {
                 />
               </View>
 
-              <Text>Faixa etário alvo</Text>
+              <Text style={{...styles.btnText}}>Faixa etário alvo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={faixaEtaria}
@@ -98,7 +98,7 @@ export default function CliPesquisa({navigation}) {
                 />
               </View>
 
-              <Text>Foco</Text>
+              <Text style={{...styles.btnText}}>Foco</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
                   value={foco}
@@ -108,8 +108,8 @@ export default function CliPesquisa({navigation}) {
               </View>
 
               <TextInput style={{...styles.inputIsolado}} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonalFilter}><Text>Pesquisar</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonal}><Text>Ver todos</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonalFilter}><Text style={{...styles.btnText}}>Pesquisar</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonal}><Text style={{...styles.btnText}}>Ver todos</Text></TouchableOpacity>
             </View>
 
             <ScrollView>
@@ -120,9 +120,9 @@ export default function CliPesquisa({navigation}) {
                     <Image source={{uri: value?.temFoto ? `${SERVER_URL}/${value?._id}.png?${Date.now()}` :  `${SERVER_URL}/default.png?${Date.now()}`}} style={{width: 40, height: 40, borderRadius: 400/ 2}}/>
                   </View>
                   <View style={{...styles.bg, ...styles.itensProf}}>
-                    <Text>{value.nome}</Text>
-                    <Text>{value.email}</Text>
-                    <Text>{value.celular}</Text>
+                    <Text style={{...styles.btnText}}>{value.nome}</Text>
+                    <Text style={{...styles.btnText}}>{value.email}</Text>
+                    <Text style={{...styles.btnText}}>{value.celular}</Text>
                   </View>
                   <View style={{...styles.bg}}>
                   <SocialIcon

@@ -10,7 +10,7 @@ interface AuthContextData {
     signed: boolean;
     user: any;
     type: string | undefined;
-    signIn(email: string, password: string): Promise<void>;
+    signIn(email: string, password: string): any;
     signUp(user: any, type: "aluno" | "personal"): Promise<void>;
     signOut(): Promise<void>;
     refreshUser(alunoId: string): Promise<void>;
@@ -61,19 +61,28 @@ export const AuthProvider: React.FC = ({children}) => {
 
     async function signIn(email: string, password:string) {
         const response: Response = await api.post(`${SERVER_URL}/api/login`, {email, password} );
-        setUser({...response.data.user});
-        setType(response.data.type);
-    
-        await AsyncStorage.setItem(
-          '@reactNativeAuth:user',
-          JSON.stringify({...response.data.user}),
-        );
-        await AsyncStorage.setItem(
-          '@reactNativeAuth:type',
-          JSON.stringify(response.data.type),
-        );
-        await AsyncStorage.setItem('@reactNativeAuth:token', response.data.token);
-        api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
+        //@ts-ignore
+        const error = response.data.error;
+        //@ts-ignore
+        const msg = response.data.mensagem;
+
+        if(!error) {
+          setUser({...response.data.user});
+          setType(response.data.type);
+      
+          await AsyncStorage.setItem(
+            '@reactNativeAuth:user',
+            JSON.stringify({...response.data.user}),
+          );
+          await AsyncStorage.setItem(
+            '@reactNativeAuth:type',
+            JSON.stringify(response.data.type),
+          );
+          await AsyncStorage.setItem('@reactNativeAuth:token', response.data.token);
+          api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
+        } else {
+          return msg;
+        }
       }
 
       async function refreshUser(userId: string) {

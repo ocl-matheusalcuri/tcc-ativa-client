@@ -31,13 +31,13 @@ route.post('/cadastroAgenda', async (req, res) => {
 });
 
 route.delete('/deletarAgenda', async (req, res) => {
-    const { agendaId } = req.body;
-    Treino.findByIdAndRemove(agendaId).exec().then((response) => {
+    const { agendaId } = req.query;
+    await Agenda.findByIdAndRemove(agendaId).then((response) => {
         if (response != null) {
-            res.status(200).send("Agenda Excluido com Sucesso");
+            res.json(response);
         }
         else {
-            res.status(404).send("Agenda Inexistente");
+            res.json([]);
         }
     });
 });
