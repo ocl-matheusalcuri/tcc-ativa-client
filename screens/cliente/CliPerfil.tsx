@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, Image, Platform, ScrollView } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, Image, Platform, ScrollView, Clipboard } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import { Text, View } from '../../components/Themed';
@@ -133,8 +133,11 @@ function atualizaPerfil() {
                 <TextInput style={{...styles.input}} placeholder={user?.nascimento} onChangeText={nascimento => setNovoNascimento(nascimento)}/>
                 </View>
               </View>
-              
-              <Text style={{...styles.btnText, marginTop: 10}}>Token de registro: {user?.token}</Text>
+
+              <TouchableOpacity style={{padding: 15}} onPress={() => Clipboard.setString(user?.token)}>
+                <Text style={{...styles.btnText, marginTop: 10}}>Clique aqui para copiar seu token de registro</Text>
+              </TouchableOpacity>
+
               <Text style={{...styles.btnText, marginTop: 40}}>Objetivo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
