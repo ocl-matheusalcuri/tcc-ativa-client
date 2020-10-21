@@ -133,7 +133,8 @@ function atualizaPerfil() {
                 <TextInput style={{...styles.input}} placeholder={user?.nascimento} onChangeText={nascimento => setNovoNascimento(nascimento)}/>
                 </View>
               </View>
-
+              
+              <Text style={{...styles.btnText, marginTop: 10}}>Token de registro: {user?.token}</Text>
               <Text style={{...styles.btnText, marginTop: 40}}>Objetivo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect

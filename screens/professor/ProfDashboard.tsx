@@ -79,7 +79,7 @@ export default function ProfDashboard({navigation}) {
   };
 
   const showMode = (currentMode: "date" | "time") => {
-    setShow(true);
+    setShow(!show);
     setMode(currentMode);
   };
 
