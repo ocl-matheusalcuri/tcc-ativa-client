@@ -19,7 +19,13 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.tcc.ativa",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.tcc.ativa",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
