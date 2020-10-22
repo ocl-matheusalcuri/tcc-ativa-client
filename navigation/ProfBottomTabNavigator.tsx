@@ -31,7 +31,7 @@ export default function ProfBottomTabNavigator(email: string) {
         {props => <ProfPerfilNavigator/>}
       </ProfBottomTab.Screen>
       <ProfBottomTab.Screen
-        name="Dashboard"
+        name="Agenda"
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-calendar" color={color} />,
         }}

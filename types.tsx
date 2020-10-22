@@ -46,7 +46,7 @@ export type CliRelationList = {
 
 export type ProfBottomTabsList = {
   Perfil: undefined;
-  Dashboard: undefined;
+  Agenda: undefined;
   Alunos: undefined;
 };
 

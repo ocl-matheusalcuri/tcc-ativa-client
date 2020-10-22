@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "tcc3",
-    "slug": "tcc3",
+    "name": "Ativa!",
+    "slug": "ativa",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -20,12 +20,12 @@
     ],
     "ios": {
       "bundleIdentifier": "com.tcc.ativa",
-      "buildNumber": "1.0.0",
+      "buildNumber": "2.0.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.tcc.ativa",
-      "versionCode": 1
+      "versionCode": 2
     }
   }
 }

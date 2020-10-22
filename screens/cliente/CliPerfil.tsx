@@ -174,7 +174,6 @@ function atualizaPerfil() {
                 />
               </View>
               <TouchableOpacity style={{...styles.btnCadastro}} onPress={atualizaPerfil}><Text style={{...styles.btnText}}>Salvar informações do perfil</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={salvarFoto}><Text style={{...styles.btnText}}>Salvar foto</Text></TouchableOpacity>
               <TouchableOpacity style={{...styles.btnSair}} onPress={handleSignOut}><Text style={{...styles.btnText}}>Sair</Text></TouchableOpacity>
             </View>
         </View>
