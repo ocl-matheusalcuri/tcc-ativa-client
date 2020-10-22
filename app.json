@@ -26,9 +26,6 @@
     "android": {
       "package": "com.tcc.ativa",
       "versionCode": 1
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
     }
   }
 }

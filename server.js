@@ -43,7 +43,7 @@ app.post('/upload', async (req, res) => {
     return res.json({
         user: {name: user.nome, email: user.email, temFoto: user.temFoto},
         //45 ou 58
-        url: `http://192.168.0.58:3001/${user?._id}.png?${Date.now()}`
+        url: `https://intense-woodland-10073.herokuapp.com/${user?._id}.png?${Date.now()}`
     })
 });
 
@@ -51,6 +51,6 @@ app.use('/api/agendaModel', require('./api/Agenda'))
 app.use('/api/alunoModel', require('./api/Aluno'))
 app.use('/api/personalModel', require('./api/Personal'))
 app.use('/api/treinoModel', require('./api/Treino'))
-const Port = process.env.Port || 3001;
+const Port = 3001;
 
 app.listen(Port,()=>console.log('Server started'));
