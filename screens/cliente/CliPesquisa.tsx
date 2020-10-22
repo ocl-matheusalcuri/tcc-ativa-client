@@ -116,7 +116,7 @@ export default function CliPesquisa({navigation}) {
                 { dados && dados.map((value: any, index: any) => (
                   <View key={index} style={{...styles.bg, ...styles.profs}}>
                   <View style={{...styles.bg, maxWidth: 40}}>
-                    <Image source={{uri: value?.temFoto ? `${SERVER_URL}/${value?._id}.png?${Date.now()}` :  `${SERVER_URL}/default.png?${Date.now()}`}} style={{width: 40, height: 40, borderRadius: 400/ 2}}/>
+                    <Image source={{uri: value?.fotoUrl ? value?.fotoUrl :  `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`}} style={{width: 40, height: 40, borderRadius: 400/ 2}}/>
                   </View>
                   <View style={{...styles.bg, ...styles.itensProf}}>
                     <Text style={{...styles.btnText}}>{value.nome}</Text>

@@ -20,8 +20,6 @@ export default function ProfAlunoDetalhado({route, navigation}) {
 
   const { alunoId, temFoto } = route.params;
  
-  const [foto, setFoto] = useState<any>(temFoto ? `${SERVER_URL}/${alunoId}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`);
-
 const [nomeTreino, setNomeTreino] = useState("");
 const [aparelho, setAparelho] = useState("");
 const [serie, setSerie] = useState<number>();
@@ -113,7 +111,7 @@ async function criarTreino() {
               <View style={styles.bg}>
                 <View style={{...styles.bg, ...styles.conjuntoInput, marginBottom: 40}}>
                   <View  style={{...styles.bg, ...styles.foto}}>
-                    <Image source={{uri: foto, cache:"reload"}} style={{width: 100, height: 100, borderRadius: 400/ 2}}/>
+                    <Image source={{uri: aluno?.fotoUrl ? aluno?.fotoUrl : `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`, cache:"reload"}} style={{width: 100, height: 100, borderRadius: 400/ 2}}/>
                   </View>
 
                   <View  style={{...styles.bg, marginLeft: 20}}>

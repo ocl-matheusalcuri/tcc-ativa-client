@@ -24,7 +24,7 @@ export default function ProfPerfil() {
 
   const { signOut, user, type, refreshUser } = React.useContext(AuthContext);
 
-  const [foto, setFoto] = useState<any>(user?.temFoto ? `${SERVER_URL}/${user?._id}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`);
+  const [foto, setFoto] = useState<any>(user?.fotoUrl ? user?.fotoUrl : `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`);
   const [imgBase64, setImgBase64] = useState<any>();
 
   const [novoNome, setNovoNome] = useState(user?.nome);

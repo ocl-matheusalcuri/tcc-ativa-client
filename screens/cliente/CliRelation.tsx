@@ -52,7 +52,7 @@ export default function CliRelation({navigation}) {
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg, ...styles.conjuntoInput, marginBottom: 50}}>
                 <View  style={{...styles.bg, ...styles.foto}}>
-                  <Image source={{uri: personal?.temFoto ? `${SERVER_URL}/${personal?._id}.png?${Date.now()}` : `${SERVER_URL}/default.png?${Date.now()}`, cache:"reload"}} style={{width: 80, height: 80, borderRadius: 400/ 2}}/>
+                  <Image source={{uri: personal?.fotoUrl ? personal?.fotoUrl : `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`, cache:"reload"}} style={{width: 80, height: 80, borderRadius: 400/ 2}}/>
                 </View>
 
                 <View style={{...styles.bg, marginLeft: 20}}>
