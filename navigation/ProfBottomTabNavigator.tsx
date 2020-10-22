@@ -9,6 +9,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import ProfPerfil from '../screens/professor/ProfPerfil';
 import ProfDashboard from '../screens/professor/ProfDashboard';
 import ProfAlunos from '../screens/professor/ProfAlunos';
+import ProfAlunoDetalhado from '../screens/professor/ProfAlunoDetalhado';
 
 import { ProfBottomTabsList, ProfPerfilList, ProfDashboardList, ProfAlunosList } from '../types';
 
@@ -20,7 +21,7 @@ export default function ProfBottomTabNavigator(email: string) {
   return (
     <ProfBottomTab.Navigator
       initialRouteName="Perfil"
-      tabBarOptions={{ activeTintColor: "orange", inactiveBackgroundColor: "gray", activeBackgroundColor: "gray", inactiveTintColor: "white" }}>
+      tabBarOptions={{ activeTintColor: "#51C73C", inactiveBackgroundColor: "#784E00", activeBackgroundColor: "#784E00", inactiveTintColor: "white" }}>
       <ProfBottomTab.Screen
         name="Perfil"
         options={{
@@ -65,7 +66,7 @@ function ProfPerfilNavigator() {
       <ProfPerfilStack.Screen
         name="ProfPerfilScreen"
         component={ProfPerfil}
-        options={{ headerTitle: 'Perfil Prof' }}
+        options={{ headerTitle: 'Seu Perfil', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
       />
     </ProfPerfilStack.Navigator>
   );
@@ -79,7 +80,7 @@ function ProfDashboardNavigator() {
       <ProfDashboardStack.Screen
         name="ProfDashboardScreen"
         component={ProfDashboard}
-        options={{ headerTitle: 'Dashboard Prof' }}
+        options={{ headerTitle: 'Sua Agenda', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
       />
     </ProfDashboardStack.Navigator>
   );
@@ -93,8 +94,14 @@ function ProfAlunosNavigator() {
       <ProfAlunosStack.Screen
         name="ProfAlunosScreen"
         component={ProfAlunos}
-        options={{ headerTitle: 'Alunos Prof' }}
+        options={{ headerTitle: 'Lista de Alunos', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
       />
+
+    <ProfAlunosStack.Screen
+        name="ProfAlunoDetalhadoScreen"
+        component={ProfAlunoDetalhado}
+        options={{ headerTitle: 'Detalhado', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
+      /> 
     </ProfAlunosStack.Navigator>
   );
 }
