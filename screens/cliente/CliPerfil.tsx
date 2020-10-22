@@ -25,7 +25,7 @@ Icon.loadFont();
 export default function CliPerfil({navigation}) {
   const { signOut, user, type, refreshUser } = React.useContext(AuthContext);
 
-  const [foto, setFoto] = useState<any>(user?.fotoUrl ? user?.fotoUrl : `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`);
+  const [foto, setFoto] = useState<any>(user?.fotoUrl != "" ? user?.fotoUrl : `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`);
   const [imgBase64, setImgBase64] = useState<any>();
   const [novoNome, setNovoNome] = useState(user?.nome);
   const [novoEmail, setNovoEmail] = useState(user?.email);
@@ -86,12 +86,13 @@ function salvarFoto() {
     api.post(`${SERVER_URL}/upload`, {
       body: {
         //@ts-ignore
-        imgsource: imgBase64,
+        base64: imgBase64,
         userId: user?._id,
         type
       },
-    }).then(response => {
+    }).then(async (response) => {
       setFoto(response.data.url);
+      await refreshUser(user?._id);
     }) 
 }
 

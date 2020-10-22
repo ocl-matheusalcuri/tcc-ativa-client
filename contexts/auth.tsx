@@ -95,7 +95,7 @@ export const AuthProvider: React.FC = ({children}) => {
 
           await AsyncStorage.setItem(
             '@reactNativeAuth:user',
-            JSON.stringify({...response.data._doc, type: response.data.type}),
+            JSON.stringify({...response.data, type: response.data.type}),
           );
         })
       }
