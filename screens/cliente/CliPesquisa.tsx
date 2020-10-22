@@ -4,7 +4,6 @@ import { SocialIcon  } from 'react-native-elements'
 
 import { styles } from '../styles';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 
 import RNPickerSelect from 'react-native-picker-select';
