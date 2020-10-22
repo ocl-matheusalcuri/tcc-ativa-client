@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 import { styles } from '../screens/styles';
@@ -9,16 +9,28 @@ import { Text, View } from '../components/Themed';
 import { AuthContext } from '../contexts/auth';
 
 //@ts-ignore
-export default function Login({navigation}) {
+export default function Login({route, navigation}) {
+  let statusParam = route.params?.status || ""
   const { signed, signIn, user, signOut } = React.useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
-//"aluno1@hotmail.com", "12345"
+  const [status, setStatus] = useState("");
+
+
+  useEffect(() => {
+    setStatus(statusParam);
+  }, [route.params?.status])
+
   async function handleSignIn() {
-    setError("")
+    navigation.setParams({status: ""})
+    setStatus("");
+    setError("");
    const login = await signIn(email, senha);
-   if(login) setError(login);
+   if(login) {
+     setError(login);
+     setTimeout(function(){ setError(""); }, 3000);
+    }
   };
 
   async function handleSignOut() {
@@ -30,6 +42,7 @@ export default function Login({navigation}) {
             <View style={{...styles.bg}}>
               <Image source={require('../assets/images/logo.png')} style={{width: 300, height: 300, borderRadius: 400/ 2}}/>
               {!!error && <Text style={{...styles.error}}>{error}</Text>}
+              {!!status && <Text style={{...styles.sucesso}}>{status}</Text>}
               <TextInput style={{...styles.inputIsolado}} placeholder="Email" onChangeText={email => setEmail(email)}/>
               <TextInput style={{...styles.inputIsolado}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
               <TextInput/>

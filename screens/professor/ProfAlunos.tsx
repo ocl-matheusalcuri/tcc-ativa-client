@@ -44,6 +44,7 @@ export default function ProfAlunos({navigation}) {
   }
 
   async function addCliente() {
+    setClienteId("");
     api.put(`${SERVER_URL}/api/alunoModel/incluirPersonal`, {
       body: {
         alunoId: clienteId,
@@ -67,11 +68,11 @@ export default function ProfAlunos({navigation}) {
       </View>
 
       <View style={{...styles.bg}}>
-          <TextInput style={{...styles.inputIsolado}} placeholder="Adicionar novo cliente" onChangeText={id => setClienteId(id)}/>
+          <TextInput style={{...styles.inputIsolado}} value={clienteId} placeholder="Adicionar novo cliente" onChangeText={id => setClienteId(id)}/>
           <TouchableOpacity style={{...styles.btnCadastro}} onPress={addCliente}><Text style={{...styles.btnText}}>Adicionar</Text></TouchableOpacity>
         </View>
 
-     { dados?.length > 0 && 
+     { dados?.length > 0 ? 
      (<ScrollView>
         <View style={{...styles.bg}}>
           
@@ -94,7 +95,13 @@ export default function ProfAlunos({navigation}) {
           ))}
         </View>
       </ScrollView>
-      )}
+      ) :
+      (
+        <View style={{...styles.bg}}>
+          <Text style={{...styles.btnText, marginTop: 40, marginRight: 25, fontSize: 20}}>Você ainda não possui nenhum aluno</Text>
+        </View>
+      )
+      }
   </View>
     )
 }

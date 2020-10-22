@@ -15,11 +15,23 @@ export const styles = StyleSheet.create({
       backgroundColor: "#ff9191",
       color: "#870000",
       borderWidth: 1,
-      borderColor: "#ff0000",
+      borderColor: "#870000",
       borderRadius: 4,
       textAlign: "center",
       marginBottom: 10,
-      paddingVertical: 5
+      paddingVertical: 5,
+      width: 290
+    },
+    sucesso: {
+      backgroundColor: "#DFF0D8",
+      color: "#3C763D",
+      borderWidth: 1,
+      borderColor: "#3C763D",
+      borderRadius: 4,
+      textAlign: "center",
+      marginBottom: 10,
+      paddingVertical: 5,
+      width: 290
     },
     agendaBox: {
       marginBottom: 20, 

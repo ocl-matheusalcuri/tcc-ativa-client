@@ -27,6 +27,8 @@ export default function SignupProf({navigation}) {
   const [especialidade, setEspecialidade] = useState("Ginástica");
   const [faixaEtaria, setFaixaEtaria] = useState("Idosos");
   const [foco, setFoco] = useState("Fortalecimento");
+  const [error, setError] = useState("");
+
 
   const especialidadeOpt = [
     {label: "Ginástica", value: "Ginástica"},
@@ -80,14 +82,24 @@ export default function SignupProf({navigation}) {
       especializacao: especialidade, 
       faixaEtaria: faixaEtaria
     }
-    await signUp(prof, "personal");
-    navigation.navigate("Login");
+
+    const formularioPreenchido = senha && nome && celular && email && nascimento && instagram && facebook && cref && foco && especialidade && faixaEtaria;
+
+    if(senha.length < 8) {
+      setError("Senha deve conter no mínimo 8 caracteres!")
+    } else if(!formularioPreenchido) {
+      setError("Por favor preencha todos os campos!")
+    } else {
+      setError("");
+      await signUp(prof, "personal").then((response: any) => navigation.navigate("Login", { status: response }));
+    }
   }
 
     return (
       <ScrollView>
             <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
+            {!!error && <Text style={{...styles.error}}>{error}</Text>}
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
                 <TextInputMask 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, Image, Platform, ScrollView, Clipboard } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, Image, Platform, ScrollView, Clipboard, Alert } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import { Text, View } from '../../components/Themed';
@@ -8,6 +8,7 @@ import { styles } from '../styles';
 
 
 import { AuthContext } from '../../contexts/auth';
+import { TextInputMask } from 'react-native-masked-text';
 
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
@@ -29,11 +30,13 @@ export default function CliPerfil({navigation}) {
   const [imgBase64, setImgBase64] = useState<any>();
   const [novoNome, setNovoNome] = useState(user?.nome);
   const [novoEmail, setNovoEmail] = useState(user?.email);
-  const [novoNascimento, setNovoNascimento] = useState(user?.nascimento);
+  const [novoNascimento, setNovoNascimento] = useState("");
   const [novoObjetivo, setNovoObjetivo] = useState(user?.objetivo);
   const [novoPrepFisico, setNovoPrepFisico] = useState(user?.prepFisico);
   const [novoSaude, setNovoSaude] = useState(user?.saude);
   const [novoHrAtiva, setNovoHrAtiva] = useState(user?.hrAtiva);
+  const [status, setStatus] = useState("");
+
 
   const objetivoOpt = [
     {label: "Emagrecer", value: "Emagrecer"},
@@ -63,13 +66,26 @@ export default function CliPerfil({navigation}) {
     {label: "Ótima", value: "Ótima"}
   ]
 
-
-
-
-
   async function handleSignOut() {
     await signOut();
   }
+
+  function salvarFoto(base64: any) {
+    api.post(`${SERVER_URL}/upload`, {
+      body: {
+        //@ts-ignore
+        base64: base64,
+        userId: user?._id,
+        type
+      },
+    }).then(async (response) => {
+      setFoto(response.data.url);
+      refreshUser(user?._id).then(() => {
+        setStatus("")
+        Alert.alert("Foto de perfil atualizada com sucesso!")
+      });
+    }) 
+}
 
 async function handleProfileImage() {
   let image = await ImagePicker.launchImageLibraryAsync({
@@ -77,39 +93,32 @@ async function handleProfileImage() {
     quality: 1,
     base64: true,
   });
-
-  //@ts-ignore
-    Platform.OS !== 'web' ? setImgBase64(image.base64) : setImgBase64(image.uri.split(',')[1]);
+    //@ts-ignore
+    setImgBase64(image.base64)
+    setStatus("Atualizando foto, aguarde...")
+    //@ts-ignore
+    await salvarFoto(image.base64);
 }
 
-function salvarFoto() {
-    api.post(`${SERVER_URL}/upload`, {
-      body: {
-        //@ts-ignore
-        base64: imgBase64,
-        userId: user?._id,
-        type
-      },
-    }).then(async (response) => {
-      setFoto(response.data.url);
-      await refreshUser(user?._id);
-    }) 
-}
+
+
 
 function atualizaPerfil() {
+  setStatus("");
   api.put(`${SERVER_URL}/api/alunoModel/editarPerfil`, {
     body: {
       alunoId: user?._id, 
       nome: novoNome, 
       email: novoEmail, 
-      nascimento: novoNascimento, 
+      nascimento: novoNascimento != "" ? novoNascimento: user?.nascimento, 
       hrAtiva: novoHrAtiva, 
       saude: novoSaude, 
       prepFisico: novoPrepFisico, 
       objetivo: novoObjetivo
     }
   }).then(async response => {
-    await refreshUser(user?._id)
+    refreshUser(user?._id).then(() => Alert.alert("Perfil atualizado com sucesso!"));
+    
   })
 }
 
@@ -119,19 +128,27 @@ function atualizaPerfil() {
       <ScrollView>
         <View style={{...styles.container, ...styles.bg}}>
             <View style={styles.bg}>
+            {!!status && <Text style={{...styles.sucesso}}>{status}</Text>}
               <View style={{...styles.bg, ...styles.conjuntoInput}}>
                 <View  style={{...styles.bg, ...styles.foto}}>
                   <Image source={{uri: foto, cache:"reload"}} style={{width: 100, height: 100, borderRadius: 400/ 2}}/>
                   <View style={{...styles.bg, ...styles.conjuntoInput}}>
                     <TouchableOpacity style={{padding: 15}} onPress={handleProfileImage}><Icon name="camera-alt" size={20} color="white" /></TouchableOpacity>
-                    <TouchableOpacity style={{padding: 15}} onPress={salvarFoto}><Icon name="save" size={20} color="white" /></TouchableOpacity>
                   </View>
                 </View>
 
                 <View  style={{...styles.bg}}>
                 <TextInput style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
                 <TextInput style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
-                <TextInput style={{...styles.input}} placeholder={user?.nascimento} onChangeText={nascimento => setNovoNascimento(nascimento)}/>
+                <TextInputMask 
+                  type={'datetime'}
+                  options={{
+                    format: 'DD/MM/YYYY'
+                  }} 
+                  style={{...styles.input}} 
+                  value={novoNascimento} 
+                  placeholder={user?.nascimento} 
+                  onChangeText={nascimento => setNovoNascimento(nascimento)}/>
                 </View>
               </View>
 

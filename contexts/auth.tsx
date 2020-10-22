@@ -11,7 +11,7 @@ interface AuthContextData {
     user: any;
     type: string | undefined;
     signIn(email: string, password: string): any;
-    signUp(user: any, type: "aluno" | "personal"): Promise<void>;
+    signUp(user: any, type: "aluno" | "personal"): any;
     signOut(): Promise<void>;
     refreshUser(alunoId: string): Promise<void>;
 }
@@ -55,8 +55,16 @@ export const AuthProvider: React.FC = ({children}) => {
 
     async function signUp(user: any, type: "aluno" | "personal") {
       const url = type === "aluno" ? `${SERVER_URL}/api/aluno` : `${SERVER_URL}/api/personal`
-      api.post(url, {user}).then(response  => {
-      })
+      const response = await api.post(url, {user});
+
+        //@ts-ignore
+        const error = response.data.error;
+        //@ts-ignore
+        const msg = response.data.mensagem || "Conta criada com sucesso!";
+
+        if(!error) {
+          return msg;
+        }
     }
 
     async function signIn(email: string, password:string) {

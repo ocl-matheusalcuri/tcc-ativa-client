@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 
 import { styles } from '../styles';
 
@@ -8,6 +8,7 @@ import { Text, View } from '../../components/Themed';
 import { AuthContext } from '../../contexts/auth';
 
 import RNPickerSelect from 'react-native-picker-select';
+import { TextInputMask } from 'react-native-masked-text';
 
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
@@ -29,14 +30,16 @@ export default function ProfPerfil() {
 
   const [novoNome, setNovoNome] = useState(user?.nome);
   const [novoEmail, setNovoEmail] = useState(user?.email);
-  const [novoNascimento, setNovoNascimento] = useState(user?.nascimento);
-  const [novoCelular, setNovoCelular] = useState(user?.celular);
+  const [novoNascimento, setNovoNascimento] = useState("");
+  const [novoCelular, setNovoCelular] = useState("");
   const [novoFacebook, setNovoFacebook] = useState(user?.facebook);
   const [novoInstagram, setNovoInstagram] = useState(user?.instagram);
 
   const [especialidade, setEspecialidade] = useState(user?.especializacao);
   const [faixaEtaria, setFaixaEtaria] = useState(user?.faixaEtaria);
   const [foco, setFoco] = useState(user?.foco);
+  const [status, setStatus] = useState("");
+
 
 
   const especialidadeOpt = [
@@ -65,6 +68,23 @@ export default function ProfPerfil() {
     await signOut();
   }
 
+function salvarFoto(base64: any) {
+    api.post(`${SERVER_URL}/upload`, {
+      body: {
+        //@ts-ignore
+        base64: base64,
+        userId: user?._id,
+        type
+      },
+    }).then(async (response) => {
+      setFoto(response.data.url);
+      refreshUser(user?._id).then(() => {
+        setStatus("");
+        Alert.alert("Foto de perfil atualizada com sucesso!");
+      });;
+    }) 
+};
+
 async function handleProfileImage() {
   let image = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -72,22 +92,12 @@ async function handleProfileImage() {
     base64: true,
   });
 
-  //@ts-ignore
-    Platform.OS !== 'web' ? setImgBase64(image.base64) : setImgBase64(image.uri.split(',')[1]);
-}
+    //@ts-ignore
+    setImgBase64(image.base64)
 
-function salvarFoto() {
-    api.post(`${SERVER_URL}/upload`, {
-      body: {
-        //@ts-ignore
-        base64: imgBase64,
-        userId: user?._id,
-        type
-      },
-    }).then(async (response) => {
-      setFoto(response.data.url);
-      await refreshUser(user?._id);
-    }) 
+    setStatus("Atualizando foto, aguarde...");
+    //@ts-ignore
+    await salvarFoto(image.base64);
 }
 
 function atualizaPerfil() {
@@ -95,9 +105,9 @@ function atualizaPerfil() {
     body: {
       personalId: user?._id,
       nome: novoNome,
-       celular: novoCelular, 
+       celular: novoCelular != "" ? novoCelular : user?.celular, 
        email: novoEmail, 
-       nascimento: novoNascimento, 
+       nascimento: novoNascimento != "" ? novoNascimento : user?.nascimento, 
        instagram: novoInstagram, 
        facebook: novoFacebook, 
        foco: foco, 
@@ -113,23 +123,42 @@ function atualizaPerfil() {
       <ScrollView>
       <View style={{...styles.container, ...styles.bg}}>
       <View style={styles.bg}>
+      {!!status && <Text style={{...styles.sucesso}}>{status}</Text>}
         <View style={{...styles.bg, ...styles.conjuntoInput}}>
           <View  style={{...styles.bg, ...styles.foto}}>
             <Image source={{uri: foto, cache:"reload"}} style={{width: 100, height: 100, borderRadius: 400/ 2}}/>
             <View style={{...styles.bg, ...styles.conjuntoInput}}>
               <TouchableOpacity style={{padding: 15}} onPress={handleProfileImage}><Icon name="camera-alt" size={20} color="white" /></TouchableOpacity>
-              <TouchableOpacity style={{padding: 15}} onPress={salvarFoto}><Icon name="save" size={20} color="white" /></TouchableOpacity>
             </View>
           </View>
 
           <View  style={{...styles.bg}}>
           <TextInput style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
           <TextInput style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
-          <TextInput style={{...styles.input}} placeholder={user?.nascimento} onChangeText={nascimento => setNovoNascimento(nascimento)}/>
+          <TextInputMask 
+                  type={'datetime'}
+                  options={{
+                    format: 'DD/MM/YYYY'
+                  }} 
+                  style={{...styles.input}} 
+                  value={novoNascimento} 
+                  placeholder={user?.nascimento}
+                  onChangeText={nascimento => setNovoNascimento(nascimento)}/>
           </View>
         </View>
 
-        <TextInput style={{...styles.inputIsolado}} placeholder={user?.celular} onChangeText={celular => setNovoCelular(celular)}/>
+        <TextInputMask 
+                  type={'cel-phone'}
+                  options={{
+                    maskType: 'BRL',
+                    withDDD: true,
+                  }} 
+                  value={novoCelular}
+                  style={{...styles.inputIsolado}} 
+                  keyboardType="number-pad" 
+                  placeholder={user?.celular}
+                  onChangeText={celular => setNovoCelular(celular)}
+          />
         <TextInput style={{...styles.inputIsolado}} placeholder={user?.facebook} onChangeText={facebook => setNovoFacebook(facebook)}/>
         <TextInput style={{...styles.inputIsolado}} placeholder={user?.instagram} onChangeText={instagram => setNovoInstagram(instagram)}/>
 

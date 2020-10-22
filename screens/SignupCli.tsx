@@ -26,6 +26,7 @@ export default function SignupCli({navigation}) {
   const [saude, setSaude] = useState("Péssima");
   const [prepFisico, setprepFisico] = useState("Sedentário");
   const [objetivo, setObjetivo] = useState("Emagrecer");
+  const [error, setError] = useState("");
 
   const objetivoOpt = [
     {label: "Emagrecer", value: "Emagrecer"},
@@ -55,20 +56,6 @@ export default function SignupCli({navigation}) {
     {label: "Ótima", value: "Ótima"}
   ]
 
-
-
-  // const [aluno, setAluno] = useState<any>({ 
-  //   password: senha, 
-  //   nome: nome, 
-  //   celular: celular, 
-  //   email: email, 
-  //   nascimento: nascimento, 
-  //   hrAtiva: "Muita", 
-  //   saude: "Regular", 
-  //   prepFisico: "Sedentário", 
-  //   objetivo: "Emagrecer" 
-  // });
-
   async function handleSignUp() {
     const aluno = {
       password: senha, 
@@ -81,14 +68,22 @@ export default function SignupCli({navigation}) {
       prepFisico: prepFisico, 
       objetivo: objetivo 
     }
-    await signUp(aluno, "aluno");
-    navigation.navigate("Login");
+    const formularioPreenchido = senha && nome && celular && email && nascimento && hrAtiva && saude && prepFisico && objetivo;
+    if(senha.length < 8) {
+      setError("Senha deve conter no mínimo 8 caracteres!")
+    } else if(!formularioPreenchido) {
+      setError("Por favor preencha todos os campos!")
+    } else {
+      setError("");
+      await signUp(aluno, "aluno").then((response: any) => navigation.navigate("Login", { status: response }));
+    }
   }
 
   
     return (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
+              {!!error && <Text style={{...styles.error}}>{error}</Text>}
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
                 <TextInputMask 
