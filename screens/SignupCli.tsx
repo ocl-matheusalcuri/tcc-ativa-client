@@ -4,6 +4,8 @@ import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 import { styles } from '../screens/styles';
 
+import { TextInputMask } from 'react-native-masked-text';
+
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -89,11 +91,29 @@ export default function SignupCli({navigation}) {
             <View style={{...styles.bg}}>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
-                <TextInput style={{...styles.inputSignUp}} placeholder="Nascimento" onChangeText={nascimento => setNascimento(nascimento)}/>
+                <TextInputMask 
+                  type={'datetime'}
+                  options={{
+                    format: 'DD/MM/YYYY'
+                  }} 
+                  style={{...styles.inputSignUp}} 
+                  value={nascimento} 
+                  placeholder="Nascimento" 
+                  onChangeText={nascimento => setNascimento(nascimento)}/>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-                <TextInput style={{...styles.inputSignUp}} keyboardType="number-pad" placeholder="Celular" onChangeText={celular => setCelular(celular)}/>
+                <TextInputMask 
+                  type={'cel-phone'}
+                  options={{
+                    maskType: 'BRL',
+                    withDDD: true,
+                  }} 
+                  value={celular}
+                  style={{...styles.inputSignUp}} 
+                  keyboardType="number-pad" 
+                  placeholder="Celular" 
+                  onChangeText={celular => setCelular(celular)}/>
               </View>
               <TextInput style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
               

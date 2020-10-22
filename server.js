@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
     res.send("Trabalho de Conclusão de Curso!");
 })
 
+
 app.use('/api', require('./api/Cadastro'));
 app.use('/api', require('./api/AuthValidation'));
 

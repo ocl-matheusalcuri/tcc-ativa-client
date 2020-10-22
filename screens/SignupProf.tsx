@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 
+import { TextInputMask } from 'react-native-masked-text';
+
 import { styles } from '../screens/styles';
 
 import EditScreenInfo from '../components/EditScreenInfo';
@@ -88,11 +90,29 @@ export default function SignupProf({navigation}) {
             <View style={{...styles.bg}}>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
-                <TextInput style={{...styles.inputSignUp}} placeholder="Nascimento" onChangeText={nascimento => setNascimento(nascimento)}/>
+                <TextInputMask 
+                  type={'datetime'}
+                  options={{
+                    format: 'DD/MM/YYYY'
+                  }} 
+                  style={{...styles.inputSignUp}} 
+                  value={nascimento} 
+                  placeholder="Nascimento" 
+                  onChangeText={nascimento => setNascimento(nascimento)}/>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-                <TextInput style={{...styles.inputSignUp}} keyboardType="number-pad" placeholder="Celular" onChangeText={celular => setCelular(celular)}/>
+                <TextInputMask 
+                  type={'cel-phone'}
+                  options={{
+                    maskType: 'BRL',
+                    withDDD: true,
+                  }} 
+                  value={celular}
+                  style={{...styles.inputSignUp}} 
+                  keyboardType="number-pad" 
+                  placeholder="Celular" 
+                  onChangeText={celular => setCelular(celular)}/>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
