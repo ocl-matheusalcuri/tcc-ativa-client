@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Image, ScrollView } from 'react-native';
+import { StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
@@ -11,15 +11,19 @@ import { styles } from '../styles';
 
 
 import { SERVER_URL } from '../../url'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Dialog from "react-native-dialog";
 
 //@ts-ignore
 export default function CliRelation({navigation}) {
-  const { signOut, user, type } = React.useContext(AuthContext);
+  const { signOut, user, refreshUser } = React.useContext(AuthContext);
 
   const [imgBase64, setImgBase64] = useState<any>();
   const [treino, setTreino] = useState<any>();
   const [personal, setPersonal] = useState<any>();
+  const [senha, setSenha] = useState("");
+  const [visible, setVisible] = useState(false);  
+  const [error, setError] = useState("");
+
 
   const array = [{label: 'Acre', value: 'Acre'},{label: 'Alagoas', value: 'Alagoas'},{label: 'Amapa', value: 'Amapa'},{label: 'Amazonas', value: 'Amazonas'}]
   const array2 = [{label: 'Acre', value: 'Acre'},{label: 'Alagoas', value: 'Alagoas'},{label: 'Amapa', value: 'Amapa'},{label: 'Amazonas', value: 'Amazonas'},{label: 'Bahia', value: 'Bahia'},{label: 'Ceara', value: 'Ceara'},{label: 'Distrito Federal', value: 'Distrito Federal'},{label: 'Espirito Santo', value: 'Espirito Santo'},{label: 'Goias', value: 'Goias'},{label: 'Maranhao', value: 'Maranhao'},{label: 'Mato Grosso', value: 'Mato Grosso'},{label: 'Mato Grosso do Sul', value: 'Mato Grosso do Sul'},{label: 'Minas Gerais', value: 'Minas Gerais'},{label: 'Para', value: 'Para'},{label: 'Paraiba', value: 'Paraiba'},{label: 'Parana', value: 'Parana'},{label: 'Pernambuco', value: 'Pernambuco'},{label: 'Piaui', value: 'Piaui'},{label: 'Rio de Janeiro', value: 'Rio de Janeiro'},{label: 'Rio Grande do Norte', value: 'Rio Grande do Norte'},{label: 'Rio Grande do Sul', value: 'Rio Grande do Sul'},{label: 'Rondonia', value: 'Rondonia'},{label: 'Roraima', value: 'Roraima'},{label: 'Santa Catarina', value: 'Santa Catarina'},{label: 'Sao Paulo', value: 'Sao Paulo'},{label: 'Sergipe', value: 'Sergipe'},{label: 'Tocantins', value: 'Tocantins'}]
@@ -47,9 +51,41 @@ export default function CliRelation({navigation}) {
     getPersonal();
   }, [navigation]);
 
+  const handleCancel = () => {
+    setVisible(false);
+    setSenha("");
+  };
+
+  const handleDelete = () => {
+    api.put(`${SERVER_URL}/api/alunoModel/deletarRelation`, {
+      body: {
+        alunoId: user?._id, 
+        senha, 
+      }
+    }).then(async response => {
+      if(response.data.error) {
+        setError(response.data.mensagem)
+      } else {
+        await refreshUser(user?._id)
+      }
+      setVisible(false);
+      setTimeout(function(){ setError(""); }, 3000);
+      setSenha("");
+    })
+  };
 
     return personal && personal._id ? (
         <View style={{...styles.container, ...styles.bg}}>
+              {!!error && <Text style={{...styles.error}}>{error}</Text>}
+              <Dialog.Container visible={visible}>
+                <Dialog.Title>Desfazer relação com personal</Dialog.Title>
+                <Dialog.Description>
+                  Você tem certeza de que deseja cancelar sua relação com o personal?
+                </Dialog.Description>
+                <Dialog.Input style={{borderWidth: 1, borderColor: "gray", borderRadius: 4, marginTop: 5, height: 30, paddingHorizontal: 10}} value={senha} placeholder="Digite sua senha para confirmar" secureTextEntry={true} onChangeText={(senha) => setSenha(senha)} />
+                <Dialog.Button label="Cancelar" onPress={handleCancel} />
+                <Dialog.Button label="Confirmar" onPress={handleDelete} />
+            </Dialog.Container>
             <View style={{...styles.bg, ...styles.conjuntoInput, marginBottom: 50}}>
                 <View  style={{...styles.bg, ...styles.foto}}>
                   <Image source={{uri: personal?.fotoUrl ? personal?.fotoUrl : `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`, cache:"reload"}} style={{width: 80, height: 80, borderRadius: 400/ 2}}/>
@@ -75,6 +111,10 @@ export default function CliRelation({navigation}) {
                 <Text style={{...styles.btnText}}>IMC:</Text>
                 <Text style={{...styles.btnText}}>{user?.imc}</Text>
               </View>
+              </View>
+
+              <View style={{...styles.bg}}>
+                <TouchableOpacity style={{...styles.btnCancel}} onPress={() => setVisible(true)}><Text>Desfazer relação</Text></TouchableOpacity>
               </View>
 
               <ScrollView>
@@ -111,13 +151,16 @@ export default function CliRelation({navigation}) {
                 
               </View>
               </ScrollView>
+              
         </View>
-    ) : (
-    <View style={{...styles.container, ...styles.bg, justifyContent: "center"}}>
-      <Text style={{...styles.btnText}}>Você não está associado(a) à nenhum personal.</Text>
-      <Text style={{...styles.btnText}}>Encontre algum que lhe agrade cliando no botão abaixo</Text>
-      <TouchableOpacity style={{...styles.btnCadastro, marginTop: 50}} onPress={() => navigation.navigate("Pesquisa")}><Text style={{...styles.btnText}}>Pesquisar personal</Text></TouchableOpacity>
-    </View>
+    ) : personal === undefined ? (
+        <View style={{...styles.bg, ...styles.container}}/>
+      ) : (
+        <View style={{...styles.container, ...styles.bg, justifyContent: "center"}}>
+          <Text style={{...styles.btnText}}>Você não está associado(a) à nenhum personal.</Text>
+          <Text style={{...styles.btnText}}>Encontre algum que lhe agrade cliando no botão abaixo</Text>
+          <TouchableOpacity style={{...styles.btnCadastro, marginTop: 50}} onPress={() => navigation.navigate("Pesquisa")}><Text style={{...styles.btnText}}>Pesquisar personal</Text></TouchableOpacity>
+        </View>
       )
 }
 

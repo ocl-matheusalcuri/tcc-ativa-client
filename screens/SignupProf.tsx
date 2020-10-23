@@ -101,7 +101,7 @@ export default function SignupProf({navigation}) {
             <View style={{...styles.bg}}>
             {!!error && <Text style={{...styles.error}}>{error}</Text>}
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
+                <TextInput autoCapitalize="words" style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
                 <TextInputMask 
                   type={'datetime'}
                   options={{
@@ -113,7 +113,7 @@ export default function SignupProf({navigation}) {
                   onChangeText={nascimento => setNascimento(nascimento)}/>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
+                <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
                 <TextInputMask 
                   type={'cel-phone'}
                   options={{
@@ -127,11 +127,11 @@ export default function SignupProf({navigation}) {
                   onChangeText={celular => setCelular(celular)}/>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
-                <TextInput style={{...styles.inputSignUp}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
+                <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
+                <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
               </View>
-              <TextInput style={{...styles.inputSignUp, width: 300}} placeholder="CREF" onChangeText={cref => setCREF(cref)}/>
-              <TextInput style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
+              <TextInput autoCapitalize="characters" style={{...styles.inputSignUp, width: 300}} placeholder="CREF" onChangeText={cref => setCREF(cref)}/>
+              <TextInput autoCapitalize="none" style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
               
               <Text style={{...styles.btnText}}>Especialidade</Text>
               <View style={{...styles.bg, ...styles.picker}}>

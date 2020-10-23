@@ -20,6 +20,7 @@ export default function ProfAlunos({navigation}) {
   const [nome, setNome] = useState("");
   const [clienteId, setClienteId] = useState("");
   const [dados, setDados] = useState<any>();
+  const [error, setError] = useState("");
 
   const array = [{label: 'Acre', value: 'Acre'},{label: 'Alagoas', value: 'Alagoas'},{label: 'Amapa', value: 'Amapa'},{label: 'Amazonas', value: 'Amazonas'},{label: 'Bahia', value: 'Bahia'},{label: 'Ceara', value: 'Ceara'},{label: 'Distrito Federal', value: 'Distrito Federal'},{label: 'Espirito Santo', value: 'Espirito Santo'},{label: 'Goias', value: 'Goias'},{label: 'Maranhao', value: 'Maranhao'},{label: 'Mato Grosso', value: 'Mato Grosso'},{label: 'Mato Grosso do Sul', value: 'Mato Grosso do Sul'},{label: 'Minas Gerais', value: 'Minas Gerais'},{label: 'Para', value: 'Para'},{label: 'Paraiba', value: 'Paraiba'},{label: 'Parana', value: 'Parana'},{label: 'Pernambuco', value: 'Pernambuco'},{label: 'Piaui', value: 'Piaui'},{label: 'Rio de Janeiro', value: 'Rio de Janeiro'},{label: 'Rio Grande do Norte', value: 'Rio Grande do Norte'},{label: 'Rio Grande do Sul', value: 'Rio Grande do Sul'},{label: 'Rondonia', value: 'Rondonia'},{label: 'Roraima', value: 'Roraima'},{label: 'Santa Catarina', value: 'Santa Catarina'},{label: 'Sao Paulo', value: 'Sao Paulo'},{label: 'Sergipe', value: 'Sergipe'},{label: 'Tocantins', value: 'Tocantins'}]
 
@@ -44,13 +45,20 @@ export default function ProfAlunos({navigation}) {
   }
 
   async function addCliente() {
-    setClienteId("");
     api.put(`${SERVER_URL}/api/alunoModel/incluirPersonal`, {
       body: {
         alunoId: clienteId,
         personalId: user?._id
       }
-    }).then(response => getAlunos())
+    }).then(response => {
+      if(response.data.error) {
+        setError(response.data.mensagem);
+        setTimeout(function(){ setError(""); }, 3000);
+      } else {
+        getAlunos();
+        setClienteId("");
+      }
+    })
   }
 
   useEffect(() => {
@@ -59,6 +67,7 @@ export default function ProfAlunos({navigation}) {
 
     return (
       <View style={{...styles.container, ...styles.bg}}>
+      {!!error && <Text style={{...styles.error, marginRight: 20}}>{error}</Text>}
       <View style={{...styles.bg}}>
 
         <TextInput style={{...styles.inputIsolado}} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>

@@ -102,7 +102,7 @@ export default function CliProfDetalhado({route, navigation}) {
                     />
               </View>
 
-                <TouchableOpacity style={{...styles.btnWhatsApp}} onPress={() => Linking.openURL(`whatsapp://send?text=Olá ${personal.nome}, tudo bem? Vi seu perfil no Ativa! e gostaria de falar mais sobre seus planos e valores!&phone=+55${personal.celular}`)}>
+                <TouchableOpacity style={{...styles.btnWhatsApp}} onPress={() => Linking.openURL(`whatsapp://send?text=Olá ${personal.nome}, tudo bem? Vi seu perfil no *Ativa!* e gostaria de falar mais sobre seus planos e valores!&phone=+55${personal.celular}`)}>
                   <Text style={{...styles.profTextSemMargin}}>Mande um WhatsApp para o personal</Text>
                 </TouchableOpacity>
 

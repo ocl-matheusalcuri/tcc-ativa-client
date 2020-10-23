@@ -185,6 +185,14 @@ export const styles = StyleSheet.create({
       width: 290,
       borderRadius: 44/2
     },
+    btnCancel: {
+      backgroundColor: "#E32C22",
+      padding: 10,
+      alignItems: "center",
+      marginVertical: 10,
+      width: 290,
+      borderRadius: 44/2
+    },
     btnToken: {
       backgroundColor: "#4B0082",
       padding: 10,

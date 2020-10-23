@@ -138,8 +138,8 @@ function atualizaPerfil() {
                 </View>
 
                 <View  style={{...styles.bg}}>
-                <TextInput style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
-                <TextInput style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
+                <TextInput autoCapitalize="words" style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
+                <TextInput autoCapitalize="none" style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
                 <TextInputMask 
                   type={'datetime'}
                   options={{

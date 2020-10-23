@@ -125,7 +125,7 @@ function atualizaPerfil() {
       <View style={styles.bg}>
       {!!status && <Text style={{...styles.sucesso}}>{status}</Text>}
         <View style={{...styles.bg, ...styles.conjuntoInput}}>
-          <View  style={{...styles.bg, ...styles.foto}}>
+          <View style={{...styles.bg, ...styles.foto}}>
             <Image source={{uri: foto, cache:"reload"}} style={{width: 100, height: 100, borderRadius: 400/ 2}}/>
             <View style={{...styles.bg, ...styles.conjuntoInput}}>
               <TouchableOpacity style={{padding: 15}} onPress={handleProfileImage}><Icon name="camera-alt" size={20} color="white" /></TouchableOpacity>
@@ -133,8 +133,8 @@ function atualizaPerfil() {
           </View>
 
           <View  style={{...styles.bg}}>
-          <TextInput style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
-          <TextInput style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
+          <TextInput autoCapitalize="words" style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
+          <TextInput autoCapitalize="none" style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
           <TextInputMask 
                   type={'datetime'}
                   options={{
@@ -159,8 +159,8 @@ function atualizaPerfil() {
                   placeholder={user?.celular}
                   onChangeText={celular => setNovoCelular(celular)}
           />
-        <TextInput style={{...styles.inputIsolado}} placeholder={user?.facebook} onChangeText={facebook => setNovoFacebook(facebook)}/>
-        <TextInput style={{...styles.inputIsolado}} placeholder={user?.instagram} onChangeText={instagram => setNovoInstagram(instagram)}/>
+        <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} placeholder={user?.facebook} onChangeText={facebook => setNovoFacebook(facebook)}/>
+        <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} placeholder={user?.instagram} onChangeText={instagram => setNovoInstagram(instagram)}/>
 
 
         <Text style={{marginTop: 20, ...styles.btnText}}>Especialidade</Text>
