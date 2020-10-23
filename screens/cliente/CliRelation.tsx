@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, ScrollView, TouchableOpacity, Platform } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
@@ -82,7 +82,7 @@ export default function CliRelation({navigation}) {
                 <Dialog.Description>
                   Você tem certeza de que deseja cancelar sua relação com o personal?
                 </Dialog.Description>
-                <Dialog.Input style={{borderWidth: 1, borderColor: "gray", borderRadius: 4, marginTop: 5, height: 30, paddingHorizontal: 10}} value={senha} placeholder="Digite sua senha para confirmar" secureTextEntry={true} onChangeText={(senha) => setSenha(senha)} />
+                <Dialog.Input style={Platform.OS === 'android' ? {borderWidth: 1, borderColor: "gray", borderRadius: 4, marginTop: 5, height: 30, paddingHorizontal: 10}: {}} value={senha} placeholder="Digite sua senha para confirmar" secureTextEntry={true} onChangeText={(senha) => setSenha(senha)} />
                 <Dialog.Button label="Cancelar" onPress={handleCancel} />
                 <Dialog.Button label="Confirmar" onPress={handleDelete} />
             </Dialog.Container>
@@ -114,7 +114,9 @@ export default function CliRelation({navigation}) {
               </View>
 
               <View style={{...styles.bg}}>
-                <TouchableOpacity style={{...styles.btnCancel}} onPress={() => setVisible(true)}><Text>Desfazer relação</Text></TouchableOpacity>
+                <TouchableOpacity style={{...styles.btnCancel}} onPress={() => setVisible(true)}>
+                  <Text style={{...styles.btnText}}>Desfazer relação</Text>
+                </TouchableOpacity>
               </View>
 
               <ScrollView>
