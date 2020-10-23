@@ -32,6 +32,7 @@ export type CliPerfilList = {
 
 export type CliPesquisaList = {
   CliPesquisaScreen: undefined;
+  CliProfDetalhadoScreen: undefined;
 };
 
 export type CliDashboardList = {

@@ -9,6 +9,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import CliPerfil from '../screens/cliente/CliPerfil';
 import CliPesquisa from '../screens/cliente/CliPesquisa';
 import CliDashboard from '../screens/cliente/CliDashboard';
+import CliProfDetalhado from '../screens/cliente/CliProfDetalhado';
 import CliRelation from '../screens/cliente/CliRelation';
 
 import { CliBottomTabsList, CliPerfilList, CliPesquisaList, CliDashboardList, CliRelationList  } from '../types';
@@ -83,6 +84,12 @@ function CliPesquisaNavigator() {
         name="CliPesquisaScreen"
         component={CliPesquisa}
         options={{ headerTitle: 'Pesquisa de personal', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
+      />
+      
+      <CliPesquisaStack.Screen
+        name="CliProfDetalhadoScreen"
+        component={CliProfDetalhado}
+        options={{ headerTitle: 'Info personal', headerStyle: {backgroundColor: '#CC8400'}, headerTintColor: '#fff', headerTitleStyle: {fontWeight: 'bold', fontSize: 40}, headerTitleAlign: "center" }}
       />
     </CliPesquisaStack.Navigator>
   );

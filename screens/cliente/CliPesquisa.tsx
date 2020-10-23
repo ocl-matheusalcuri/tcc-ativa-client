@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, Linking } from 'react-native';
-import { SocialIcon  } from 'react-native-elements'
+import { SocialIcon  } from 'react-native-elements';
 
 import { styles } from '../styles';
 
@@ -12,12 +12,6 @@ import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { SERVER_URL } from '../../url'
 
-
-async function getPersonal() {
-  const response = await api.get(`${SERVER_URL}/api/personalModel/getAll`)
-
-  return response
-}
 
 //@ts-ignore
 export default function CliPesquisa({navigation}) {
@@ -31,6 +25,7 @@ export default function CliPesquisa({navigation}) {
   async function getPersonal() {
     const response = await api.get(`${SERVER_URL}/api/personalModel/getAll`)
     setDados(response.data);
+    setNome("");
   }
 
   async function getPersonalFilter() {
@@ -106,14 +101,23 @@ export default function CliPesquisa({navigation}) {
                 />
               </View>
 
-              <TextInput style={{...styles.inputIsolado}} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
+              <TextInput style={{...styles.inputIsolado}} value={nome} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
               <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonalFilter}><Text style={{...styles.btnText}}>Pesquisar</Text></TouchableOpacity>
               <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonal}><Text style={{...styles.btnText}}>Ver todos</Text></TouchableOpacity>
             </View>
 
-            <ScrollView>
-              <View style={{...styles.bg, overflow: "scroll"}}>
+            {dados && dados.length == 0 ? (
+              <View style={{...styles.bg, marginTop: 40, marginRight: 20}}>
+                <Text style={{...styles.btnText, fontSize: 20}}>Nenhum personal encontrado!</Text>
+              </View>
+            ) :
+            (
+              <ScrollView>
+              <View style={{...styles.bg, overflow: "scroll", paddingBottom: 50}}>
                 { dados && dados.map((value: any, index: any) => (
+                  <TouchableOpacity key={index} onPress={() => navigation.navigate("CliProfDetalhadoScreen", {
+                    personalId: value._id,
+                  })}>
                   <View key={index} style={{...styles.bg, ...styles.profs}}>
                   <View style={{...styles.bg, maxWidth: 40}}>
                     <Image source={{uri: value?.fotoUrl ? value?.fotoUrl :  `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`}} style={{width: 40, height: 40, borderRadius: 400/ 2}}/>
@@ -130,10 +134,13 @@ export default function CliPesquisa({navigation}) {
                   />
                   </View>
                 </View>
+                </TouchableOpacity>
                 ))}
                 
               </View>
             </ScrollView>
+            )}
+            
         </View>
     )
 }

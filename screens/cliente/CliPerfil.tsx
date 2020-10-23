@@ -152,8 +152,8 @@ function atualizaPerfil() {
                 </View>
               </View>
 
-              <TouchableOpacity style={{padding: 15}} onPress={() => Clipboard.setString(user?.token)}>
-                <Text style={{...styles.btnText, marginTop: 10}}>Clique aqui para copiar seu token de registro</Text>
+              <TouchableOpacity style={{...styles.btnToken}} onPress={() => Clipboard.setString(user?.token)}>
+                <Text style={{...styles.btnText}}>Clique aqui para copiar seu token de registro</Text>
               </TouchableOpacity>
 
               <Text style={{...styles.btnText, marginTop: 40}}>Objetivo</Text>

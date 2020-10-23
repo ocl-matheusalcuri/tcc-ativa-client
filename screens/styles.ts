@@ -150,6 +150,25 @@ export const styles = StyleSheet.create({
     btnText: {
       color: "#FFF",
     },
+    profText: {
+      color: "#FFF",
+      fontSize: 20,
+      marginTop: 15
+    },    
+    profTextSemMargin: {
+      color: "#FFF",
+      fontSize: 18,
+    }, 
+    profRow: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      alignItems: "center",
+      marginVertical: 30
+    },
+    row: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
     btnCadastro: {
       backgroundColor: "#1B82B3",
       padding: 10,
@@ -157,6 +176,23 @@ export const styles = StyleSheet.create({
       marginVertical: 10,
       width: 290,
       borderRadius: 4
+    },
+    btnWhatsApp: {
+      backgroundColor: "#1D802D",
+      padding: 10,
+      alignItems: "center",
+      marginVertical: 10,
+      width: 290,
+      borderRadius: 44/2
+    },
+    btnToken: {
+      backgroundColor: "#4B0082",
+      padding: 10,
+      alignItems: "center",
+      marginVertical: 10,
+      marginTop: 15,
+      width: 290,
+      borderRadius: 44/2
     },
     btnSair: {
         backgroundColor: "#E32C22",
