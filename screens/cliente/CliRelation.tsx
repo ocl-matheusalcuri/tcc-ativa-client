@@ -128,7 +128,7 @@ export default function CliRelation({navigation}) {
                   </View>
                   <View style={{backgroundColor: "#593100", ...styles.profs, padding: 10}}>
                     <Text style={{...styles.btnText}}>Aparelho</Text>
-                    <Text style={{paddingHorizontal: 50, ...styles.btnText}}>Série</Text>
+                    <Text style={{marginLeft: 50, ...styles.btnText}}>Série</Text>
                     <Text style={{...styles.btnText}}>Repetições</Text>
                   </View>
                   
@@ -136,10 +136,10 @@ export default function CliRelation({navigation}) {
                       {parent.descricaoTreino.map((value: any, index: any) => (
                         <View key={index} style={{backgroundColor: "#593100", ...styles.profs}}>
                         <View style={{backgroundColor: "#593100"}}>
-                          <Text style={{...styles.btnText}}>{value.nome}</Text>
+                          <Text numberOfLines={1} style={{...styles.aparelhoText, ...styles.btnText}}>{value.nome}</Text>
                         </View>
                         <View style={{backgroundColor: "#593100"}}>
-                          <Text style={{...styles.btnText}}>{value.serie}</Text>
+                          <Text style={{...styles.btnText, paddingRight: 100}}>{value.serie}</Text>
                         </View>
                         <View style={{backgroundColor: "#593100"}}>
                           <Text style={{...styles.btnText}}>{value.repeticao}</Text>

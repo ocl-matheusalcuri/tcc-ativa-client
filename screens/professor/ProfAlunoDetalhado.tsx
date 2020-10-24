@@ -161,9 +161,9 @@ async function criarTreino() {
                     </View>
 
                     <View style={{...styles.bg, ...styles.profs}}>
-                      <TextInput style={{...styles.inputSemLargura}} placeholder="Aparelho" onChangeText={aparelho => setAparelho(aparelho)}/>
-                      <TextInput style={{...styles.inputSemLargura}} placeholder="Série" onChangeText={serie => setSerie(parseInt(serie))}/>
-                      <TextInput style={{...styles.inputSemLargura}} placeholder="Repetições" onChangeText={repeticao => setRepeticao(parseInt(repeticao))}/>
+                      <TextInput style={{...styles.inputSemLargura, width: 100, maxWidth: 100}} placeholder="Aparelho" onChangeText={aparelho => setAparelho(aparelho)}/>
+                      <TextInput style={{...styles.inputSemLargura, width: 50, maxWidth: 50}} placeholder="Série" onChangeText={serie => setSerie(parseInt(serie))}/>
+                      <TextInput style={{...styles.inputSemLargura, width: 80, maxWidth: 80}} placeholder="Repetições" onChangeText={repeticao => setRepeticao(parseInt(repeticao))}/>
                     </View>  
                     <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50}} onPress={() => atualizaTreino(parent._id, aparelho, serie, repeticao)}><Text style={{...styles.btnText}}>Add aparelho</Text></TouchableOpacity>
 

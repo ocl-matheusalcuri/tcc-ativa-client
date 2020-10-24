@@ -53,6 +53,9 @@ export default function ProfDashboard({navigation}) {
   async function salvarCompromisso() {
     await api.post(`${SERVER_URL}/api/agendaModel/cadastroAgenda`, {nome: titulo, professorId: user?._id, data, hora});
     getPersonalFilter();
+    setTitulo("");
+    setData("");
+    setHora("");
   }
 
   async function deletarCompromisso(agendaId: string) {
@@ -91,13 +94,10 @@ export default function ProfDashboard({navigation}) {
     showMode('time');
   };
 
-
-  const array = [{label: 'Acre', value: 'Acre'},{label: 'Alagoas', value: 'Alagoas'},{label: 'Amapa', value: 'Amapa'},{label: 'Amazonas', value: 'Amazonas'},{label: 'Bahia', value: 'Bahia'},{label: 'Ceara', value: 'Ceara'},{label: 'Distrito Federal', value: 'Distrito Federal'},{label: 'Espirito Santo', value: 'Espirito Santo'},{label: 'Goias', value: 'Goias'},{label: 'Maranhao', value: 'Maranhao'},{label: 'Mato Grosso', value: 'Mato Grosso'},{label: 'Mato Grosso do Sul', value: 'Mato Grosso do Sul'},{label: 'Minas Gerais', value: 'Minas Gerais'},{label: 'Para', value: 'Para'},{label: 'Paraiba', value: 'Paraiba'},{label: 'Parana', value: 'Parana'},{label: 'Pernambuco', value: 'Pernambuco'},{label: 'Piaui', value: 'Piaui'},{label: 'Rio de Janeiro', value: 'Rio de Janeiro'},{label: 'Rio Grande do Norte', value: 'Rio Grande do Norte'},{label: 'Rio Grande do Sul', value: 'Rio Grande do Sul'},{label: 'Rondonia', value: 'Rondonia'},{label: 'Roraima', value: 'Roraima'},{label: 'Santa Catarina', value: 'Santa Catarina'},{label: 'Sao Paulo', value: 'Sao Paulo'},{label: 'Sergipe', value: 'Sergipe'},{label: 'Tocantins', value: 'Tocantins'}]
-
     return (
         <View style={{...styles.container, ...styles.bg}}>
           <View style={{...styles.bg, marginBottom: 40}}>
-            <TextInput style={{...styles.inputIsolado}} placeholder="Título do evento" onChangeText={titulo => setTitulo(titulo)}/>
+            <TextInput style={{...styles.inputIsolado}} value={titulo} placeholder="Título do evento" onChangeText={titulo => setTitulo(titulo)}/>
             <Text style={{...styles.btnText}}>Dia selecionado: {data}</Text>
             <TouchableOpacity style={{...styles.btnCadastro}} onPress={showDatepicker}><Text style={{...styles.btnText}}>Selecione o dia</Text></TouchableOpacity>
             <Text style={{...styles.btnText}}>Horário selecionado: {hora}</Text>
@@ -114,19 +114,29 @@ export default function ProfDashboard({navigation}) {
             />}
             </View>
             </View>
-            <ScrollView>
-            {agenda && <View style={{...styles.bg}}>
-              
+            
+            {agenda && agenda.length > 0 ? 
+            
+            (<ScrollView>
+            <View style={{...styles.bg, paddingBottom: 50}}>
                 {agenda.map((value: any, index: any) => (
                   <View key={index} style={{...styles.bg, ...styles.agendaBox}}>
-                    <TouchableOpacity style={{position: "absolute", left: 10, top: "30%"}} onPress={() => deletarCompromisso(value?._id)}><Icon name="close" size={20} color="#E32C22" /></TouchableOpacity>
-                    <Text style={{...styles.btnText}}>{value.nome}</Text>
-                    <Text style={{...styles.btnText}}>{value.data} às {value.hora}</Text>
+                    <TouchableOpacity style={{...styles.agendaBtn}} onPress={() => deletarCompromisso(value?._id)}><Icon name="close" style={{paddingTop: "100%"}} size={20} color="#992D2D" /></TouchableOpacity>
+                    <View style={{...styles.agendaBtn, zIndex: 9}}/>
+                    <Text style={{...styles.btnText, ...styles.agendaConteudo}}>{value.nome}</Text>
+                    <Text style={{...styles.btnText, ...styles.agendaConteudo}}>{value.data} às {value.hora}</Text>
                   </View>
                 ))}
               
-            </View>}
-            </ScrollView>
+            </View>
+            </ScrollView>) : agenda === undefined ?
+            (<View style={{...styles.bg, ...styles.container}}/>) :
+            (
+              <View style={{...styles.bg, marginTop: 50}}>
+                <Text style={{...styles.btnText, fontSize: 20, marginRight: 20}}>Você não possui nenhum evento!</Text>
+              </View>
+            )}
+           
 
         </View>
     )

@@ -54,9 +54,6 @@ export default function CliPesquisa({navigation}) {
     {label: "Academia", value: "Academia"}
   ];
 
-  const array = [{label: 'Acre', value: 'Acre'},{label: 'Alagoas', value: 'Alagoas'},{label: 'Amapa', value: 'Amapa'},{label: 'Amazonas', value: 'Amazonas'},{label: 'Bahia', value: 'Bahia'},{label: 'Ceara', value: 'Ceara'},{label: 'Distrito Federal', value: 'Distrito Federal'},{label: 'Espirito Santo', value: 'Espirito Santo'},{label: 'Goias', value: 'Goias'},{label: 'Maranhao', value: 'Maranhao'},{label: 'Mato Grosso', value: 'Mato Grosso'},{label: 'Mato Grosso do Sul', value: 'Mato Grosso do Sul'},{label: 'Minas Gerais', value: 'Minas Gerais'},{label: 'Para', value: 'Para'},{label: 'Paraiba', value: 'Paraiba'},{label: 'Parana', value: 'Parana'},{label: 'Pernambuco', value: 'Pernambuco'},{label: 'Piaui', value: 'Piaui'},{label: 'Rio de Janeiro', value: 'Rio de Janeiro'},{label: 'Rio Grande do Norte', value: 'Rio Grande do Norte'},{label: 'Rio Grande do Sul', value: 'Rio Grande do Sul'},{label: 'Rondonia', value: 'Rondonia'},{label: 'Roraima', value: 'Roraima'},{label: 'Santa Catarina', value: 'Santa Catarina'},{label: 'Sao Paulo', value: 'Sao Paulo'},{label: 'Sergipe', value: 'Sergipe'},{label: 'Tocantins', value: 'Tocantins'}]
-
-
   const faixaEtariaOpt = [
     {label: "Idosos", value: "Idosos"},
     {label: "Crianças", value: "Crianças"},
@@ -100,10 +97,12 @@ export default function CliPesquisa({navigation}) {
                   items={focoOpt}
                 />
               </View>
-
-              <TextInput style={{...styles.inputIsolado}} value={nome} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonalFilter}><Text style={{...styles.btnText}}>Pesquisar</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={getPersonal}><Text style={{...styles.btnText}}>Ver todos</Text></TouchableOpacity>
+              <Text style={{...styles.texto, marginTop: 10}}>OU</Text>
+              <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} value={nome} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
+              <View style={{...styles.conjuntoInput, ...styles.bg, paddingRight: 20}}>
+                <TouchableOpacity style={{...styles.btnCadastro, width: "auto", minWidth: 110}} onPress={getPersonalFilter}><Text style={{...styles.btnText}}>Pesquisar</Text></TouchableOpacity>
+                <TouchableOpacity style={{...styles.btnCadastro, width: "auto", minWidth: 110}} onPress={getPersonal}><Text style={{...styles.btnText}}>Ver todos</Text></TouchableOpacity>
+              </View>
             </View>
 
             {dados && dados.length == 0 ? (

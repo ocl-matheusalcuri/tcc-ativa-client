@@ -35,11 +35,32 @@ export const styles = StyleSheet.create({
     },
     agendaBox: {
       marginBottom: 20, 
-      paddingBottom: 5,
       width: 300, 
       alignItems: "center",
-      borderBottomWidth: 1,
-      borderBottomColor: "gray"
+      borderWidth: 1,
+      borderColor: "#FFF",
+    },
+    agendaConteudo: {
+      borderWidth: 1, 
+      borderColor: "#FFF", 
+      width: "100%", 
+      textAlign: "center",
+      padding: 5,
+      paddingVertical: 10,
+    },
+    agendaBtn: {
+      position: "absolute", 
+      left: 0, 
+      top: 0,
+      zIndex: 10,
+      backgroundColor: "#CC8400",
+      borderWidth: 1,
+      borderColor: "#FFF",
+      borderRightWidth: 2,
+      borderRightColor: "#FFF",
+      height: "100%",
+      paddingHorizontal: 10,
+      width: 45
     },
     foto: {
       alignItems: "center",
@@ -132,7 +153,8 @@ export const styles = StyleSheet.create({
       },
       aparelhoText: {
         maxWidth: 180,
-        minWidth: 180
+        minWidth: 180,
+        paddingRight: 25
       },
           texto: {
               fontSize: 20,
