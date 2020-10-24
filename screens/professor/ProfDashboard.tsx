@@ -118,7 +118,7 @@ export default function ProfDashboard({navigation}) {
             {agenda && agenda.length > 0 ? 
             
             (<ScrollView>
-            <View style={{...styles.bg, paddingBottom: 50}}>
+            <View style={{...styles.bg, paddingBottom: 50, paddingRight: 23}}>
                 {agenda.map((value: any, index: any) => (
                   <View key={index} style={{...styles.bg, ...styles.agendaBox}}>
                     <TouchableOpacity style={{...styles.agendaBtn}} onPress={() => deletarCompromisso(value?._id)}><Icon name="close" style={{paddingTop: "100%"}} size={20} color="#992D2D" /></TouchableOpacity>

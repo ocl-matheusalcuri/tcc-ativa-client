@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ativa!",
     "slug": "ativa",
-    "version": "7.0.0",
+    "version": "9.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "scheme": "myapp",
@@ -20,12 +20,12 @@
     ],
     "ios": {
       "bundleIdentifier": "com.tcc.ativa",
-      "buildNumber": "7.0.0",
+      "buildNumber": "9.0.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.tcc.ativa",
-      "versionCode": 7
+      "versionCode": 9
     }
   }
 }
