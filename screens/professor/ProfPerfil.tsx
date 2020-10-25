@@ -166,6 +166,7 @@ function atualizaPerfil() {
         <Text style={{marginTop: 20, ...styles.btnText}}>Especialidade</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
+            placeholder={{}}
             value={especialidade}
             onValueChange={(value) => setEspecialidade(value)}
             items={especialidadeOpt}
@@ -175,6 +176,7 @@ function atualizaPerfil() {
         <Text style={{...styles.btnText}}>Faixa etária</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
+            placeholder={{}}
             value={faixaEtaria}
             onValueChange={(value) => setFaixaEtaria(value)}
             items={faixaEtariaOpt}
@@ -184,6 +186,7 @@ function atualizaPerfil() {
         <Text style={{...styles.btnText}}>Foco</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
+            placeholder={{}}
             value={foco}
             onValueChange={(value) => setFoco(value)}
             items={focoOpt}

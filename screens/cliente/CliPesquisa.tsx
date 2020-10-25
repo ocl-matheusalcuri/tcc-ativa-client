@@ -74,6 +74,7 @@ export default function CliPesquisa({navigation}) {
             <Text style={{...styles.btnText}}>Especialidade</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={especialidade}
                   onValueChange={(value) => setEspecialidade(value)}
                   items={especialidadeOpt}
@@ -83,6 +84,7 @@ export default function CliPesquisa({navigation}) {
               <Text style={{...styles.btnText}}>Faixa etário alvo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={faixaEtaria}
                   onValueChange={(value) => setFaixaEtaria(value)}
                   items={faixaEtariaOpt}
@@ -92,6 +94,7 @@ export default function CliPesquisa({navigation}) {
               <Text style={{...styles.btnText}}>Foco</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={foco}
                   onValueChange={(value) => setFoco(value)}
                   items={focoOpt}

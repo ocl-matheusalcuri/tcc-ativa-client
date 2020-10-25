@@ -159,6 +159,7 @@ function atualizaPerfil() {
               <Text style={{...styles.btnText, marginTop: 40}}>Objetivo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={novoObjetivo}
                   onValueChange={(value) => setNovoObjetivo(value)}
                   items={objetivoOpt}
@@ -168,6 +169,7 @@ function atualizaPerfil() {
               <Text style={{...styles.btnText}}>Preparo físico</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={novoPrepFisico}
                   onValueChange={(value) => setNovoPrepFisico(value)}
                   items={prepFisicoOpt}
@@ -177,6 +179,7 @@ function atualizaPerfil() {
               <Text style={{...styles.btnText}}>Saúde</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={novoSaude}
                   onValueChange={(value) => setNovoSaude(value)}
                   items={saudeOpt}
@@ -186,6 +189,7 @@ function atualizaPerfil() {
               <Text style={{...styles.btnText}}>Horas ativas por semana</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={novoHrAtiva}
                   onValueChange={(value) => setNovoHrAtiva(value)}
                   items={hrAtivaOpt}

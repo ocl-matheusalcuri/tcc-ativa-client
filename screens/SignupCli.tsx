@@ -79,7 +79,6 @@ export default function SignupCli({navigation}) {
     }
   }
 
-  
     return (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
@@ -115,6 +114,7 @@ export default function SignupCli({navigation}) {
               <Text style={{...styles.btnText}}>Objetivo</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={objetivo}
                   onValueChange={(value) => setObjetivo(value)}
                   items={objetivoOpt}
@@ -124,6 +124,7 @@ export default function SignupCli({navigation}) {
               <Text style={{...styles.btnText}}>Preparo físico</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={prepFisico}
                   onValueChange={(value) => setprepFisico(value)}
                   items={prepFisicoOpt}
@@ -133,6 +134,7 @@ export default function SignupCli({navigation}) {
               <Text style={{...styles.btnText}}>Saúde</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={saude}
                   onValueChange={(value) => setSaude(value)}
                   items={saudeOpt}
@@ -142,6 +144,7 @@ export default function SignupCli({navigation}) {
               <Text style={{...styles.btnText}}>Horas ativas por semana</Text>
               <View style={{...styles.bg, ...styles.picker}}>
                 <RNPickerSelect
+                  placeholder={{}}
                   value={hrAtiva}
                   onValueChange={(value) => sethrAtiva(value)}
                   items={hrAtivaOpt}
