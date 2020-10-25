@@ -30,12 +30,14 @@ export default function CliPerfil({navigation}) {
   const [imgBase64, setImgBase64] = useState<any>();
   const [novoNome, setNovoNome] = useState(user?.nome);
   const [novoEmail, setNovoEmail] = useState(user?.email);
+  const [novoCelular, setNovoCelular] = useState("");
   const [novoNascimento, setNovoNascimento] = useState("");
   const [novoObjetivo, setNovoObjetivo] = useState(user?.objetivo);
   const [novoPrepFisico, setNovoPrepFisico] = useState(user?.prepFisico);
   const [novoSaude, setNovoSaude] = useState(user?.saude);
   const [novoHrAtiva, setNovoHrAtiva] = useState(user?.hrAtiva);
   const [status, setStatus] = useState("");
+  const [error, setError] = useState("");
 
 
   const objetivoOpt = [
@@ -105,21 +107,29 @@ async function handleProfileImage() {
 
 function atualizaPerfil() {
   setStatus("");
-  api.put(`${SERVER_URL}/api/alunoModel/editarPerfil`, {
-    body: {
-      alunoId: user?._id, 
-      nome: novoNome, 
-      email: novoEmail, 
-      nascimento: novoNascimento != "" ? novoNascimento: user?.nascimento, 
-      hrAtiva: novoHrAtiva, 
-      saude: novoSaude, 
-      prepFisico: novoPrepFisico, 
-      objetivo: novoObjetivo
-    }
-  }).then(async response => {
-    refreshUser(user?._id).then(() => Alert.alert("Perfil atualizado com sucesso!"));
-    
-  })
+  setError("");
+  const podeAtualizar = (novoNascimento === "" || novoNascimento.length === 10) && (novoCelular === "" || novoCelular.length === 15);
+
+  if(podeAtualizar) {
+    api.put(`${SERVER_URL}/api/alunoModel/editarPerfil`, {
+      body: {
+        alunoId: user?._id, 
+        nome: novoNome, 
+        email: novoEmail, 
+        celular: novoCelular != "" ? novoCelular : user?.celular, 
+        nascimento: novoNascimento != "" ? novoNascimento : user?.nascimento, 
+        hrAtiva: novoHrAtiva, 
+        saude: novoSaude, 
+        prepFisico: novoPrepFisico, 
+        objetivo: novoObjetivo
+      }
+    }).then(async response => {
+      refreshUser(user?._id).then(() => Alert.alert("Perfil atualizado com sucesso!"));
+    });
+  } else {
+    setError("Por favor preencha todos os campos!");
+    setTimeout(function(){ setError(""); }, 3000);
+  }
 }
 
 
@@ -128,6 +138,7 @@ function atualizaPerfil() {
       <ScrollView>
         <View style={{...styles.container, ...styles.bg}}>
             <View style={styles.bg}>
+            {!!error && <Text style={{...styles.error, width: 300}}>{error}</Text>}
             {!!status && <Text style={{...styles.sucesso}}>{status}</Text>}
               <View style={{...styles.bg, ...styles.conjuntoInput}}>
                 <View  style={{...styles.bg, ...styles.foto}}>
@@ -138,8 +149,19 @@ function atualizaPerfil() {
                 </View>
 
                 <View  style={{...styles.bg}}>
-                <TextInput autoCapitalize="words" style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
-                <TextInput autoCapitalize="none" style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
+                <TextInput autoCapitalize="words" style={{...styles.input, marginBottom: 1}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
+                <TextInput autoCapitalize="none" style={{...styles.input, marginBottom: 1}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
+                <TextInputMask 
+                  type={'cel-phone'}
+                  options={{
+                    maskType: 'BRL',
+                    withDDD: true,
+                  }} 
+                  value={novoCelular}
+                  style={{...styles.input, marginBottom: 1}} 
+                  keyboardType="number-pad" 
+                  placeholder={user?.celular}
+                  onChangeText={celular => setNovoCelular(celular)}/>
                 <TextInputMask 
                   type={'datetime'}
                   options={{

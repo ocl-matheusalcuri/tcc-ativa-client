@@ -83,7 +83,7 @@ export default function SignupProf({navigation}) {
       faixaEtaria: faixaEtaria
     }
 
-    const formularioPreenchido = senha && nome && celular && email && nascimento && instagram && facebook && cref && foco && especialidade && faixaEtaria;
+    const formularioPreenchido = senha && nome && celular && email && nascimento && instagram && facebook && cref && foco && especialidade && faixaEtaria && nascimento.length === 10 && celular.length === 15;
 
     if(senha.length < 8) {
       setError("Senha deve conter no mínimo 8 caracteres!")
@@ -91,7 +91,14 @@ export default function SignupProf({navigation}) {
       setError("Por favor preencha todos os campos!")
     } else {
       setError("");
-      await signUp(prof, "personal").then((response: any) => navigation.navigate("Login", { status: response }));
+      await signUp(prof, "personal").then((response: any) => {
+        if(response === "Conta criada com sucesso!") {
+          setError("");
+          navigation.navigate("Login", { status: response });
+        } else {
+          setError(response);
+        }
+      });
     }
   }
 
@@ -99,7 +106,7 @@ export default function SignupProf({navigation}) {
       <ScrollView>
             <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
-            {!!error && <Text style={{...styles.error}}>{error}</Text>}
+            {!!error && <Text style={{...styles.error, width: 300}}>{error}</Text>}
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput autoCapitalize="words" style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
                 <TextInputMask 

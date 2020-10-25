@@ -68,21 +68,28 @@ export default function SignupCli({navigation}) {
       prepFisico: prepFisico, 
       objetivo: objetivo 
     }
-    const formularioPreenchido = senha && nome && celular && email && nascimento && hrAtiva && saude && prepFisico && objetivo;
+    const formularioPreenchido = senha && nome && celular && email && nascimento && hrAtiva && saude && prepFisico && objetivo && nascimento.length === 10 && celular.length === 15;
     if(senha.length < 8) {
       setError("Senha deve conter no mínimo 8 caracteres!")
     } else if(!formularioPreenchido) {
       setError("Por favor preencha todos os campos!")
     } else {
       setError("");
-      await signUp(aluno, "aluno").then((response: any) => navigation.navigate("Login", { status: response }));
+      await signUp(aluno, "aluno").then((response: any) => {
+        if(response === "Conta criada com sucesso!") {
+          setError("");
+          navigation.navigate("Login", { status: response });
+        } else {
+          setError(response);
+        }
+      });
     }
   }
 
     return (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
-              {!!error && <Text style={{...styles.error}}>{error}</Text>}
+              {!!error && <Text style={{...styles.error, width: 300}}>{error}</Text>}
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
                 <TextInput autoCapitalize="words" style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
                 <TextInputMask 

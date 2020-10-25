@@ -56,15 +56,12 @@ export const AuthProvider: React.FC = ({children}) => {
     async function signUp(user: any, type: "aluno" | "personal") {
       const url = type === "aluno" ? `${SERVER_URL}/api/aluno` : `${SERVER_URL}/api/personal`
       const response = await api.post(url, {user});
-
         //@ts-ignore
         const error = response.data.error;
         //@ts-ignore
         const msg = response.data.mensagem || "Conta criada com sucesso!";
 
-        if(!error) {
-          return msg;
-        }
+        return msg;
     }
 
     async function signIn(email: string, password:string) {

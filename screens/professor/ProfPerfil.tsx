@@ -39,6 +39,7 @@ export default function ProfPerfil() {
   const [faixaEtaria, setFaixaEtaria] = useState(user?.faixaEtaria);
   const [foco, setFoco] = useState(user?.foco);
   const [status, setStatus] = useState("");
+  const [error, setError] = useState("");
 
 
 
@@ -101,28 +102,39 @@ async function handleProfileImage() {
 }
 
 function atualizaPerfil() {
-  api.put(`${SERVER_URL}/api/personalModel/editarPerfil`, {
-    body: {
-      personalId: user?._id,
-      nome: novoNome,
-       celular: novoCelular != "" ? novoCelular : user?.celular, 
-       email: novoEmail, 
-       nascimento: novoNascimento != "" ? novoNascimento : user?.nascimento, 
-       instagram: novoInstagram, 
-       facebook: novoFacebook, 
-       foco: foco, 
-       especializacao: especialidade, 
-       faixaEtaria: faixaEtaria
-    }
-  }).then(async response => {
-    await refreshUser(user?._id)
-  })
+  setError("");
+  setStatus("");
+
+  const podeAtualizar = (novoNascimento === "" || novoNascimento.length === 10) && (novoCelular === "" || novoCelular.length === 15);
+
+  if(podeAtualizar) {
+    api.put(`${SERVER_URL}/api/personalModel/editarPerfil`, {
+      body: {
+        personalId: user?._id,
+        nome: novoNome,
+         celular: novoCelular != "" ? novoCelular : user?.celular, 
+         email: novoEmail, 
+         nascimento: novoNascimento != "" ? novoNascimento : user?.nascimento, 
+         instagram: novoInstagram, 
+         facebook: novoFacebook, 
+         foco: foco, 
+         especializacao: especialidade, 
+         faixaEtaria: faixaEtaria
+      }
+    }).then(async response => {
+      await refreshUser(user?._id)
+    })
+  } else {
+    setError("Por favor preencha todos os campos!");
+    setTimeout(function(){ setError(""); }, 3000);
+  }
 }
 
     return (
       <ScrollView>
       <View style={{...styles.container, ...styles.bg}}>
       <View style={styles.bg}>
+      {!!error && <Text style={{...styles.error, width: 300}}>{error}</Text>}
       {!!status && <Text style={{...styles.sucesso}}>{status}</Text>}
         <View style={{...styles.bg, ...styles.conjuntoInput}}>
           <View style={{...styles.bg, ...styles.foto}}>
