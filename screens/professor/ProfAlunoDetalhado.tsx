@@ -10,7 +10,9 @@ import api from '../../services/api';
 import { styles } from '../styles';
 
 
-import { SERVER_URL } from '../../url'
+import { SERVER_URL } from '../../url';
+import Dialog from "react-native-dialog";
+
 
 //@ts-ignore
 export default function ProfAlunoDetalhado({route, navigation}) {
@@ -28,6 +30,9 @@ const [peso, setPeso] = useState<number>();
 const [massaMuscular, setMassaMuscular] = useState<number>();
 const [imc, setImc] = useState<string>();
 const [aluno, setAluno] = useState<any>();
+const [visible, setVisible] = useState(false);  
+const [treinoId, setTreinoId] = useState("");  
+
 
 async function getAlunoInfo() {
   await api.get(`${SERVER_URL}/api/alunoModel/getById`, {
@@ -102,11 +107,27 @@ async function criarTreino() {
   getTreinos();
 }
 
+async function deletarTreino() {
+  await api.delete(`${SERVER_URL}/api/treinoModel/deletarTreino`, {
+    params: {
+      treinoId
+    }
+  }).then(response => {getTreinos(); setVisible(false)});
+}
+
 
     return aluno ? (
       <>      
       <ScrollView>
           <View style={{...styles.container, ...styles.bg, minHeight: 732}}>
+          <Dialog.Container visible={visible}>
+                <Dialog.Title>Deletar treino</Dialog.Title>
+                <Dialog.Description>
+                  Você tem certeza de que deseja deletar este treino?
+                </Dialog.Description>
+                <Dialog.Button label="Cancelar" onPress={() => {setVisible(false); setTreinoId("")}} />
+                <Dialog.Button label="Confirmar" onPress={deletarTreino} />
+            </Dialog.Container>
               <View style={styles.bg}>
                 <View style={{...styles.bg, ...styles.conjuntoInput, marginBottom: 40}}>
                   <View  style={{...styles.bg, ...styles.foto}}>
@@ -134,8 +155,11 @@ async function criarTreino() {
                 <View style={{...styles.bg}}>
                 {treinos?.map((parent: any, index: any) => (
                   <View key={index} style={{...styles.bg}}>
-                    <View style={{...styles.bg, ...styles.profs}}>
-                      <Text style={{marginBottom: 15, ...styles.btnText}}>{parent.nome}</Text>
+                    <View style={{...styles.bg, ...styles.profs, alignContent: "center"}}>
+                      <Text style={{...styles.btnText, fontWeight: "bold"}}>{parent.nome}</Text>
+                      <TouchableOpacity style={{...styles.btnCancel, width: 100}} onPress={() => { setTreinoId(parent._id); setVisible(!visible) }}>
+                        <Text style={{...styles.btnText}}>Deletar treino</Text>
+                      </TouchableOpacity>
                     </View>
 
                     <View style={{...styles.bg, ...styles.profs}}>
