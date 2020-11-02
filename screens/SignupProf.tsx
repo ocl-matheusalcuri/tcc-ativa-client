@@ -137,7 +137,16 @@ export default function SignupProf({navigation}) {
                 <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
                 <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
               </View>
-              <TextInput autoCapitalize="characters" style={{...styles.inputSignUp, width: 300}} placeholder="CREF" onChangeText={cref => setCREF(cref)}/>
+              <TextInputMask 
+                  type={'custom'}
+                  options={{
+                    mask: '999999-A/AA'
+                  }} 
+                  value={cref}
+                  style={{...styles.inputSignUp, width: 300}} 
+                  placeholder="CREF" 
+                  autoCapitalize="characters"
+                  onChangeText={cref => setCREF(cref)}/>
               <TextInput autoCapitalize="none" style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
               
               <Text style={{...styles.btnText}}>Especialidade</Text>
