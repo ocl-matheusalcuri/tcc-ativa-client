@@ -21,11 +21,17 @@ export default function CliPesquisa({navigation}) {
   const [faixaEtaria, setFaixaEtaria] = useState("Idosos");
   const [foco, setFoco] = useState("Fortalecimento");
   const [dados, setDados] = useState<any>();
+  const [estado, setEstado] = useState("AC");
+  const [cidade, setCidade] = useState("");
+
+  const estados1 = [{label: 'AC', value: 'AC'},{label: 'AL', value: 'AL'},{label: 'AP', value: 'AP'},{label: 'AM', value: 'AM'},{label: 'BA', value: 'BA'},{label: 'CE', value: 'CE'},{label: 'DF', value: 'DF'},{label: 'ES', value: 'ES'},{label: 'GO', value: 'GO'},{label: 'MA', value: 'MA'},{label: 'MT', value: 'MT'},{label: 'MS', value: 'MS'},{label: 'MG', value: 'MG'},{label: 'PA', value: 'PA'},{label: 'PB', value: 'PB'},{label: 'PR', value: 'PR'},{label: 'PE', value: 'PE'},{label: 'PI', value: 'PI'},{label: 'RJ', value: 'RJ'},{label: 'RN', value: 'RN'},{label: 'RS', value: 'RS'},{label: 'RO', value: 'RO'},{label: 'RR', value: 'RR'},{label: 'SC', value: 'SC'},{label: 'SP', value: 'SP'},{label: 'SE', value: 'SE'},{label: 'TO', value: 'TO'}]
+
 
   async function getPersonal() {
     const response = await api.get(`${SERVER_URL}/api/personalModel/getAll`)
     setDados(response.data);
     setNome("");
+    setCidade("");
   }
 
   async function getPersonalFilter() {
@@ -34,7 +40,20 @@ export default function CliPesquisa({navigation}) {
         especialidade,
         foco,
         faixaEtaria,
-        nome
+        nome,
+        cidade,
+        estado
+      }
+    });
+
+    setDados(response.data);
+  };
+
+  async function getPersonalFilterCidade() {
+    const response = await api.get(`${SERVER_URL}/api/personalModel/getFiltrado`, {
+      params: {
+        cidade,
+        estado
       }
     });
 
@@ -71,8 +90,10 @@ export default function CliPesquisa({navigation}) {
     return (
         <View style={{...styles.container, ...styles.bg}}>
             <View style={{...styles.bg}}>
+            <View style={{...styles.conjuntoInput, ...styles.bg}}>
+              <View style={{...styles.bg}}>
             <Text style={{...styles.btnText}}>Especialidade</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 135}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={especialidade}
@@ -80,9 +101,11 @@ export default function CliPesquisa({navigation}) {
                   items={especialidadeOpt}
                 />
               </View>
+              </View>
 
+            <View style={{...styles.bg}}>
               <Text style={{...styles.btnText}}>Faixa etário alvo</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 135, marginRight: 20}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={faixaEtaria}
@@ -90,6 +113,9 @@ export default function CliPesquisa({navigation}) {
                   items={faixaEtariaOpt}
                 />
               </View>
+              </View>
+            </View>
+          
 
               <Text style={{...styles.btnText}}>Foco</Text>
               <View style={{...styles.bg, ...styles.picker}}>
@@ -100,11 +126,23 @@ export default function CliPesquisa({navigation}) {
                   items={focoOpt}
                 />
               </View>
-              <Text style={{...styles.texto, marginTop: 10}}>OU</Text>
-              <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} value={nome} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
+
+              <View style={{...styles.conjuntoInput, ...styles.bg}}>
+                <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160}} value={cidade} placeholder="Cidade" onChangeText={cidade => setCidade(cidade)}/>
+                <View style={{...styles.picker, width: 100, marginRight: 20}}>
+                    <RNPickerSelect
+                      placeholder={{}}
+                      value={estado}
+                      onValueChange={(value) => setEstado(value)}
+                      items={estados1}
+                    />
+                </View>
+              </View>
+              <TextInput autoCapitalize="none" style={{...styles.inputIsolado, marginTop: 10}} value={nome} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
               <View style={{...styles.conjuntoInput, ...styles.bg, paddingRight: 20}}>
-                <TouchableOpacity style={{...styles.btnCadastro, width: "auto", minWidth: 110}} onPress={getPersonalFilter}><Text style={{...styles.btnText}}>Pesquisar</Text></TouchableOpacity>
-                <TouchableOpacity style={{...styles.btnCadastro, width: "auto", minWidth: 110}} onPress={getPersonal}><Text style={{...styles.btnText}}>Ver todos</Text></TouchableOpacity>
+                <TouchableOpacity style={{...styles.btnCadastro, width: "auto", minWidth: 60}} onPress={getPersonalFilter}><Text style={{...styles.btnText}}>Pesquisar</Text></TouchableOpacity>
+                <TouchableOpacity style={{...styles.btnCadastro, width: "auto", minWidth: 80}} onPress={getPersonalFilterCidade}><Text style={{...styles.btnText}}>Pesquisar por região</Text></TouchableOpacity>
+                <TouchableOpacity style={{...styles.btnCadastro, width: "auto", minWidth: 60}} onPress={getPersonal}><Text style={{...styles.btnText}}>Ver todos</Text></TouchableOpacity>
               </View>
             </View>
 
@@ -115,7 +153,7 @@ export default function CliPesquisa({navigation}) {
             ) :
             (
               <ScrollView>
-              <View style={{...styles.bg, overflow: "scroll", paddingBottom: 50}}>
+              <View style={{...styles.bg, paddingBottom: 50, width: 325}}>
                 { dados && dados.map((value: any, index: any) => (
                   <TouchableOpacity key={index} onPress={() => navigation.navigate("CliProfDetalhadoScreen", {
                     personalId: value._id,
@@ -124,7 +162,7 @@ export default function CliPesquisa({navigation}) {
                   <View style={{...styles.bg, maxWidth: 40}}>
                     <Image source={{uri: value?.fotoUrl ? value?.fotoUrl :  `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`}} style={{width: 40, height: 40, borderRadius: 400/ 2}}/>
                   </View>
-                  <View style={{...styles.bg, ...styles.itensProf}}>
+                  <View style={{...styles.bg, ...styles.itensProf, width: 180}}>
                     <Text style={{...styles.btnText}}>{value.nome}</Text>
                     <Text style={{...styles.btnText}}>{value.email}</Text>
                     <Text style={{...styles.btnText}}>{value.celular}</Text>

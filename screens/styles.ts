@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
         paddingVertical: 10
       },
       itensProf: {
-        marginHorizontal: 40,
+        marginHorizontal: 20,
       },
       agendaCardBg: {
         backgroundColor: "#593100"

@@ -40,6 +40,11 @@ export default function ProfPerfil() {
   const [foco, setFoco] = useState(user?.foco);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
+  const [estado, setEstado] = useState(user?.estado);
+  const [cidade, setCidade] = useState(user?.cidade);
+
+  const estados1 = [{label: 'AC', value: 'AC'},{label: 'AL', value: 'AL'},{label: 'AP', value: 'AP'},{label: 'AM', value: 'AM'},{label: 'BA', value: 'BA'},{label: 'CE', value: 'CE'},{label: 'DF', value: 'DF'},{label: 'ES', value: 'ES'},{label: 'GO', value: 'GO'},{label: 'MA', value: 'MA'},{label: 'MT', value: 'MT'},{label: 'MS', value: 'MS'},{label: 'MG', value: 'MG'},{label: 'PA', value: 'PA'},{label: 'PB', value: 'PB'},{label: 'PR', value: 'PR'},{label: 'PE', value: 'PE'},{label: 'PI', value: 'PI'},{label: 'RJ', value: 'RJ'},{label: 'RN', value: 'RN'},{label: 'RS', value: 'RS'},{label: 'RO', value: 'RO'},{label: 'RR', value: 'RR'},{label: 'SC', value: 'SC'},{label: 'SP', value: 'SP'},{label: 'SE', value: 'SE'},{label: 'TO', value: 'TO'}]
+
 
 
 
@@ -119,10 +124,12 @@ function atualizaPerfil() {
          facebook: novoFacebook, 
          foco: foco, 
          especializacao: especialidade, 
-         faixaEtaria: faixaEtaria
+         faixaEtaria: faixaEtaria,
+         cidade: cidade,
+         estado: estado
       }
     }).then(async response => {
-      await refreshUser(user?._id)
+      refreshUser(user?._id).then(() => Alert.alert("Perfil atualizado com sucesso!"))
     })
   } else {
     setError("Por favor preencha todos os campos!");
@@ -158,6 +165,18 @@ function atualizaPerfil() {
                   onChangeText={nascimento => setNovoNascimento(nascimento)}/>
           </View>
         </View>
+
+        <View style={{...styles.conjuntoInput, ...styles.bg}}>
+            <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160}} value={cidade} placeholder={user?.cidade} onChangeText={cidade => setCidade(cidade)}/>
+            <View style={{...styles.picker, width: 100, marginRight: 25}}>
+                <RNPickerSelect
+                  placeholder={{}}
+                  value={estado}
+                  onValueChange={(value) => setEstado(value)}
+                  items={estados1}
+                />
+            </View>
+          </View>
 
         <TextInputMask 
                   type={'cel-phone'}

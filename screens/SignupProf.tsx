@@ -28,6 +28,11 @@ export default function SignupProf({navigation}) {
   const [faixaEtaria, setFaixaEtaria] = useState("Idosos");
   const [foco, setFoco] = useState("Fortalecimento");
   const [error, setError] = useState("");
+  const [estado, setEstado] = useState("AC");
+  const [cidade, setCidade] = useState("");
+
+  const estados1 = [{label: 'AC', value: 'AC'},{label: 'AL', value: 'AL'},{label: 'AP', value: 'AP'},{label: 'AM', value: 'AM'},{label: 'BA', value: 'BA'},{label: 'CE', value: 'CE'},{label: 'DF', value: 'DF'},{label: 'ES', value: 'ES'},{label: 'GO', value: 'GO'},{label: 'MA', value: 'MA'},{label: 'MT', value: 'MT'},{label: 'MS', value: 'MS'},{label: 'MG', value: 'MG'},{label: 'PA', value: 'PA'},{label: 'PB', value: 'PB'},{label: 'PR', value: 'PR'},{label: 'PE', value: 'PE'},{label: 'PI', value: 'PI'},{label: 'RJ', value: 'RJ'},{label: 'RN', value: 'RN'},{label: 'RS', value: 'RS'},{label: 'RO', value: 'RO'},{label: 'RR', value: 'RR'},{label: 'SC', value: 'SC'},{label: 'SP', value: 'SP'},{label: 'SE', value: 'SE'},{label: 'TO', value: 'TO'}]
+
 
 
   const especialidadeOpt = [
@@ -80,10 +85,12 @@ export default function SignupProf({navigation}) {
       cref: cref, 
       foco: foco, 
       especializacao: especialidade, 
-      faixaEtaria: faixaEtaria
+      faixaEtaria: faixaEtaria,
+      estado: estado,
+      cidade: cidade
     }
 
-    const formularioPreenchido = senha && nome && celular && email && nascimento && instagram && facebook && cref && foco && especialidade && faixaEtaria && nascimento.length === 10 && celular.length === 15;
+    const formularioPreenchido = senha && nome && celular && email && nascimento && instagram && facebook && cref && foco && especialidade && faixaEtaria && nascimento.length === 10 && celular.length === 15 && cidade;
 
     if(senha.length < 8) {
       setError("Senha deve conter no mínimo 8 caracteres!")
@@ -137,6 +144,19 @@ export default function SignupProf({navigation}) {
                 <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
                 <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
               </View>
+
+              <View style={{...styles.conjuntoInput, ...styles.bg}}>
+                <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160}} placeholder="Cidade" onChangeText={cidade => setCidade(cidade)}/>
+                <View style={{...styles.picker, width: 100, marginRight: 25}}>
+                    <RNPickerSelect
+                      placeholder={{}}
+                      value={estado}
+                      onValueChange={(value) => setEstado(value)}
+                      items={estados1}
+                    />
+                </View>
+              </View>
+
               <TextInputMask 
                   type={'custom'}
                   options={{

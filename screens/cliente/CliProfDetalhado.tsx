@@ -70,7 +70,11 @@ export default function CliProfDetalhado({route, navigation}) {
                     <Text style={{...styles.profText}}>{personal.celular}</Text>
                 </View>
 
-              
+                <View style={{...styles.bg, ...styles.row}}>
+                    <Text style={{...styles.profText, fontWeight: "bold"}}>Localidade:   </Text>
+                    <Text style={{...styles.profText}}>{personal.cidade}, {personal.estado}</Text>
+                </View>
+
                 <View style={{...styles.bg, ...styles.row}}>
                     <Text style={{...styles.profText, fontWeight: "bold"}}>CREF:   </Text>
                     <Text style={{...styles.profText}}>{personal.cref}</Text>
