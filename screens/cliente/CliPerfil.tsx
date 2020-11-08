@@ -149,28 +149,45 @@ function atualizaPerfil() {
                 </View>
 
                 <View  style={{...styles.bg}}>
-                <TextInput autoCapitalize="words" style={{...styles.input, marginBottom: 1}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
-                <TextInput autoCapitalize="none" style={{...styles.input, marginBottom: 1}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
-                <TextInputMask 
-                  type={'cel-phone'}
-                  options={{
-                    maskType: 'BRL',
-                    withDDD: true,
-                  }} 
-                  value={novoCelular}
-                  style={{...styles.input, marginBottom: 1}} 
-                  keyboardType="number-pad" 
-                  placeholder={user?.celular}
-                  onChangeText={celular => setNovoCelular(celular)}/>
-                <TextInputMask 
-                  type={'datetime'}
-                  options={{
-                    format: 'DD/MM/YYYY'
-                  }} 
-                  style={{...styles.input}} 
-                  value={novoNascimento} 
-                  placeholder={user?.nascimento} 
-                  onChangeText={nascimento => setNovoNascimento(nascimento)}/>
+                  <View style={{...styles.bg}}>
+                    <Text style={{...styles.btnText, marginBottom: 5}}>Nome</Text>
+                    <TextInput autoCapitalize="words" style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
+                  </View>
+
+                  <View style={{...styles.bg}}>
+                    <Text style={{...styles.btnText, marginBottom: 5}}>Email</Text>
+                    <TextInput autoCapitalize="none" style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
+                  </View>
+
+                  <View style={{...styles.bg}}>
+                    <Text style={{...styles.btnText, marginBottom: 5}}>Celular</Text>
+                    <TextInputMask 
+                      type={'cel-phone'}
+                      options={{
+                        maskType: 'BRL',
+                        withDDD: true,
+                      }} 
+                      value={novoCelular}
+                      style={{...styles.input}} 
+                      keyboardType="number-pad" 
+                      placeholder={user?.celular}
+                      onChangeText={celular => setNovoCelular(celular)}/>
+                  </View>
+
+                  <View style={{...styles.bg}}>
+                    <Text style={{...styles.btnText, marginBottom: 5}}>Seu nascimento</Text>
+                    <TextInputMask 
+                      type={'datetime'}
+                      options={{
+                        format: 'DD/MM/YYYY'
+                      }} 
+                      style={{...styles.input}} 
+                      value={novoNascimento} 
+                      placeholder={user?.nascimento} 
+                      onChangeText={nascimento => setNovoNascimento(nascimento)}/>
+                  </View>
+   
+                
                 </View>
               </View>
 

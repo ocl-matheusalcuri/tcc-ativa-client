@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
       height: 30,
       width: 160,
       paddingHorizontal: 10,
-      marginVertical: 20,
+      marginBottom: 10,
       marginRight: 20,
       borderRadius: 5
     },
@@ -114,7 +114,7 @@ export const styles = StyleSheet.create({
       height: 30,
       width: 290,
       paddingHorizontal: 10,
-      marginVertical: 20,
+      marginBottom: 20,
       marginRight: 20,
       borderRadius: 5
     },
@@ -145,7 +145,7 @@ export const styles = StyleSheet.create({
               backgroundColor: "#fff",
               padding: 0,
               paddingHorizontal: 10,
-              marginVertical: 20,
+              marginBottom: 20,
               height: 30,
               width: 130,
               marginRight: 20,
@@ -167,7 +167,8 @@ export const styles = StyleSheet.create({
       padding: 10,
       alignItems: "center",
       marginVertical: 10,
-      width: 290
+      width: 290,
+      borderRadius: 4
     },
     btnText: {
       color: "#FFF",
@@ -219,7 +220,7 @@ export const styles = StyleSheet.create({
       backgroundColor: "#4B0082",
       padding: 10,
       alignItems: "center",
-      marginVertical: 10,
+      marginVertical: 0,
       marginTop: 15,
       width: 290,
       borderRadius: 44/2

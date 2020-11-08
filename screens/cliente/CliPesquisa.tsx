@@ -128,7 +128,7 @@ export default function CliPesquisa({navigation}) {
               </View>
 
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160}} value={cidade} placeholder="Cidade" onChangeText={cidade => setCidade(cidade)}/>
+                <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160, marginTop: 20}} value={cidade} placeholder="Cidade" onChangeText={cidade => setCidade(cidade)}/>
                 <View style={{...styles.picker, width: 100, marginRight: 20}}>
                     <RNPickerSelect
                       placeholder={{}}

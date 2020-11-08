@@ -97,7 +97,7 @@ export default function ProfDashboard({navigation}) {
     return (
         <View style={{...styles.container, ...styles.bg}}>
           <View style={{...styles.bg, marginBottom: 40}}>
-            <TextInput style={{...styles.inputIsolado}} value={titulo} placeholder="Título do evento" onChangeText={titulo => setTitulo(titulo)}/>
+            <TextInput style={{...styles.inputIsolado, marginTop: 20}} value={titulo} placeholder="Título do evento" onChangeText={titulo => setTitulo(titulo)}/>
             <Text style={{...styles.btnText}}>Dia selecionado: {data}</Text>
             <TouchableOpacity style={{...styles.btnCadastro}} onPress={showDatepicker}><Text style={{...styles.btnText}}>Selecione o dia</Text></TouchableOpacity>
             <Text style={{...styles.btnText}}>Horário selecionado: {hora}</Text>

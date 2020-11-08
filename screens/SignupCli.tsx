@@ -91,20 +91,33 @@ export default function SignupCli({navigation}) {
             <View style={{...styles.bg}}>
               {!!error && <Text style={{...styles.error, width: 300}}>{error}</Text>}
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput autoCapitalize="words" style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
-                <TextInputMask 
-                  type={'datetime'}
-                  options={{
-                    format: 'DD/MM/YYYY'
-                  }} 
-                  style={{...styles.inputSignUp}} 
-                  value={nascimento} 
-                  placeholder="Nascimento" 
-                  onChangeText={nascimento => setNascimento(nascimento)}/>
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginTop: 20, marginBottom: 5}}>Nome</Text>
+                  <TextInput autoCapitalize="words" style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
+                </View>
+
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginTop: 20, marginBottom: 5}}>Data de nascimento</Text>
+                  <TextInputMask 
+                    type={'datetime'}
+                    options={{
+                      format: 'DD/MM/YYYY'
+                    }} 
+                    style={{...styles.inputSignUp}} 
+                    value={nascimento} 
+                    placeholder="xx/xx/xxxx" 
+                    onChangeText={nascimento => setNascimento(nascimento)}/>
+                </View>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-                <TextInputMask 
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Email</Text>
+                  <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
+                </View>
+
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Celular</Text>
+                  <TextInputMask 
                   type={'cel-phone'}
                   options={{
                     maskType: 'BRL',
@@ -113,13 +126,18 @@ export default function SignupCli({navigation}) {
                   value={celular}
                   style={{...styles.inputSignUp}} 
                   keyboardType="number-pad" 
-                  placeholder="Celular" 
+                  placeholder="(xx) xxxxx-xxxx"
                   onChangeText={celular => setCelular(celular)}/>
+                </View>
               </View>
-              <TextInput autoCapitalize="none" style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
+
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Senha</Text>
+                  <TextInput autoCapitalize="none" style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Mínimo 8 dígitos" onChangeText={senha => setSenha(senha)}/>
+                </View>
               
               <Text style={{...styles.btnText}}>Objetivo</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 300}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={objetivo}
@@ -129,7 +147,7 @@ export default function SignupCli({navigation}) {
               </View>
 
               <Text style={{...styles.btnText}}>Preparo físico</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 300}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={prepFisico}
@@ -139,7 +157,7 @@ export default function SignupCli({navigation}) {
               </View>
 
               <Text style={{...styles.btnText}}>Saúde</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 300}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={saude}
@@ -149,7 +167,7 @@ export default function SignupCli({navigation}) {
               </View>
 
               <Text style={{...styles.btnText}}>Horas ativas por semana</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 300}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={hrAtiva}
@@ -157,8 +175,8 @@ export default function SignupCli({navigation}) {
                   items={hrAtivaOpt}
                 />
               </View>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("Login")}><Text style={{...styles.btnText}}>Voltar ao login</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={handleSignUp}><Text style={{...styles.btnText}}>Criar conta</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro, width: 300, marginTop: 40}} onPress={() => navigation.navigate("Login")}><Text style={{...styles.btnText}}>Voltar ao login</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro, width: 300}} onPress={handleSignUp}><Text style={{...styles.btnText}}>Criar conta</Text></TouchableOpacity>
             </View>
         </View>
     )

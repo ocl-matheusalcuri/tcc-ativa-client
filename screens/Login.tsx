@@ -43,9 +43,14 @@ export default function Login({route, navigation}) {
               <Image source={require('../assets/images/logo.png')} style={{width: 300, height: 300, borderRadius: 400/ 2}}/>
               {!!error && <Text style={{...styles.error}}>{error}</Text>}
               {!!status && <Text style={{...styles.sucesso}}>{status}</Text>}
-              <TextInput autoCapitalize="none" autoCompleteType="email" style={{...styles.inputIsolado}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-              <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
-              <TextInput/>
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Usuário</Text>
+                  <TextInput autoCapitalize="none" autoCompleteType="email" style={{...styles.inputIsolado}} placeholder="Email" onChangeText={email => setEmail(email)}/>
+                </View>
+                <View style={{...styles.bg, marginBottom: 20}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Senha</Text>
+                  <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} secureTextEntry={true} placeholder="Mínimo 8 dígitos" onChangeText={senha => setSenha(senha)}/>
+                </View>
               <TouchableOpacity style={{...styles.btnEntrar}} onPress={handleSignIn}><Text style={{...styles.btnText}}>Entrar</Text></TouchableOpacity>
               <Text style={{...styles.texto}}>OU</Text>
               <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("SignupCli")}><Text style={{...styles.btnText}}>Criar conta como Aluno</Text></TouchableOpacity>

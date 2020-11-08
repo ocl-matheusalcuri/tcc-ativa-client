@@ -70,20 +70,20 @@ export default function ProfAlunos({navigation}) {
       {!!error && <Text style={{...styles.error, marginRight: 20}}>{error}</Text>}
       <View style={{...styles.bg}}>
 
-        <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} value={nome} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
+        <TextInput autoCapitalize="none" style={{...styles.inputIsolado, marginTop: 20}} value={nome} placeholder="Procure por nome ou email" onChangeText={nome => setNome(nome)}/>
         <TouchableOpacity style={{...styles.btnCadastro}} onPress={getAlunosPorTexto}><Text style={{...styles.btnText}}>Pesquisar</Text></TouchableOpacity>
         <TouchableOpacity style={{...styles.btnCadastro}} onPress={getAlunos}><Text style={{...styles.btnText}}>Ver todos</Text></TouchableOpacity>
 
       </View>
 
       <View style={{...styles.bg}}>
-          <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} value={clienteId} placeholder="Adicionar novo cliente" onChangeText={id => setClienteId(id)}/>
+          <TextInput autoCapitalize="none" style={{...styles.inputIsolado, marginTop: 20}} value={clienteId} placeholder="Adicionar novo cliente" onChangeText={id => setClienteId(id)}/>
           <TouchableOpacity style={{...styles.btnCadastro}} onPress={addCliente}><Text style={{...styles.btnText}}>Adicionar</Text></TouchableOpacity>
         </View>
 
      { dados?.length > 0 ? 
      (<ScrollView>
-        <View style={{...styles.bg, paddingBottom: 50}}>
+        <View style={{...styles.bg, paddingBottom: 50, paddingRight: 25}}>
           
           {dados.map((value: any, index: any) => (
             <TouchableOpacity key={index} onPress={() => navigation.navigate("ProfAlunoDetalhadoScreen", {

@@ -25,6 +25,9 @@ const [nomeTreino, setNomeTreino] = useState("");
 const [aparelho, setAparelho] = useState("");
 const [serie, setSerie] = useState<number>();
 const [repeticao, setRepeticao] = useState<number>();
+const [novoAparelho, setNovoAparelho] = useState<any>({});
+const [novaSerie, setNovaSerie] = useState<any>({});
+const [novaRepeticao, setNovaRepeticao] = useState<any>({});
 const [treinos, setTreinos] = useState<any>();
 const [peso, setPeso] = useState<number>();
 const [massaMuscular, setMassaMuscular] = useState<number>();
@@ -44,14 +47,6 @@ async function getAlunoInfo() {
   })
 }
 
-// const test = [
-//   {
-//     treinoId,
-//     título,
-//     descricaoTreino: [{}]
-//   }
-// ]
-
 async function getTreinos() {
   const response = await api.get(`${SERVER_URL}/api/treinoModel/getTreinosByAlunoId`, {
     params: {
@@ -67,6 +62,18 @@ useEffect(() => {
 }, [navigation])
 
 async function atualizaTreino(treinoId: any, aparelho: string, serie: number | undefined, repeticao: number | undefined) {
+  const aparelhos = {...novoAparelho};
+  aparelhos[treinoId] = "";
+  setNovoAparelho(aparelhos);
+
+  const series = {...novaSerie};
+  series[treinoId] = undefined;
+  setNovaSerie(series);
+
+  const repeticoes = {...novaRepeticao};
+  repeticoes[treinoId] = undefined;
+  setNovaRepeticao(repeticoes);
+
   await api.put(`${SERVER_URL}/api/treinoModel/editarTreino`, {
     body: {
       treinoId: treinoId, 
@@ -92,6 +99,10 @@ async function atualizarAluno() {
 }
 
 async function criarTreino() {
+  setNomeTreino("");
+  setAparelho("");
+  setSerie(undefined);
+  setRepeticao(undefined);
   const response = await api.post(`${SERVER_URL}/api/treinoModel/cadastrarTreino`, {
     body: {
       alunoId: alunoId, 
@@ -115,6 +126,23 @@ async function deletarTreino() {
   }).then(response => {getTreinos(); setVisible(false)});
 }
 
+async function defineAparelhos(info: any, index: any, tipo: any) {
+  if(tipo === "aparelho") {
+    const aparelhos = {...novoAparelho};
+    aparelhos[index] = info;
+    setNovoAparelho(aparelhos);
+  } else if(tipo === "serie") {
+    const series = {...novaSerie};
+    series[index] = parseInt(info);
+    setNovaSerie(series);
+  } else {
+    const repeticoes = {...novaRepeticao};
+    repeticoes[index] = parseInt(info);
+    setNovaRepeticao(repeticoes);
+  }
+
+}
+
 
     return aluno ? (
       <>      
@@ -134,21 +162,21 @@ async function deletarTreino() {
                     <Image source={{uri: aluno?.fotoUrl ? aluno?.fotoUrl : `https://uploadofototcc.s3.sa-east-1.amazonaws.com/default.png`, cache:"reload"}} style={{width: 100, height: 100, borderRadius: 400/ 2}}/>
                   </View>
 
-                  <View  style={{...styles.bg, marginLeft: 20}}>
+                  <View  style={{...styles.bg, paddingRight: 50}}>
                     <Text style={{...styles.btnText}}>Objetivo: {aluno.objetivo}</Text>
                     <Text style={{marginVertical: 20, ...styles.btnText}}>Preparo físico: {aluno.prepFisico}</Text>
                     <Text style={{...styles.btnText}}>Saúde: {aluno.saude}</Text>
                   </View>
                 </View>
                 
-                <View style={{...styles.bg, marginBottom: 30}}>
+                <View style={{...styles.bg, marginBottom: 0}}>
                   <Text style={{...styles.btnText}}>Peso (em kg)</Text>
-                  <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.peso.toString()} onChangeText={peso => setPeso(parseInt(peso) || 0)}/>
-                  <Text style={{...styles.btnText}}>Massa muscular</Text>
-                  <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.massaMuscular.toString()} onChangeText={massa => setMassaMuscular(parseInt(massa) || 0)}/>
-                  <Text style={{...styles.btnText}}>IMC (e anotações)</Text>
+                  <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.peso.toString()} keyboardType="number-pad" onChangeText={peso => setPeso(parseInt(peso) || 0)}/>
+                  <Text style={{...styles.btnText, marginTop: 10}}>Massa muscular</Text>
+                  <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.massaMuscular.toString()} keyboardType="number-pad" onChangeText={massa => setMassaMuscular(parseInt(massa) || 0)}/>
+                  <Text style={{...styles.btnText, marginTop: 10}}>Anotações extras</Text>
                   <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.imc} onChangeText={imc => setImc(imc)}/>
-                  <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50}} onPress={atualizarAluno}><Text style={{...styles.btnText}}>Atualizar informações</Text></TouchableOpacity>
+                  <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50, marginTop: 20}} onPress={atualizarAluno}><Text style={{...styles.btnText}}>Atualizar informações</Text></TouchableOpacity>
                 </View>
 
                
@@ -185,11 +213,11 @@ async function deletarTreino() {
                     </View>
 
                     <View style={{...styles.bg, ...styles.profs}}>
-                      <TextInput style={{...styles.inputSemLargura, width: 100, maxWidth: 100}} placeholder="Aparelho" onChangeText={aparelho => setAparelho(aparelho)}/>
-                      <TextInput style={{...styles.inputSemLargura, width: 50, maxWidth: 50}} placeholder="Série" onChangeText={serie => setSerie(parseInt(serie))}/>
-                      <TextInput style={{...styles.inputSemLargura, width: 80, maxWidth: 80}} placeholder="Repetições" onChangeText={repeticao => setRepeticao(parseInt(repeticao))}/>
+                      <TextInput style={{...styles.inputSemLargura, width: 100, maxWidth: 100}} placeholder="Aparelho" value={novoAparelho[parent._id] || ""} onChangeText={(e) => defineAparelhos(e, parent._id, "aparelho")}/>
+                      <TextInput style={{...styles.inputSemLargura, width: 50, maxWidth: 50}} placeholder="Série" value={ novaSerie[parent._id] ? novaSerie[parent._id].toString() : undefined } keyboardType="number-pad" onChangeText={(e) => defineAparelhos(e, parent._id, "serie")}/>
+                      <TextInput style={{...styles.inputSemLargura, width: 80, maxWidth: 80}} placeholder="Repetições" value={ novaRepeticao[parent._id] ? novaRepeticao[parent._id].toString() : undefined } keyboardType="number-pad" onChangeText={(e) => defineAparelhos(e, parent._id, "repeticao")}/>
                     </View>  
-                    <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50}} onPress={() => atualizaTreino(parent._id, aparelho, serie, repeticao)}><Text style={{...styles.btnText}}>Add aparelho</Text></TouchableOpacity>
+                    <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50}} onPress={() => atualizaTreino(parent._id, novoAparelho[parent._id], novaSerie[parent._id], novaRepeticao[parent._id])}><Text style={{...styles.btnText}}>Add aparelho</Text></TouchableOpacity>
 
                   </View>
                 
@@ -197,11 +225,11 @@ async function deletarTreino() {
                 
                 </View>
                 
-                <Text style={{...styles.btnText}}>Adicionar novo treino</Text>
-                <TextInput style={{...styles.inputIsolado}} placeholder="Título do novo treino" onChangeText={nome => setNomeTreino(nome)}/>
-                <TextInput style={{...styles.inputIsolado}} placeholder="Coloque no mínimo um aparelho" onChangeText={aparelho => setAparelho(aparelho)}/>
-                <TextInput style={{...styles.inputIsolado}} placeholder="Repetições" onChangeText={repeticao => setRepeticao(parseInt(repeticao) || 0)}/>
-                <TextInput style={{...styles.inputIsolado}} placeholder="Séries" onChangeText={serie => setSerie(parseInt(serie) || 0)}/>
+                <Text style={{...styles.btnText, fontWeight: "bold", fontSize: 18}}>Adicionar novo treino</Text>
+                <TextInput style={{...styles.inputIsolado, marginTop: 20}} placeholder="Título do novo treino" value={nomeTreino} onChangeText={nome => setNomeTreino(nome)}/>
+                <TextInput style={{...styles.inputIsolado, marginTop: 10}} placeholder="Coloque no mínimo um aparelho" value={aparelho} onChangeText={aparelho => setAparelho(aparelho)}/>
+                <TextInput style={{...styles.inputIsolado, marginTop: 10}} placeholder="Repetições" keyboardType="number-pad" value={repeticao ? repeticao.toString() : undefined} onChangeText={repeticao => setRepeticao(parseInt(repeticao) || 0)}/>
+                <TextInput style={{...styles.inputIsolado, marginTop: 10}} placeholder="Séries"keyboardType="number-pad" value={serie ? serie.toString() : undefined} onChangeText={serie => setSerie(parseInt(serie) || 0)}/>
                 
                 <TouchableOpacity style={{...styles.btnCadastro}} onPress={criarTreino}><Text style={{...styles.btnText}}>Adicionar</Text></TouchableOpacity>
                 
@@ -211,7 +239,7 @@ async function deletarTreino() {
           </View>
       </ScrollView>
       </>
-    ) : (<View/>)
+    ) : (<View style={{...styles.bg, height: 740}}/>)
 }
 
 // const styles = StyleSheet.create({

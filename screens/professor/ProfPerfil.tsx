@@ -152,9 +152,19 @@ function atualizaPerfil() {
           </View>
 
           <View  style={{...styles.bg}}>
-          <TextInput autoCapitalize="words" style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
-          <TextInput autoCapitalize="none" style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
-          <TextInputMask 
+            <View style={{...styles.bg}}>
+              <Text style={{...styles.btnText, marginBottom: 5}}>Nome</Text>
+              <TextInput autoCapitalize="words" style={{...styles.input}} placeholder={user?.nome} onChangeText={nome => setNovoNome(nome)}/>
+            </View>
+
+            <View style={{...styles.bg}}>
+              <Text style={{...styles.btnText, marginBottom: 5}}>Email</Text>
+              <TextInput autoCapitalize="none" style={{...styles.input}} placeholder={user?.email} onChangeText={email => setNovoEmail(email)}/>
+            </View>
+
+            <View style={{...styles.bg}}>
+              <Text style={{...styles.btnText, marginBottom: 5}}>Nascimento</Text>
+              <TextInputMask 
                   type={'datetime'}
                   options={{
                     format: 'DD/MM/YYYY'
@@ -163,13 +173,20 @@ function atualizaPerfil() {
                   value={novoNascimento} 
                   placeholder={user?.nascimento}
                   onChangeText={nascimento => setNovoNascimento(nascimento)}/>
+            </View>
           </View>
         </View>
 
-        <View style={{...styles.conjuntoInput, ...styles.bg}}>
-            <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160}} value={cidade} placeholder={user?.cidade} onChangeText={cidade => setCidade(cidade)}/>
+        <View style={{...styles.conjuntoInput, ...styles.bg, marginTop: 20}}>
+            <View style={{...styles.bg}}>
+              <Text style={{...styles.btnText, marginBottom: 5}}>Cidade</Text>
+              <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160}} value={cidade} placeholder={user?.cidade} onChangeText={cidade => setCidade(cidade)}/>
+            </View>
+
             <View style={{...styles.picker, width: 100, marginRight: 25}}>
-                <RNPickerSelect
+              <Text style={{...styles.btnText, marginBottom: -4}}>Estado</Text>
+              <RNPickerSelect
+                  style={{viewContainer: {marginBottom: 9}}}
                   placeholder={{}}
                   value={estado}
                   onValueChange={(value) => setEstado(value)}
@@ -178,23 +195,35 @@ function atualizaPerfil() {
             </View>
           </View>
 
-        <TextInputMask 
-                  type={'cel-phone'}
-                  options={{
-                    maskType: 'BRL',
-                    withDDD: true,
-                  }} 
-                  value={novoCelular}
-                  style={{...styles.inputIsolado}} 
-                  keyboardType="number-pad" 
-                  placeholder={user?.celular}
-                  onChangeText={celular => setNovoCelular(celular)}
-          />
-        <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} placeholder={user?.facebook} onChangeText={facebook => setNovoFacebook(facebook)}/>
-        <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} placeholder={user?.instagram} onChangeText={instagram => setNovoInstagram(instagram)}/>
+          <View style={{...styles.bg}}>
+            <Text style={{...styles.btnText, marginBottom: 5}}>Celular</Text>
+            <TextInputMask 
+              type={'cel-phone'}
+              options={{
+                maskType: 'BRL',
+                withDDD: true,
+              }} 
+              value={novoCelular}
+              style={{...styles.inputIsolado}} 
+              keyboardType="number-pad" 
+              placeholder={user?.celular}
+              onChangeText={celular => setNovoCelular(celular)}/>
+          </View>
 
 
-        <Text style={{marginTop: 20, ...styles.btnText}}>Especialidade</Text>
+        <View style={{...styles.bg}}>
+          <Text style={{...styles.btnText, marginBottom: 5}}>Instagram</Text>
+          <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} placeholder={user?.instagram} onChangeText={instagram => setNovoInstagram(instagram)}/>
+        </View>
+
+        <View style={{...styles.bg}}>
+          <Text style={{...styles.btnText, marginBottom: 5}}>Facebook</Text>
+          <TextInput autoCapitalize="none" style={{...styles.inputIsolado}} placeholder={user?.facebook} onChangeText={facebook => setNovoFacebook(facebook)}/>
+        </View>
+        
+
+
+        <Text style={{marginTop: 0, ...styles.btnText}}>Especialidade</Text>
         <View style={{...styles.bg, ...styles.picker}}>
           <RNPickerSelect
             placeholder={{}}

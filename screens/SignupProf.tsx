@@ -115,20 +115,33 @@ export default function SignupProf({navigation}) {
             <View style={{...styles.bg}}>
             {!!error && <Text style={{...styles.error, width: 300}}>{error}</Text>}
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput autoCapitalize="words" style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
-                <TextInputMask 
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Nome</Text>
+                  <TextInput autoCapitalize="words" style={{...styles.inputSignUp}} placeholder="Nome" onChangeText={nome => setNome(nome)}/>
+                </View>
+
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Data de nascimento</Text>
+                  <TextInputMask 
                   type={'datetime'}
                   options={{
                     format: 'DD/MM/YYYY'
                   }} 
                   style={{...styles.inputSignUp}} 
                   value={nascimento} 
-                  placeholder="Nascimento" 
+                  placeholder="xx/xx/xxxx" 
                   onChangeText={nascimento => setNascimento(nascimento)}/>
+                </View>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
-                <TextInputMask 
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Email</Text>
+                  <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Email" onChangeText={email => setEmail(email)}/>
+                </View>
+
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Celular</Text>
+                  <TextInputMask 
                   type={'cel-phone'}
                   options={{
                     maskType: 'BRL',
@@ -137,40 +150,61 @@ export default function SignupProf({navigation}) {
                   value={celular}
                   style={{...styles.inputSignUp}} 
                   keyboardType="number-pad" 
-                  placeholder="Celular" 
+                  placeholder="(xx) xxxxx-xxxx" 
                   onChangeText={celular => setCelular(celular)}/>
+                </View>
               </View>
               <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
-                <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
-              </View>
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Instagram</Text>
+                  <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Instagram" onChangeText={instagram => setInstagram(instagram)}/>
+                </View>
 
-              <View style={{...styles.conjuntoInput, ...styles.bg}}>
-                <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160}} placeholder="Cidade" onChangeText={cidade => setCidade(cidade)}/>
-                <View style={{...styles.picker, width: 100, marginRight: 25}}>
-                    <RNPickerSelect
-                      placeholder={{}}
-                      value={estado}
-                      onValueChange={(value) => setEstado(value)}
-                      items={estados1}
-                    />
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Facebook</Text>
+                  <TextInput autoCapitalize="none" style={{...styles.inputSignUp}} placeholder="Facebook" onChangeText={facebook => setFacebook(facebook)}/>
                 </View>
               </View>
 
-              <TextInputMask 
+              <View style={{...styles.conjuntoInput, ...styles.bg}}>
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Cidade</Text>
+                  <TextInput autoCapitalize="words" style={{...styles.inputSignUp, width: 160}} placeholder="Cidade" onChangeText={cidade => setCidade(cidade)}/>
+                </View>
+
+                <View style={{...styles.picker, width: 100, marginRight: 25}}>
+                    <Text style={{...styles.btnText, marginBottom: -4}}>Estado</Text>
+                    <RNPickerSelect
+                        style={{viewContainer: {marginBottom: 9}}}
+                        placeholder={{}}
+                        value={estado}
+                        onValueChange={(value) => setEstado(value)}
+                        items={estados1}
+                      />
+                </View>
+              </View>
+
+              <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>CREF</Text>
+                  <TextInputMask 
                   type={'custom'}
                   options={{
                     mask: '999999-A/AA'
                   }} 
                   value={cref}
                   style={{...styles.inputSignUp, width: 300}} 
-                  placeholder="CREF" 
+                  placeholder="Registro CREF" 
                   autoCapitalize="characters"
                   onChangeText={cref => setCREF(cref)}/>
-              <TextInput autoCapitalize="none" style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Senha" onChangeText={senha => setSenha(senha)}/>
+                </View>
+
+                <View style={{...styles.bg}}>
+                  <Text style={{...styles.btnText, marginBottom: 5}}>Senha</Text>
+                  <TextInput autoCapitalize="none" style={{...styles.inputSignUp, width: 300}} secureTextEntry={true} placeholder="Mínimo 8 dígitos" onChangeText={senha => setSenha(senha)}/>
+                </View>
               
               <Text style={{...styles.btnText}}>Especialidade</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 300}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={especialidade}
@@ -180,7 +214,7 @@ export default function SignupProf({navigation}) {
               </View>
 
               <Text style={{...styles.btnText}}>Faixa etário alvo</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 300}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={faixaEtaria}
@@ -190,7 +224,7 @@ export default function SignupProf({navigation}) {
               </View>
 
               <Text style={{...styles.btnText}}>Foco</Text>
-              <View style={{...styles.bg, ...styles.picker}}>
+              <View style={{...styles.bg, ...styles.picker, width: 300}}>
                 <RNPickerSelect
                   placeholder={{}}
                   value={foco}
@@ -198,8 +232,8 @@ export default function SignupProf({navigation}) {
                   items={focoOpt}
                 />
               </View>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={() => navigation.navigate("Login")}><Text style={{...styles.btnText}}>Voltar ao login</Text></TouchableOpacity>
-              <TouchableOpacity style={{...styles.btnCadastro}} onPress={handleSignUp}><Text style={{...styles.btnText}}>Criar conta</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro, width: 300, marginTop: 40}} onPress={() => navigation.navigate("Login")}><Text style={{...styles.btnText}}>Voltar ao login</Text></TouchableOpacity>
+              <TouchableOpacity style={{...styles.btnCadastro, width: 300}} onPress={handleSignUp}><Text style={{...styles.btnText}}>Criar conta</Text></TouchableOpacity>
             </View>
             </View>
           </ScrollView>
