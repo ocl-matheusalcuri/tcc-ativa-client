@@ -4,7 +4,6 @@ Primeiramente, será necessário instalar algumas CLI's:
 
 1. Yarn: https://classic.yarnpkg.com/pt-BR/docs/install/#windows-stable
 2. Expo: https://docs.expo.io/get-started/installation/
-3. Nodemon: https://nodemon.io/
 
 
 Feito isto, basta clonar o repositório para sua máquina e então rodar os comandos:
