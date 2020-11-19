@@ -75,8 +75,14 @@ export default function ProfDashboard({navigation}) {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     const compromisso = new Date(currentDate);
-    setData(compromisso.getDate() +'/'+(compromisso.getMonth()+1)+'/'+compromisso.getFullYear());
-    setHora(compromisso.getUTCHours() - 3 + 'h ' + compromisso.getUTCMinutes() + 'min');
+    setData(("0" + compromisso.getDate()).slice(-2) +'/'+("0" + (compromisso.getMonth()+1)).slice(-2) +'/'+compromisso.getFullYear());
+
+    let compromissoHora = compromisso.getUTCHours() - 3;
+    if(compromissoHora === -3) compromissoHora = 21;
+    if(compromissoHora === -2) compromissoHora = 22;
+    if(compromissoHora === -1) compromissoHora = 23;
+    setHora(("0" + compromissoHora).slice(-2) + 'h ' + ("0" + compromisso.getUTCMinutes()).slice(-2) + 'min');
+
 
     setDate(currentDate);
   };

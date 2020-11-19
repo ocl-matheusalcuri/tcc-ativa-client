@@ -164,7 +164,7 @@ async function defineAparelhos(info: any, index: any, tipo: any) {
 
                   <View  style={{...styles.bg, paddingRight: 50}}>
                     <Text style={{...styles.btnText}}>Objetivo: {aluno.objetivo}</Text>
-                    <Text style={{marginVertical: 20, ...styles.btnText}}>Preparo físico: {aluno.prepFisico}</Text>
+                    <Text style={{marginVertical: 20, ...styles.btnText, width: 150}}>Preparo físico: {aluno.prepFisico}</Text>
                     <Text style={{...styles.btnText}}>Saúde: {aluno.saude}</Text>
                   </View>
                 </View>
@@ -176,7 +176,7 @@ async function defineAparelhos(info: any, index: any, tipo: any) {
                   <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.massaMuscular.toString()} keyboardType="number-pad" onChangeText={massa => setMassaMuscular(parseInt(massa) || 0)}/>
                   <Text style={{...styles.btnText, marginTop: 10}}>Anotações extras</Text>
                   <TextInput style={{...styles.inputSemAltura}} placeholder={aluno?.imc} onChangeText={imc => setImc(imc)}/>
-                  <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50, marginTop: 20}} onPress={atualizarAluno}><Text style={{...styles.btnText}}>Atualizar informações</Text></TouchableOpacity>
+                  <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50, marginTop: 20, width: 320}} onPress={atualizarAluno}><Text style={{...styles.btnText}}>Atualizar informações</Text></TouchableOpacity>
                 </View>
 
                
@@ -217,7 +217,7 @@ async function defineAparelhos(info: any, index: any, tipo: any) {
                       <TextInput style={{...styles.inputSemLargura, width: 50, maxWidth: 50}} placeholder="Série" value={ novaSerie[parent._id] ? novaSerie[parent._id].toString() : undefined } keyboardType="number-pad" onChangeText={(e) => defineAparelhos(e, parent._id, "serie")}/>
                       <TextInput style={{...styles.inputSemLargura, width: 80, maxWidth: 80}} placeholder="Repetições" value={ novaRepeticao[parent._id] ? novaRepeticao[parent._id].toString() : undefined } keyboardType="number-pad" onChangeText={(e) => defineAparelhos(e, parent._id, "repeticao")}/>
                     </View>  
-                    <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50}} onPress={() => atualizaTreino(parent._id, novoAparelho[parent._id], novaSerie[parent._id], novaRepeticao[parent._id])}><Text style={{...styles.btnText}}>Add aparelho</Text></TouchableOpacity>
+                    <TouchableOpacity style={{...styles.btnCadastro, marginBottom: 50, width: 320}} onPress={() => atualizaTreino(parent._id, novoAparelho[parent._id], novaSerie[parent._id], novaRepeticao[parent._id])}><Text style={{...styles.btnText}}>Add aparelho</Text></TouchableOpacity>
 
                   </View>
                 
@@ -226,12 +226,12 @@ async function defineAparelhos(info: any, index: any, tipo: any) {
                 </View>
                 
                 <Text style={{...styles.btnText, fontWeight: "bold", fontSize: 18}}>Adicionar novo treino</Text>
-                <TextInput style={{...styles.inputIsolado, marginTop: 20}} placeholder="Título do novo treino" value={nomeTreino} onChangeText={nome => setNomeTreino(nome)}/>
-                <TextInput style={{...styles.inputIsolado, marginTop: 10}} placeholder="Coloque no mínimo um aparelho" value={aparelho} onChangeText={aparelho => setAparelho(aparelho)}/>
-                <TextInput style={{...styles.inputIsolado, marginTop: 10}} placeholder="Repetições" keyboardType="number-pad" value={repeticao ? repeticao.toString() : undefined} onChangeText={repeticao => setRepeticao(parseInt(repeticao) || 0)}/>
-                <TextInput style={{...styles.inputIsolado, marginTop: 10}} placeholder="Séries"keyboardType="number-pad" value={serie ? serie.toString() : undefined} onChangeText={serie => setSerie(parseInt(serie) || 0)}/>
+                <TextInput style={{...styles.inputIsolado, marginTop: 20, width: 320}} placeholder="Título do novo treino" value={nomeTreino} onChangeText={nome => setNomeTreino(nome)}/>
+                <TextInput style={{...styles.inputIsolado, marginTop: 10, width: 320}} placeholder="Coloque no mínimo um aparelho" value={aparelho} onChangeText={aparelho => setAparelho(aparelho)}/>
+                <TextInput style={{...styles.inputIsolado, marginTop: 10, width: 320}} placeholder="Repetições" keyboardType="number-pad" value={repeticao ? repeticao.toString() : undefined} onChangeText={repeticao => setRepeticao(parseInt(repeticao) || 0)}/>
+                <TextInput style={{...styles.inputIsolado, marginTop: 10, width: 320}} placeholder="Séries"keyboardType="number-pad" value={serie ? serie.toString() : undefined} onChangeText={serie => setSerie(parseInt(serie) || 0)}/>
                 
-                <TouchableOpacity style={{...styles.btnCadastro}} onPress={criarTreino}><Text style={{...styles.btnText}}>Adicionar</Text></TouchableOpacity>
+                <TouchableOpacity style={{...styles.btnCadastro, width: 320}} onPress={criarTreino}><Text style={{...styles.btnText}}>Adicionar</Text></TouchableOpacity>
                 
 
               </View>
