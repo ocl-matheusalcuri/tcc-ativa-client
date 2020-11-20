@@ -47,7 +47,12 @@ export default function ProfDashboard({navigation}) {
     const response = await api.get(`${SERVER_URL}/api/agendaModel/getAgenda`, {
       params: {  professorId: user?._id }
     });
-    setAgenda(response.data);
+    const eventos = response.data.sort(function(a: any, b: any) {
+      var aa = a.data.split('/').reverse().join();
+      var bb = b.data.split('/').reverse().join();
+      return aa < bb ? -1 : (aa > bb ? 1 : 0);
+  });
+    setAgenda(eventos);
   }
 
   async function salvarCompromisso() {
