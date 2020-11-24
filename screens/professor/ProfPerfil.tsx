@@ -97,13 +97,12 @@ async function handleProfileImage() {
     quality: 1,
     base64: true,
   });
-
     //@ts-ignore
     setImgBase64(image.base64)
-
-    setStatus("Atualizando foto, aguarde...");
+    setStatus("Atualizando foto, aguarde...")
     //@ts-ignore
-    await salvarFoto(image.base64);
+    if(image?.base64) await salvarFoto(image.base64);
+    else setStatus("")
 }
 
 function atualizaPerfil() {
